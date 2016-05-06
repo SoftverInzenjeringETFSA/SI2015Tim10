@@ -1,16 +1,14 @@
-package guiSI;
+package ba.unsa.etf.si.app.SiDesk.View;
 
+import java.awt.Choice;
 import java.awt.EventQueue;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import java.awt.Choice;
 import javax.swing.JTextField;
-import javax.swing.JButton;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 
-public class DodavanjeKategorije {
+public class MenadzerModifikovanjeKategorije {
 
 	private JFrame frmModifikovanjeKategorije;
 	private JTextField textField;
@@ -22,7 +20,7 @@ public class DodavanjeKategorije {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					DodavanjeKategorije window = new DodavanjeKategorije();
+					MenadzerModifikovanjeKategorije window = new MenadzerModifikovanjeKategorije();
 					window.frmModifikovanjeKategorije.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -34,7 +32,7 @@ public class DodavanjeKategorije {
 	/**
 	 * Create the application.
 	 */
-	public DodavanjeKategorije() {
+	public MenadzerModifikovanjeKategorije() {
 		initialize();
 	}
 
@@ -72,4 +70,5 @@ public class DodavanjeKategorije {
 		btnDodajKategoriju.setBounds(301, 122, 169, 23);
 		frmModifikovanjeKategorije.getContentPane().add(btnDodajKategoriju);
 	}
+
 }
