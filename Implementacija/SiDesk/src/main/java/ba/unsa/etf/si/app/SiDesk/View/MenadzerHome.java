@@ -31,8 +31,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.event.MenuListener;
 import javax.swing.event.MenuEvent;
-import javax.swing.event.MenuKeyListener;
-import javax.swing.event.MenuKeyEvent;
 
 import ba.unsa.etf.si.app.SiDesk.View.MenadzerDodavanjeKategorije;
 
@@ -42,8 +40,8 @@ public class MenadzerHome {
 
 	private JFrame frmMenadzerHome;
 	protected JMenuItem mntmDodajKategoriju;
-	protected JMenuItem mntmdodajPitanje;
-	static JTree tree;
+	protected  JMenuItem mntmdodajPitanje;
+	private JTree tree;
 	
 	private JTextField textField;
 
@@ -76,6 +74,8 @@ public class MenadzerHome {
 	/**
 	 * Initialize the contents of the frame.
 	 */
+	
+	
 	private void initialize() {
 		frmMenadzerHome = new JFrame();
 		
@@ -113,30 +113,46 @@ public class MenadzerHome {
 			}
 		));
 		
-		/*MouseListener ml = new MouseAdapter() {
-		     public void mousePressed(MouseEvent e) {
-		         if(SwingUtilities.isRightMouseButton(e)){
-		         int selRow = tree.getRowForLocation(e.getX(), e.getY());
-		         TreePath selPath = tree.getPathForLocation(e.getX(), e.getY());
-		                 tree.setSelectionPath(selPath); 
-		                 if (selRow>-1){
-		                    tree.setSelectionRow(selRow); 
-		                 }
-		         }
-		     }
-	     };
-		 tree.addMouseListener(ml);*/
-		
 		frmMenadzerHome.getContentPane().add(tree);
 		
 		JPopupMenu popupMenu = new JPopupMenu();
+		//novo
+		ActionListener menuListener = new ActionListener() {
+		      public void actionPerformed(ActionEvent event) {
+		        if(event.getActionCommand() == "Dodaj kategoriju"){
+		        	//dodavanje kategorije
+		        	System.out.println("kat");
+		        }
+		        else if(event.getActionCommand() == "Dodaj pitanje"){
+		        	//dodavanje pitanja
+		        	System.out.println("pitanje");
+		        }
+		      }
+		    };
+		    
 		addPopup(tree, popupMenu);
 		
 		mntmDodajKategoriju = new JMenuItem("Dodaj kategoriju");
+		/*mntmDodajKategoriju.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) { System.out.println("clicked");
+				int selRow = tree.getRowForLocation(e.getX(), e.getY());
+				TreePath selPath = tree.getPathForLocation(e.getX(), e.getY());
+					tree.setSelectionPath(selPath); 
+					if (selRow > -1){
+						tree.setSelectionRow(selRow);
+						//usao
+					}
+			}
+		});*/
+		mntmDodajKategoriju.addActionListener(menuListener);
 		popupMenu.add(mntmDodajKategoriju);
 		
 		mntmdodajPitanje = new JMenuItem("Dodaj pitanje");
+		mntmdodajPitanje.addActionListener(menuListener);
 		popupMenu.add(mntmdodajPitanje);
+		
+		
 		
 		textField = new JTextField();
 		textField.setBounds(10, 28, 447, 26);
@@ -311,21 +327,8 @@ public class MenadzerHome {
 		menuBar.add(mnDodajPitanje);
 	}
 	
-	private static void addPopup(Component component, final JPopupMenu popup) {
-		component.addMouseListener(new MouseAdapter() {
-			/*public void mousePressed(MouseEvent e) {
-				if (e.isPopupTrigger()) {
-					showMenu(e);
-				}
-			}
-			public void mouseReleased(MouseEvent e) {
-				if (e.isPopupTrigger()) {
-					showMenu(e);
-				}
-			}
-			private void showMenu(MouseEvent e) {
-				popup.show(e.getComponent(), e.getX(), e.getY());		
-			}*/
+	private static void addPopup(final JTree tree, final JPopupMenu popup) {		
+		tree.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if(SwingUtilities.isRightMouseButton(e))
