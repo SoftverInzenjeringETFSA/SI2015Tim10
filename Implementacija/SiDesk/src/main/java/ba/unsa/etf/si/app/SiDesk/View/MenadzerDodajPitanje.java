@@ -13,8 +13,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 public class MenadzerDodajPitanje {
-
-	JFrame frmDodajPitanje;
+	protected JFrame frmDodajPitanje;
 
 	/**
 	 * Launch the application.
@@ -24,7 +23,9 @@ public class MenadzerDodajPitanje {
 			public void run() {
 				try {
 					MenadzerDodajPitanje window = new MenadzerDodajPitanje();
+					
 					window.frmDodajPitanje.setVisible(true);
+					
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -37,6 +38,7 @@ public class MenadzerDodajPitanje {
 	 */
 	public MenadzerDodajPitanje() {
 		initialize();
+		frmDodajPitanje.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 	}
 
 	/**

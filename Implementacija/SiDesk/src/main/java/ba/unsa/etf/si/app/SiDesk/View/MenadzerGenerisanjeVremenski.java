@@ -34,6 +34,7 @@ public class MenadzerGenerisanjeVremenski {
 	 */
 	public MenadzerGenerisanjeVremenski() {
 		initialize();
+		frmKreiranjeIzvjetaja.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 	}
 
 	/**

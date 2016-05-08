@@ -303,23 +303,21 @@ public class MenadzerHome {
 		JMenuItem mntmIzvjetajPoKategoriji = new JMenuItem("Izvje\u0161taj po kategoriji problema");
 		mntmIzvjetajPoKategoriji.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				MenadzerGenerisanjeKategorija window= new MenadzerGenerisanjeKategorija();
-				
+				MenadzerGenerisanjeKategorija window = new MenadzerGenerisanjeKategorija();		
 				window.frmGenerisanjeIzvjetaja.setVisible(true);
-				
 			}
 		});
 		mnNewMenu.add(mntmIzvjetajPoKategoriji);
 		
 		JMenu mnDodajPitanje = new JMenu("Dodaj pitanje");
+		
 		mnDodajPitanje.addMenuListener(new MenuListener() {
 			public void menuCanceled(MenuEvent e) {
 			}
 			public void menuDeselected(MenuEvent e) {
 			}
 			public void menuSelected(MenuEvent e) {
-				MenadzerDodajPitanje window= new MenadzerDodajPitanje();
-				
+				MenadzerDodajPitanje window = new MenadzerDodajPitanje();		
 				window.frmDodajPitanje.setVisible(true);
 			}
 		});

@@ -36,6 +36,7 @@ public class MenadzerGenerisanjeStarosnaDob {
 	 */
 	public MenadzerGenerisanjeStarosnaDob() {
 		initialize();
+		frmGenerisanjeIzvjetaja.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 	}
 
 	/**

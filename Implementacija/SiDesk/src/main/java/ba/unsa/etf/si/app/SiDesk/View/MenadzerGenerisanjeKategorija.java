@@ -32,6 +32,7 @@ public class MenadzerGenerisanjeKategorija {
 	 */
 	public MenadzerGenerisanjeKategorija() {
 		initialize();
+		frmGenerisanjeIzvjetaja.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 	}
 
 	/**

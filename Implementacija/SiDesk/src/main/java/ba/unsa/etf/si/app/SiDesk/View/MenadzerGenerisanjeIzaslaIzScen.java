@@ -32,6 +32,7 @@ public class MenadzerGenerisanjeIzaslaIzScen {
 	 */
 	public MenadzerGenerisanjeIzaslaIzScen() {
 		initialize();
+		frmGenerisanjeIzvjetaja.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 	}
 
 	/**
