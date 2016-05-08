@@ -35,12 +35,7 @@ import ba.unsa.etf.si.app.SiDesk.View.MenadzerDodavanjeKategorije;
 public class MenadzerHome {
 
 	private JFrame frmMenadzerHome;
-	private JFrame frmDodavanjeKategorije;
-	private JFrame frmBrisanjeKategorije;
-	private JFrame frmModifikovanjeKategorije;
-	private JFrame frmGenerisanjeIzvjetaja;
-	private JFrame frmKreiranjeIzvjetaja;
-	private JFrame frmDodajPitanje;
+
 	
 	private JTextField textField;
 
