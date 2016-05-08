@@ -1,13 +1,10 @@
 package ba.unsa.etf.si.app.SiDesk.View;
 
-import java.awt.Component;
-
 import java.awt.EventQueue;
 import java.awt.event.InputMethodEvent;
 import java.awt.event.InputMethodListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -25,6 +22,7 @@ import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
+import javax.swing.tree.TreeNode;
 import javax.swing.tree.TreePath;
 
 import java.awt.event.ActionListener;
@@ -35,12 +33,10 @@ import javax.swing.event.MenuEvent;
 import ba.unsa.etf.si.app.SiDesk.View.MenadzerDodavanjeKategorije;
 
 
- 
 public class MenadzerHome {
-
 	private JFrame frmMenadzerHome;
 	protected JMenuItem mntmDodajKategoriju;
-	protected  JMenuItem mntmdodajPitanje;
+	protected JMenuItem mntmdodajPitanje;
 	private JTree tree;
 	
 	private JTextField textField;
@@ -121,7 +117,17 @@ public class MenadzerHome {
 		      public void actionPerformed(ActionEvent event) {
 		        if(event.getActionCommand() == "Dodaj kategoriju"){
 		        	//dodavanje kategorije
-		        	System.out.println("kat");
+		        	
+		        	//trazenje kliknutog elementa
+		        	DefaultMutableTreeNode selectedElement =(DefaultMutableTreeNode)tree.getSelectionPath().getLastPathComponent();
+		        	//trazenje putanje
+		        	TreeNode[] s = selectedElement.getPath();
+		        	for(int i = 0; i < s.length; i++)
+		        	{
+		        		System.out.println(s[i].toString());
+		        	}
+		        	System.out.println("Pritisnuta kategorija " + selectedElement.toString());	
+		        	
 		        }
 		        else if(event.getActionCommand() == "Dodaj pitanje"){
 		        	//dodavanje pitanja
@@ -133,18 +139,7 @@ public class MenadzerHome {
 		addPopup(tree, popupMenu);
 		
 		mntmDodajKategoriju = new JMenuItem("Dodaj kategoriju");
-		/*mntmDodajKategoriju.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) { System.out.println("clicked");
-				int selRow = tree.getRowForLocation(e.getX(), e.getY());
-				TreePath selPath = tree.getPathForLocation(e.getX(), e.getY());
-					tree.setSelectionPath(selPath); 
-					if (selRow > -1){
-						tree.setSelectionRow(selRow);
-						//usao
-					}
-			}
-		});*/
+		
 		mntmDodajKategoriju.addActionListener(menuListener);
 		popupMenu.add(mntmDodajKategoriju);
 		
@@ -223,8 +218,6 @@ public class MenadzerHome {
 		
 		JMenuBar menuBar = new JMenuBar();
 		frmMenadzerHome.setJMenuBar(menuBar);
-		 
-    	
 		
 		JMenu mnAurirajKategorije = new JMenu("A\u017Euriraj kategorije");
 		menuBar.add(mnAurirajKategorije);
@@ -239,10 +232,6 @@ public class MenadzerHome {
 		});
 	
 		mnAurirajKategorije.add(mntmDodajKategoriju_1);
-		
-	
-		
-		
 		
 		JMenuItem mntmModifikujKategoriju = new JMenuItem("Modifikuj kategoriju");
 		mntmModifikujKategoriju.addActionListener(new ActionListener() {
@@ -320,10 +309,6 @@ public class MenadzerHome {
 			}
 		});
 		
-		
-		
-	
-		
 		menuBar.add(mnDodajPitanje);
 	}
 	
@@ -339,7 +324,7 @@ public class MenadzerHome {
 						tree.setSelectionPath(selPath); 
 						if (selRow>-1){
 							tree.setSelectionRow(selRow);
-							
+							//index = selRow;
 							popup.show(e.getComponent(), e.getX(), e.getY());
 							mousePressed(e);
 						}
@@ -347,5 +332,4 @@ public class MenadzerHome {
 			}
 		});
 	}
-
 }
