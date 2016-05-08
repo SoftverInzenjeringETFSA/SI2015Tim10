@@ -1,11 +1,13 @@
 package ba.unsa.etf.si.app.SiDesk.View;
 
 import java.awt.Component;
+
 import java.awt.EventQueue;
 import java.awt.event.InputMethodEvent;
 import java.awt.event.InputMethodListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -23,6 +25,8 @@ import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
+import javax.swing.tree.TreePath;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.event.MenuListener;
@@ -32,10 +36,14 @@ import javax.swing.event.MenuKeyEvent;
 
 import ba.unsa.etf.si.app.SiDesk.View.MenadzerDodavanjeKategorije;
 
+
+ 
 public class MenadzerHome {
 
 	private JFrame frmMenadzerHome;
-
+	protected JMenuItem mntmDodajKategoriju;
+	protected JMenuItem mntmdodajPitanje;
+	static JTree tree;
 	
 	private JTextField textField;
 
@@ -78,7 +86,7 @@ public class MenadzerHome {
 		frmMenadzerHome.getContentPane().setLayout(null);
 	
 		
-		JTree tree = new JTree();
+		tree = new JTree();
 		tree.setBounds(10, 90, 198, 395);
 		tree.setModel(new DefaultTreeModel(
 			new DefaultMutableTreeNode("Kategorije") {
@@ -104,16 +112,31 @@ public class MenadzerHome {
 				}
 			}
 		));
+		
+		/*MouseListener ml = new MouseAdapter() {
+		     public void mousePressed(MouseEvent e) {
+		         if(SwingUtilities.isRightMouseButton(e)){
+		         int selRow = tree.getRowForLocation(e.getX(), e.getY());
+		         TreePath selPath = tree.getPathForLocation(e.getX(), e.getY());
+		                 tree.setSelectionPath(selPath); 
+		                 if (selRow>-1){
+		                    tree.setSelectionRow(selRow); 
+		                 }
+		         }
+		     }
+	     };
+		 tree.addMouseListener(ml);*/
+		
 		frmMenadzerHome.getContentPane().add(tree);
 		
 		JPopupMenu popupMenu = new JPopupMenu();
 		addPopup(tree, popupMenu);
 		
-		JMenuItem mntmDodajKategoriju = new JMenuItem("Dodaj kategoriju");
+		mntmDodajKategoriju = new JMenuItem("Dodaj kategoriju");
 		popupMenu.add(mntmDodajKategoriju);
 		
-		JMenuItem mntmNewMenuItem_1 = new JMenuItem("Dodaj pitanje");
-		popupMenu.add(mntmNewMenuItem_1);
+		mntmdodajPitanje = new JMenuItem("Dodaj pitanje");
+		popupMenu.add(mntmdodajPitanje);
 		
 		textField = new JTextField();
 		textField.setBounds(10, 28, 447, 26);
@@ -290,7 +313,7 @@ public class MenadzerHome {
 	
 	private static void addPopup(Component component, final JPopupMenu popup) {
 		component.addMouseListener(new MouseAdapter() {
-			public void mousePressed(MouseEvent e) {
+			/*public void mousePressed(MouseEvent e) {
 				if (e.isPopupTrigger()) {
 					showMenu(e);
 				}
@@ -301,14 +324,22 @@ public class MenadzerHome {
 				}
 			}
 			private void showMenu(MouseEvent e) {
-				//		
-			}
+				popup.show(e.getComponent(), e.getX(), e.getY());		
+			}*/
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if(SwingUtilities.isRightMouseButton(e))
 				{
-					popup.show(e.getComponent(), e.getX(), e.getY());
-					mousePressed(e);
+					//detektuje da li je desni klik i da li je pritisnuto na item
+					int selRow = tree.getRowForLocation(e.getX(), e.getY());
+					TreePath selPath = tree.getPathForLocation(e.getX(), e.getY());
+						tree.setSelectionPath(selPath); 
+						if (selRow>-1){
+							tree.setSelectionRow(selRow);
+							
+							popup.show(e.getComponent(), e.getX(), e.getY());
+							mousePressed(e);
+						}
 				}
 			}
 		});

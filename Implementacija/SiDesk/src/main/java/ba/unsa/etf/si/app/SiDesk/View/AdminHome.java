@@ -145,7 +145,7 @@ public class AdminHome {
 		
 	  
 	//	button_2.setIcon(new ImageIcon(this.getClass().getResource("/Search-16.png")));
-		//button_2.setIcon(new ImageIcon(getClass().getResource("/../resources/toolbar_find.png")));
+		//button_2.setIcon(new ImageIcon(getClass().getResource("/main/resources/toolbar_find.png")));
 		button_2.setBounds(223, 11, 30, 20);
 		panel_1.add(button_2);
 		
