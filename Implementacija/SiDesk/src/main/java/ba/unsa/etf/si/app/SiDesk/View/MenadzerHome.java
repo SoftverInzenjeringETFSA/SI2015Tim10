@@ -22,6 +22,7 @@ import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
+import javax.swing.tree.MutableTreeNode;
 import javax.swing.tree.TreeNode;
 import javax.swing.tree.TreePath;
 
@@ -37,6 +38,7 @@ public class MenadzerHome {
 	private JFrame frmMenadzerHome;
 	protected JMenuItem mntmDodajKategoriju;
 	protected JMenuItem mntmdodajPitanje;
+	protected JMenuItem mntmobrisiKategoriju;
 	private JTree tree;
 	
 	private JTextField textField;
@@ -109,6 +111,8 @@ public class MenadzerHome {
 			}
 		));
 		
+		tree.setEditable(true);
+		
 		frmMenadzerHome.getContentPane().add(tree);
 		
 		JPopupMenu popupMenu = new JPopupMenu();
@@ -119,33 +123,44 @@ public class MenadzerHome {
 		        	//dodavanje kategorije
 		        	
 		        	//trazenje kliknutog elementa
-		        	DefaultMutableTreeNode selectedElement =(DefaultMutableTreeNode)tree.getSelectionPath().getLastPathComponent();
+		        	/*DefaultMutableTreeNode model =(DefaultMutableTreeNode)tree.getSelectionPath().getLastPathComponent();
 		        	//trazenje putanje
-		        	TreeNode[] s = selectedElement.getPath();
+		        	TreeNode[] s = model.getPath();
 		        	for(int i = 0; i < s.length; i++)
 		        	{
 		        		System.out.println(s[i].toString());
 		        	}
-		        	System.out.println("Pritisnuta kategorija " + selectedElement.toString());	
+		        	
+		        	System.out.println("Pritisnuta kategorija " + model.toString());
+		        	//tree.add("New category", s);*/	
+		        	addNewCategory();
 		        	
 		        }
 		        else if(event.getActionCommand() == "Dodaj pitanje"){
 		        	//dodavanje pitanja
 		        	System.out.println("pitanje");
 		        }
+		        else if(event.getActionCommand() == "Obriši kategoriju")
+		        {
+		        	//brisanje kategorije
+		        	deleteSelectedNodes();
+		        }
 		      }
 		    };
 		    
 		addPopup(tree, popupMenu);
 		
-		mntmDodajKategoriju = new JMenuItem("Dodaj kategoriju");
-		
+		mntmDodajKategoriju = new JMenuItem("Dodaj kategoriju");		
 		mntmDodajKategoriju.addActionListener(menuListener);
 		popupMenu.add(mntmDodajKategoriju);
 		
 		mntmdodajPitanje = new JMenuItem("Dodaj pitanje");
 		mntmdodajPitanje.addActionListener(menuListener);
 		popupMenu.add(mntmdodajPitanje);
+		
+		mntmobrisiKategoriju = new JMenuItem("Obriši kategoriju");
+		mntmobrisiKategoriju.addActionListener(menuListener);
+		popupMenu.add(mntmobrisiKategoriju);
 		
 		
 		
@@ -311,6 +326,26 @@ public class MenadzerHome {
 		
 		menuBar.add(mnDodajPitanje);
 	}
+	
+	protected void addNewCategory(){
+		DefaultTreeModel model = (DefaultTreeModel) tree.getModel();
+		
+		TreePath path = tree.getSelectionPath();
+		MutableTreeNode node = (MutableTreeNode) path.getLastPathComponent();
+		tree.expandPath(path);
+		MutableTreeNode newNode = new DefaultMutableTreeNode("Nova kategorija");
+		
+		model.insertNodeInto(newNode, node, node.getChildCount());
+	}
+	protected void deleteSelectedNodes() {
+	    DefaultMutableTreeNode node;
+	    DefaultTreeModel model = (DefaultTreeModel) (tree.getModel());
+	    TreePath[] paths = tree.getSelectionPaths();
+	    for (int i = 0; i < paths.length; i++) {
+	      node = (DefaultMutableTreeNode) (paths[i].getLastPathComponent());
+	      model.removeNodeFromParent(node);
+	    }
+	  }
 	
 	private static void addPopup(final JTree tree, final JPopupMenu popup) {		
 		tree.addMouseListener(new MouseAdapter() {
