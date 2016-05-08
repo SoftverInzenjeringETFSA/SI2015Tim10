@@ -14,7 +14,7 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 
 public class Login {
 
-	private JFrame frmSidesklogin;
+	protected JFrame frmSidesklogin;
 	private JTextField textField_Username;
 	private JTextField textField_Password;
 

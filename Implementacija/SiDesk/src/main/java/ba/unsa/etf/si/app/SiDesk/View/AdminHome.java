@@ -59,10 +59,12 @@ public class AdminHome {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
+		
 		frmManager = new JFrame();
 		frmManager.setTitle("Administrator");
 		frmManager.setBounds(100, 100, 388, 490);
 		frmManager.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		ImageIcon ikona = new ImageIcon("Search-16.png");
 		
 		JLabel lblRezultatiPretrage = new JLabel("Korisnici:");
 		
@@ -108,6 +110,16 @@ public class AdminHome {
 		JButton btnOdjava = new JButton("Odjava");
 		btnOdjava.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				try
+				{
+					frmManager.dispose();
+					
+					Login window = new Login();
+					window.frmSidesklogin.setVisible(true);
+				}catch(Exception e)
+				{
+					e.printStackTrace();
+				}
 			
 			}
 		});
@@ -125,8 +137,14 @@ public class AdminHome {
 		textField_1.setBounds(107, 11, 106, 20);
 		panel_1.add(textField_1);
 		
-		JButton button_2 = new JButton("");
-		//button_2.setIcon(new ImageIcon("C:\\Users\\Enver\\Desktop\\Search-16.png"));
+		JButton button_2 = new JButton(ikona);
+		button_2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+			}
+		});
+		
+	  
+	//	button_2.setIcon(new ImageIcon(this.getClass().getResource("/Search-16.png")));
 		//button_2.setIcon(new ImageIcon(getClass().getResource("/../resources/toolbar_find.png")));
 		button_2.setBounds(223, 11, 30, 20);
 		panel_1.add(button_2);
@@ -198,14 +216,14 @@ public class AdminHome {
 		textField_pretragaKorisnika.setToolTipText("Ime Korisnika");
 		textField_pretragaKorisnika.setColumns(10);
 		
-		JButton btnNewButton_pretrazi = new JButton("");
+		JButton btnNewButton_pretrazi = new JButton(ikona);
 		btnNewButton_pretrazi.setBounds(223, 11, 30, 20);
 		panel.add(btnNewButton_pretrazi);
 		btnNewButton_pretrazi.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 			}
 		});
-		btnNewButton_pretrazi.setIcon(new ImageIcon("C:\\Users\\Enver\\Desktop\\Search-16.png"));
+
 		
 		JLabel lblIme = new JLabel("Ime:");
 		lblIme.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -233,13 +251,11 @@ public class AdminHome {
 		comboBox.setBounds(107, 77, 106, 20);
 		panel.add(comboBox);
 		
-		JButton button = new JButton("");
-		button.setIcon(new ImageIcon("C:\\Users\\Enver\\Desktop\\Search-16.png"));
+		JButton button = new JButton(ikona);
 		button.setBounds(223, 45, 30, 20);
 		panel.add(button);
 		
-		JButton button_1 = new JButton("");
-		button_1.setIcon(new ImageIcon("C:\\Users\\Enver\\Desktop\\Search-16.png"));
+		JButton button_1 = new JButton(ikona);
 		button_1.setBounds(223, 77, 30, 20);
 		panel.add(button_1);
 		frmManager.getContentPane().setLayout(groupLayout);

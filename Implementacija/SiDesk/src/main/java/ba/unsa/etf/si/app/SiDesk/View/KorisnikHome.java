@@ -3,6 +3,7 @@ package ba.unsa.etf.si.app.SiDesk.View;
 import java.awt.Color;
 import java.awt.EventQueue;
 
+import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JFrame;
@@ -20,10 +21,15 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 
 import com.toedter.calendar.JDateChooser;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import javax.swing.event.ChangeListener;
+import javax.swing.event.ChangeEvent;
 
 public class KorisnikHome {
 
-	private JFrame frame;
+	private JFrame frameKorisnik;
+
 	private JTextField textField;
 	private JTextField textField_1;
 	private JTextField textField_2;
@@ -42,7 +48,7 @@ public class KorisnikHome {
 			public void run() {
 				try {
 					KorisnikHome window = new KorisnikHome();
-					window.frame.setVisible(true);
+					window.frameKorisnik.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -61,14 +67,15 @@ public class KorisnikHome {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		frame = new JFrame();
-		frame.setBounds(100, 100, 846, 459);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.getContentPane().setLayout(null);
+		frameKorisnik = new JFrame();
+		frameKorisnik.setTitle("Korisnik");
+		frameKorisnik.setBounds(100, 100, 846, 459);
+		frameKorisnik.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frameKorisnik.getContentPane().setLayout(null);
 		
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		tabbedPane.setBounds(0, 0, 820, 420);
-		frame.getContentPane().add(tabbedPane);
+		frameKorisnik.getContentPane().add(tabbedPane);
 		
 		JPanel panel_1 = new JPanel();
 		tabbedPane.addTab("Unos korisnika", null, panel_1, null);
@@ -171,12 +178,32 @@ public class KorisnikHome {
 		JRadioButton rdbtnNoviKorisnik = new JRadioButton("Novi korisnik");
 		rdbtnNoviKorisnik.setBounds(6, 7, 137, 23);
 		panel_4.add(rdbtnNoviKorisnik);
+		rdbtnNoviKorisnik.setSelected(true);
 		
 		JRadioButton rdbtnStariKorisnik = new JRadioButton("Stari korisnik");
 		rdbtnStariKorisnik.setBounds(167, 7, 109, 23);
 		panel_4.add(rdbtnStariKorisnik);
+		rdbtnStariKorisnik.setSelected(false);
+		
+		ButtonGroup group = new ButtonGroup();
+		group.add(rdbtnStariKorisnik);
+		group.add(rdbtnNoviKorisnik);
 		
 		JButton btnNewButton = new JButton("Odjava sa sistema");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				try
+				{
+					frameKorisnik.dispose();
+					
+					Login window = new Login();
+					window.frmSidesklogin.setVisible(true);
+				}catch(Exception e)
+				{
+					e.printStackTrace();
+				}
+			}
+		});
 		btnNewButton.setBounds(553, 11, 146, 38);
 		panel_1.add(btnNewButton);
 		
@@ -284,16 +311,30 @@ public class KorisnikHome {
 		textField_5.setBounds(131, 41, 452, 133);
 		panel_5.add(textField_5);
 		textField_5.setColumns(10);
-		
-		JCheckBox chckbxIzlazakIzScenarija = new JCheckBox("Izlazak iz scenarija");
-		chckbxIzlazakIzScenarija.setBounds(129, 7, 151, 23);
-		panel_5.add(chckbxIzlazakIzScenarija);
-		
-		JPanel panel_6 = new JPanel();
+		final JPanel panel_6 = new JPanel();
 		panel_6.setBorder(new LineBorder(new Color(0, 0, 0), 1, true));
 		panel_6.setBounds(20, 246, 760, 94);
 		panel_2.add(panel_6);
 		panel_6.setLayout(null);
+		final JCheckBox chckbxIzlazakIzScenarija = new JCheckBox("Izlazak iz scenarija");
+		chckbxIzlazakIzScenarija.addChangeListener(new ChangeListener() {
+			public void stateChanged(ChangeEvent arg0) {
+			
+				if(chckbxIzlazakIzScenarija.isSelected())
+				{
+					textField_5.setEnabled(true);
+				}
+				else if(!chckbxIzlazakIzScenarija.isSelected())
+				{
+					textField_5.setEnabled(false);
+					textField_5.setText("");;
+				}
+			}
+		});
+		chckbxIzlazakIzScenarija.setBounds(129, 7, 151, 23);
+		panel_5.add(chckbxIzlazakIzScenarija);
+	
+	
 		
 		JButton btnNewButton_1 = new JButton("Poni\u0161ti");
 		btnNewButton_1.setBounds(183, 22, 180, 53);

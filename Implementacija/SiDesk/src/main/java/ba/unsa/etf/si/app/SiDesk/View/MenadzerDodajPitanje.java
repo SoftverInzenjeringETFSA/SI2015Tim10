@@ -9,10 +9,12 @@ import javax.swing.JLabel;
 import javax.swing.JTree;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class MenadzerDodajPitanje {
 
-	private JFrame frmDodajPitanje;
+	JFrame frmDodajPitanje;
 
 	/**
 	 * Launch the application.
@@ -72,6 +74,12 @@ public class MenadzerDodajPitanje {
 		frmDodajPitanje.getContentPane().add(btnNewButton);
 		
 		JButton btnIzadji = new JButton("Izlaz");
+		    btnIzadji.addActionListener(new ActionListener() {
+		        public void actionPerformed(ActionEvent e) {
+		        	frmDodajPitanje.setVisible(false);
+		        }
+
+		});
 		btnIzadji.setBounds(282, 354, 153, 23);
 		frmDodajPitanje.getContentPane().add(btnIzadji);
 		

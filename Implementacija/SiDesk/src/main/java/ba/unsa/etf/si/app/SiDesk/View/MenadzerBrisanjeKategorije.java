@@ -10,7 +10,7 @@ import javax.swing.JTextField;
 
 public class MenadzerBrisanjeKategorije {
 
-	private JFrame frmBrisanjeKategorije;
+	protected JFrame frmBrisanjeKategorije;
 	private JTextField textField;
 
 	/**

@@ -10,7 +10,7 @@ import javax.swing.JTextField;
 
 public class MenadzerModifikovanjeKategorije {
 
-	private JFrame frmModifikovanjeKategorije;
+	protected JFrame frmModifikovanjeKategorije;
 	private JTextField textField;
 
 	/**

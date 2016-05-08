@@ -9,7 +9,7 @@ import javax.swing.JLabel;
 
 public class MenadzerGenerisanjeKategorija {
 
-	private JFrame frmGenerisanjeIzvjetaja;
+	protected JFrame frmGenerisanjeIzvjetaja;
 
 	/**
 	 * Launch the application.

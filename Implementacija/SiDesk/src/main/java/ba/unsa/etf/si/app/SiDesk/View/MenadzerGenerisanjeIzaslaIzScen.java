@@ -9,7 +9,7 @@ import javax.swing.JLabel;
 
 public class MenadzerGenerisanjeIzaslaIzScen {
 
-	private JFrame frmGenerisanjeIzvjetaja;
+	protected JFrame frmGenerisanjeIzvjetaja;
 
 	/**
 	 * Launch the application.

@@ -10,7 +10,7 @@ import javax.swing.JTextField;
 
 public class MenadzerGenerisanjeStarosnaDob {
 
-	private JFrame frmGenerisanjeIzvjetaja;
+	protected JFrame frmGenerisanjeIzvjetaja;
 	private JTextField textField;
 	private JTextField textField_1;
 

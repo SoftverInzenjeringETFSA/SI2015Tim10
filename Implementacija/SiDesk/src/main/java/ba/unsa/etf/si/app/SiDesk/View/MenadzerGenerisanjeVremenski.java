@@ -11,7 +11,7 @@ import com.toedter.calendar.JDateChooser;
 
 public class MenadzerGenerisanjeVremenski {
 
-	private JFrame frmKreiranjeIzvjetaja;
+	protected JFrame frmKreiranjeIzvjetaja;
 
 	/**
 	 * Launch the application.
