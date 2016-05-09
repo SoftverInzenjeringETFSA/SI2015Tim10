@@ -62,7 +62,7 @@ public class AdminDodavanjeKorisnika {
 	private void initialize() {
 		frmDodavanjeNovogKorisnika = new JFrame();
 		frmDodavanjeNovogKorisnika.setTitle("Dodavanje Novog Korisnika");
-		frmDodavanjeNovogKorisnika.setBounds(100, 100, 401, 490);
+		frmDodavanjeNovogKorisnika.setBounds(100, 100, 401, 505);
 		frmDodavanjeNovogKorisnika.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		
@@ -95,7 +95,7 @@ public class AdminDodavanjeKorisnika {
 					.addContainerGap()
 					.addComponent(lblNoviKorisnik)
 					.addGap(1)
-					.addComponent(panel_dodavanjeKorisnika, GroupLayout.PREFERRED_SIZE, 374, GroupLayout.PREFERRED_SIZE)
+					.addComponent(panel_dodavanjeKorisnika, GroupLayout.PREFERRED_SIZE, 389, GroupLayout.PREFERRED_SIZE)
 					.addGap(18)
 					.addComponent(btnOdjava)
 					.addContainerGap())
@@ -155,32 +155,32 @@ public class AdminDodavanjeKorisnika {
 		lblTipKorisnika.setHorizontalAlignment(SwingConstants.RIGHT);
 		
 		textField_username = new JTextField();
-		textField_username.setBounds(131, 270, 186, 20);
+		textField_username.setBounds(131, 293, 186, 20);
 		textField_username.setToolTipText("");
 		textField_username.setColumns(10);
 		
 		JLabel lblUsername = new JLabel("Username:");
-		lblUsername.setBounds(11, 273, 102, 14);
+		lblUsername.setBounds(11, 296, 102, 14);
 		lblUsername.setHorizontalAlignment(SwingConstants.RIGHT);
 		
 		textField_password = new JTextField();
-		textField_password.setBounds(131, 301, 186, 20);
+		textField_password.setBounds(131, 324, 186, 20);
 		textField_password.setToolTipText("");
 		textField_password.setColumns(10);
 		
 		JLabel lblPassword = new JLabel("Password:");
-		lblPassword.setBounds(11, 304, 102, 14);
+		lblPassword.setBounds(11, 327, 102, 14);
 		lblPassword.setHorizontalAlignment(SwingConstants.RIGHT);
 		
 		JButton btnReset = new JButton("Poni\u0161ti");
-		btnReset.setBounds(190, 327, 127, 23);
+		btnReset.setBounds(190, 355, 127, 23);
 		btnReset.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
 		
 		JButton btnDodajKorisnika = new JButton("Dodaj korisnika");
-		btnDodajKorisnika.setBounds(53, 327, 127, 23);
+		btnDodajKorisnika.setBounds(53, 355, 127, 23);
 		btnDodajKorisnika.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 			}
@@ -239,6 +239,16 @@ public class AdminDodavanjeKorisnika {
 		JDateChooser dateChooser_1 = new JDateChooser();
 		dateChooser_1.setBounds(131, 68, 186, 20);
 		panel_dodavanjeKorisnika.add(dateChooser_1);
+		
+		JLabel lblTipOperatera = new JLabel("Tip operatera:");
+		lblTipOperatera.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblTipOperatera.setBounds(11, 271, 102, 14);
+		panel_dodavanjeKorisnika.add(lblTipOperatera);
+		
+		JComboBox comboBox_tipOperatera = new JComboBox();
+		comboBox_tipOperatera.setModel(new DefaultComboBoxModel(new String[] {"Foča", "Ustikolina", "Petrovac", "Gacko"}));
+		comboBox_tipOperatera.setBounds(131, 268, 186, 20);
+		panel_dodavanjeKorisnika.add(comboBox_tipOperatera);
 		frmDodavanjeNovogKorisnika.getContentPane().setLayout(groupLayout);
 	}
 }
