@@ -183,7 +183,7 @@ public class MenadzerHome {
 		JLabel lblPretragaPitanjaPo = new JLabel("Pretraga pitanja po rije\u010Di");
 		lblPretragaPitanjaPo.setBounds(10, 11, 156, 14);
 		frmMenadzerHome.getContentPane().add(lblPretragaPitanjaPo);
-		ImageIcon ikona = new ImageIcon("Search-16.png");
+		ImageIcon ikona = new ImageIcon("src/main/resources/toolbar_find.png");
 		JButton btnNewButton = new JButton(ikona);
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
