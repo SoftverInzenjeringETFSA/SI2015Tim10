@@ -4,7 +4,26 @@ import java.security.SecureRandom;
 import java.util.Date;
 import java.util.Random;
 
-public class Korisnik {
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+
+@Entity
+public class Korisnik implements java.io.Serializable{
+    
+	@Id
+	long id;
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
+	}
+	
+	@ManyToOne
+	@JoinColumn(name="tipKorisnika_id")
 
 	private String ime;
 	private String prezime;
@@ -14,7 +33,7 @@ public class Korisnik {
 	private String adresa;
 	private String email;
 	private Date datumZaposlenja;
-	private TipKorisnika tipKorisnika;
+	//private TipKorisnika tipKorisnika;
 	private String korisnickoIme;
 	private String sifra;
 	
@@ -37,7 +56,7 @@ public class Korisnik {
 		this.adresa=adresa;
 		this.email=email;
 		this.datumZaposlenja=datumZaposlenja;
-		this.tipKorisnika=tipKorisnika;
+	//	this.tipKorisnika=tipKorisnika;
 		this.korisnickoIme=korisnickoIme;
 		this.sifra=generisiLozinku(); // jedinstven ili ne, baza
 	}
@@ -106,14 +125,14 @@ public class Korisnik {
 		this.datumZaposlenja = datumZaposlenja;
 	}
 
-	public TipKorisnika getTipKorisnika() {
+	/*public TipKorisnika getTipKorisnika() {
 		return tipKorisnika;
 	}
 
 	public void setTipKorisnika(TipKorisnika tipKorisnika) {
 		this.tipKorisnika = tipKorisnika;
 	}
-
+*/
 	public String getKorisnickoIme() {
 		return korisnickoIme;
 	}
