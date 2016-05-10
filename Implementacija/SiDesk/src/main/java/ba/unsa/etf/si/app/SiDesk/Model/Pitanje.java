@@ -1,7 +1,38 @@
 package ba.unsa.etf.si.app.SiDesk.Model;
 
-public class Pitanje {
+import java.io.Serializable;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="pitanje")
+public class Pitanje implements Serializable {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
+	@Id
+	@GeneratedValue
+	long id;
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
+	}
+	
+	@ManyToOne
+	@JoinColumn(name="kategorija_id")
+	private Kategorija kategorija_pitanja;
+
 	private String pitanje;
 	private String odgovor;
 	private String putanja;
@@ -44,6 +75,10 @@ public class Pitanje {
 
 	public String getPutanja() {
 		return putanja;
+	}
+
+	public void setPutanja(String putanja) {
+		this.putanja = putanja;
 	}
 	
 	
