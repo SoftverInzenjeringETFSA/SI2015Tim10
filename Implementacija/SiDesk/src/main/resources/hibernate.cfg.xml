@@ -13,5 +13,6 @@
   <mapping class="ba.unsa.etf.si.app.SiDesk.Model.TipKorisnika"/>
   <mapping class="ba.unsa.etf.si.app.SiDesk.Model.Korisnik"/>
   <mapping class="ba.unsa.etf.si.app.SiDesk.Model.Klijent"/>
+  <mapping class="ba.unsa.etf.si.app.SiDesk.Model.Kategorija"/>
  </session-factory>
 </hibernate-configuration>
