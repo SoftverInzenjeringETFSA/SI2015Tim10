@@ -16,15 +16,11 @@ public class BrisanjeKategorijeVM {
 	public static boolean obrisiKategoriju(String ime) {
 		try {
 			Session session = (Session) HibernateUtil.getSessionFactory().openSession();
-	        System.out.println( "Hello World!" );
 	        Transaction t = session.beginTransaction();
 			
-	        System.out.println("Prosao transakciju");
 			Criteria criteria = session.createCriteria(Kategorija.class).add(Restrictions.like("ime", ime).ignoreCase());
-			System.out.println("Prosao kriterij");
 			List<Kategorija> lista = criteria.list();
 			Kategorija k = lista.get(0);
-			System.out.println("Kateogrija " + k.getIme() + " id " + k.getId());
 			k.setParentId(null);
 			session.delete(k);
 			System.out.println("Uspjesno obrisano");
