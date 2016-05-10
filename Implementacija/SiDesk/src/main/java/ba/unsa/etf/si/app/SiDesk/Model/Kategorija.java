@@ -9,6 +9,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -40,8 +42,8 @@ public class Kategorija implements Serializable{
 
 	private String ime;
 	private String putanja;
-	// nisam sigurna trebam li praviti instancu Kategorija
-	
+
+	@OneToMany(mappedBy="kategorija_pitanja")
 	ArrayList<Pitanje> pitanja;
 	
 	public Kategorija() {
