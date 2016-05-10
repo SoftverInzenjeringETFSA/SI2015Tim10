@@ -8,10 +8,17 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 @Entity
+@Table(name="korisnik")
 public class Korisnik implements java.io.Serializable{
     
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	@Id
 	long id;
 	public long getId() {
@@ -23,8 +30,9 @@ public class Korisnik implements java.io.Serializable{
 	}
 	
 	@ManyToOne
-	@JoinColumn(name="tipKorisnika_id")
-
+	@JoinColumn(name="tipkorisnika_id")
+	private TipKorisnika tipkorisnika;
+	
 	private String ime;
 	private String prezime;
 	private String brojTelefona;
@@ -125,14 +133,14 @@ public class Korisnik implements java.io.Serializable{
 		this.datumZaposlenja = datumZaposlenja;
 	}
 
-	/*public TipKorisnika getTipKorisnika() {
-		return tipKorisnika;
+	public TipKorisnika getTipKorisnika() {
+		return tipkorisnika;
 	}
 
 	public void setTipKorisnika(TipKorisnika tipKorisnika) {
-		this.tipKorisnika = tipKorisnika;
+		this.tipkorisnika = tipKorisnika;
 	}
-*/
+
 	public String getKorisnickoIme() {
 		return korisnickoIme;
 	}
