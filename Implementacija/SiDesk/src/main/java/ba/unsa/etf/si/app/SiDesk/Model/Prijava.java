@@ -2,10 +2,42 @@ package ba.unsa.etf.si.app.SiDesk.Model;
 
 import java.util.Date;
 
-public class Prijava {
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
-// zzzzzzzzzdumati treba li nam uopste ova klasa
+
+@Entity
+@Table(name="prijava")
+public class Prijava implements java.io.Serializable{
+
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	@Id
+    @Column(name="PRIJAVA_ID")
+    @GeneratedValue
+    long id;
+    
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
+	}
+	
+	
+	@ManyToOne
+	@JoinColumn(name="korisnik_id")
 	private Korisnik korisnik;
+	
 	private Date datumPrijave;   // cuva i datum i vrijeme
 	
 	public Prijava() {
@@ -14,6 +46,14 @@ public class Prijava {
 	public Prijava(Korisnik korisnik) {
 		this.korisnik = korisnik;
 		this.datumPrijave = new Date();
+	}
+
+	public void setKorisnik(Korisnik korisnik) {
+		this.korisnik = korisnik;
+	}
+
+	public void setDatumPrijave(Date datumPrijave) {
+		this.datumPrijave = datumPrijave;
 	}
 	
 	public Korisnik getKorisnik() {

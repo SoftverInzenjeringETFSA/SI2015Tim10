@@ -43,13 +43,11 @@ public class Operater implements Serializable{
 	
 	@OneToMany(mappedBy="operater_korisnik")
 	private Set<Korisnik> korisnici;
+	
 
 	private String ime;
 	private String adresa;
-/*	private ArrayList<Korisnik> korisnici;
-	private ArrayList<Klijent> klijenti;
-	private ArrayList<Prijava> prijave;
-	private ArrayList<Odjava> odjave;*/
+
 	
 	public Operater() {
 		

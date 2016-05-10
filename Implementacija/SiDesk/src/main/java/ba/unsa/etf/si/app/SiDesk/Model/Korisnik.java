@@ -3,6 +3,7 @@ package ba.unsa.etf.si.app.SiDesk.Model;
 import java.security.SecureRandom;
 import java.util.Date;
 import java.util.Random;
+import java.util.Set;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -37,6 +38,12 @@ public class Korisnik implements java.io.Serializable{
 	@ManyToOne
 	@JoinColumn(name="operater_id")
 	private Operater operater_korisnik;
+	
+	@OneToMany(mappedBy="korisnik")
+	private Set<Odjava> odjave;
+	
+	@OneToMany(mappedBy="korisnik")
+	private Set<Odjava> prijave;
 	
 	private String ime;
 	private String prezime;
@@ -164,6 +171,38 @@ public class Korisnik implements java.io.Serializable{
 	}
 	
 	// logika za password treba biti u ovoj klasi ovo je ideja
+
+	public TipKorisnika getTipkorisnika() {
+		return tipkorisnika;
+	}
+
+	public void setTipkorisnika(TipKorisnika tipkorisnika) {
+		this.tipkorisnika = tipkorisnika;
+	}
+
+	public Operater getOperater_korisnik() {
+		return operater_korisnik;
+	}
+
+	public void setOperater_korisnik(Operater operater_korisnik) {
+		this.operater_korisnik = operater_korisnik;
+	}
+
+	public Set<Odjava> getOdjave() {
+		return odjave;
+	}
+
+	public void setOdjave(Set<Odjava> odjave) {
+		this.odjave = odjave;
+	}
+
+	public Set<Odjava> getPrijave() {
+		return prijave;
+	}
+
+	public void setPrijave(Set<Odjava> prijave) {
+		this.prijave = prijave;
+	}
 
 	private String generisiLozinku() {
 		Random random = new SecureRandom();
