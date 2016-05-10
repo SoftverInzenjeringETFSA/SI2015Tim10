@@ -32,6 +32,7 @@ import javax.swing.event.MenuListener;
 import javax.swing.event.MenuEvent;
 
 import ba.unsa.etf.si.app.SiDesk.View.MenadzerDodavanjeKategorije;
+import ba.unsa.etf.si.app.SiDesk.ViewModel.BrisanjeKategorijeVM;
 
 
 public class MenadzerHome {
@@ -143,7 +144,7 @@ public class MenadzerHome {
 		        else if(event.getActionCommand() == "Obriši kategoriju")
 		        {
 		        	//brisanje kategorije
-		        	deleteSelectedNodes();
+		        	deleteCategory();
 		        }
 		      }
 		    };
@@ -335,14 +336,18 @@ public class MenadzerHome {
 		
 		model.insertNodeInto(newNode, node, node.getChildCount());
 	}
-	protected void deleteSelectedNodes() {
+	protected void deleteCategory() {
 	    DefaultMutableTreeNode node;
 	    DefaultTreeModel model = (DefaultTreeModel) (tree.getModel());
 	    TreePath[] paths = tree.getSelectionPaths();
 	    for (int i = 0; i < paths.length; i++) {
 	      node = (DefaultMutableTreeNode) (paths[i].getLastPathComponent());
 	      model.removeNodeFromParent(node);
-	    }
+	    }	    
+	    //brisanje iz baze (ViewModel)
+	    
+	    System.out.println("kategorija " + paths[paths.length - 1].getLastPathComponent().toString());
+	    BrisanjeKategorijeVM.obrisiKategoriju(paths[paths.length - 1].getLastPathComponent().toString());
 	  }
 	
 	private static void addPopup(final JTree tree, final JPopupMenu popup) {		
