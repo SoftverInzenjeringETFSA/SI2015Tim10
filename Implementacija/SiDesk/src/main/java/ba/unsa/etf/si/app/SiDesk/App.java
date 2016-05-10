@@ -23,7 +23,7 @@ public class App
         System.out.println( "Hello World!" );
         Transaction t = (Transaction) session.beginTransaction();
         
-    	session.save(new Kategorija());
+    	//session.save(new Kategorija());
 		t.commit();
 		
     	} catch (Exception e) {
