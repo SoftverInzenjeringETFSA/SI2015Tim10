@@ -1,16 +1,45 @@
 package ba.unsa.etf.si.app.SiDesk.Model;
 
 import java.util.ArrayList;
+import java.util.Set;
 
-public class Klijent {
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+
+@Entity
+public class Klijent implements java.io.Serializable{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
+	@Id
+	@GeneratedValue
+	long id;
+	
+	@OneToMany(mappedBy="klijent")
+	private Set<TelefonskiPoziv> pozivi;
+	
+	
+	
+	public Set<TelefonskiPoziv> getPozivi() {
+		return pozivi;
+	}
+
+	public void setPozivi(Set<TelefonskiPoziv> pozivi) {
+		this.pozivi = pozivi;
+	}
 
 	private String ime;
 	private String prezime;
 	private String brojTelefona;
 	private int starost;
 	private String zaposlenje;
-	
-	private ArrayList<TelefonskiPoziv> pozivi;
+
 	
 	public Klijent() {
 		
@@ -26,6 +55,14 @@ public class Klijent {
 	
 	
 	
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
+	}
+
 	public String getIme() {
 		return ime;
 	}
@@ -67,13 +104,6 @@ public class Klijent {
 	}
 	
 	
-    public ArrayList<TelefonskiPoziv> getPozivi() {
-		return pozivi;
-	}
-
-	public void setPozivi(ArrayList<TelefonskiPoziv> pozivi) {
-		this.pozivi = pozivi;
-	}
 
 	
 	

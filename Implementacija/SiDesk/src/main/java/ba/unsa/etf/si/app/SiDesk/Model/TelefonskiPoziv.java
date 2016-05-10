@@ -6,6 +6,8 @@ import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -21,12 +23,33 @@ public class TelefonskiPoziv implements Serializable {
 	@GeneratedValue
 	long id;
 	
+	@ManyToOne
+	@JoinColumn(name="klijent_id")
+	private Klijent klijent;
+	
+	
 	private Date poziv;
 	private double trajanjePoziva;
 	private String opisniTekst;
 	
 	public TelefonskiPoziv() {
 		poziv = new Date(); 
+	}
+
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
+	}
+
+	public Klijent getKlijent() {
+		return klijent;
+	}
+
+	public void setKlijent(Klijent klijent) {
+		this.klijent = klijent;
 	}
 
 	// getteri i setteri
