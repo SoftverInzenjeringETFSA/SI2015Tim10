@@ -1,11 +1,11 @@
 package ba.unsa.etf.si.app.SiDesk;
 
 
-import javax.transaction.Transaction;
+import org.hibernate.*;
 
-import org.hibernate.Session;
 
 import ba.unsa.etf.si.app.SiDesk.Model.Kategorija;
+import ba.unsa.etf.si.app.SiDesk.Model.Operater;
 import ba.unsa.etf.si.app.SiDesk.Util.HibernateUtil;
 
 /**
@@ -21,9 +21,9 @@ public class App
 		
     	Session session = (Session) HibernateUtil.getSessionFactory().openSession();
         System.out.println( "Hello World!" );
-        Transaction t = (Transaction) session.beginTransaction();
+        Transaction t = session.beginTransaction();
         
-    	//session.save(new Kategorija());
+    //	session.save(new Operater());
 		t.commit();
 		
     	} catch (Exception e) {

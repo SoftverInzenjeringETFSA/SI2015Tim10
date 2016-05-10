@@ -1,6 +1,6 @@
 package ba.unsa.etf.si.app.SiDesk.Model;
 
-import java.util.ArrayList;
+
 import java.util.Set;
 
 import javax.persistence.Entity;

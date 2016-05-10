@@ -5,13 +5,11 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -50,6 +48,18 @@ public class TelefonskiPoziv implements Serializable {
 
 	public void setPitanja(Set<Pitanje> pitanja) {
 		this.pitanja = pitanja;
+	}
+
+	
+	@ManyToOne
+	@JoinColumn(name="operater_id")
+	private Operater operater;
+	public Operater getOperater() {
+		return operater;
+	}
+
+	public void setOperater(Operater operater) {
+		this.operater = operater;
 	}
 
 	private Date poziv;

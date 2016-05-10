@@ -1,18 +1,55 @@
 package ba.unsa.etf.si.app.SiDesk.Model;
 
-import java.util.ArrayList;
+import java.io.Serializable;
 
+import java.util.Set;
 
-public class Operater {
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="operater")
+public class Operater implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	
+	@Id
+	@Column(name="OPERATER_ID")
+	@GeneratedValue
+	long id;
+	public long getId() {
+		return id;
+	}
 
+	public void setId(long id) {
+		this.id = id;
+	}
+	
+	@OneToMany(mappedBy="operater")
+	private Set<TelefonskiPoziv> telefonskiPozivi;
+	public Set<TelefonskiPoziv> getTelefonskiPozivi() {
+		return telefonskiPozivi;
+	}
+
+	public void setTelefonskiPozivi(Set<TelefonskiPoziv> telefonskiPozivi) {
+		this.telefonskiPozivi = telefonskiPozivi;
+	}
+	
+	@OneToMany(mappedBy="operater_korisnik")
+	private Set<Korisnik> korisnici;
 
 	private String ime;
 	private String adresa;
-	private ArrayList<Korisnik> korisnici;
+/*	private ArrayList<Korisnik> korisnici;
 	private ArrayList<Klijent> klijenti;
 	private ArrayList<Prijava> prijave;
-	private ArrayList<Odjava> odjave;
+	private ArrayList<Odjava> odjave;*/
 	
 	public Operater() {
 		
@@ -23,6 +60,14 @@ public class Operater {
 		this.adresa = adresa;
 	}
 	
+	public Set<Korisnik> getKorisnici() {
+		return korisnici;
+	}
+
+	public void setKorisnici(Set<Korisnik> korisnici) {
+		this.korisnici = korisnici;
+	}
+
 	public String getIme() {
 		return ime;
 	}
