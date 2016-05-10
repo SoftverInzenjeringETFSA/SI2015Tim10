@@ -21,10 +21,20 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 
 import com.toedter.calendar.JDateChooser;
+import com.toedter.calendar.JTextFieldDateEditor;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.ChangeEvent;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
+import java.awt.event.ItemEvent;
+import java.beans.PropertyChangeListener;
+import java.sql.Date;
+import java.beans.PropertyChangeEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class KorisnikHome {
 
@@ -39,6 +49,10 @@ public class KorisnikHome {
 	private JTextField textField_7;
 	private JTable table;
 	private JTable table_1;
+
+	private JDateChooser dateChooser;
+
+	private JRadioButton rdbtnNoviKorisnik;
 
 	/**
 	 * Launch the application.
@@ -66,6 +80,34 @@ public class KorisnikHome {
 	/**
 	 * Initialize the contents of the frame.
 	 */
+	public boolean provjeri()
+	{
+	    java.util.Date date = dateChooser.getDate();
+
+		if(textField.getText().equals("") || textField_1.getText().equals("") || textField_2.getText().equals("") || 
+			textField_3.getText().equals("")  || textField_4.getText().equals("") || date==null || !rdbtnNoviKorisnik.isSelected()) 
+		{
+			return false;
+		}
+		
+		else return true;
+	
+	}
+	
+	/*
+	public boolean provjeri_tabelu()
+	{
+	    java.util.Date date = dateChooser.getDate();
+
+		if( !rdbtnStariKorisnik.isSelected()) 
+		{
+			return false;
+		}
+		
+		else return true;
+	
+	}  */
+	
 	private void initialize() {
 		frameKorisnik = new JFrame();
 		frameKorisnik.setTitle("Korisnik");
@@ -73,7 +115,7 @@ public class KorisnikHome {
 		frameKorisnik.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frameKorisnik.getContentPane().setLayout(null);
 		
-		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
+		final JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		tabbedPane.setBounds(0, 0, 820, 420);
 		frameKorisnik.getContentPane().add(tabbedPane);
 		
@@ -112,31 +154,272 @@ public class KorisnikHome {
 		panel_3.add(lblZaposlenje);
 		
 		textField = new JTextField();
+		textField.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent arg0) {
+				if(provjeri())
+				{
+					int n = tabbedPane.indexOfTab("Scenarij");
+					tabbedPane.setEnabledAt(n, true);
+					int m = tabbedPane.indexOfTab("Ostali podaci");
+					tabbedPane.setEnabledAt(m, true);
+					
+				}
+				else
+				{
+
+					int n = tabbedPane.indexOfTab("Scenarij");
+					tabbedPane.setEnabledAt(n, false);
+					int m = tabbedPane.indexOfTab("Ostali podaci");
+					tabbedPane.setEnabledAt(m, false);
+				}
+			}
+		});
+	/*	textField.addPropertyChangeListener(new PropertyChangeListener() {
+			public void propertyChange(PropertyChangeEvent arg0) {
+				if(provjeri())
+				{
+					int n = tabbedPane.indexOfTab("Scenarij");
+					tabbedPane.setEnabledAt(n, true);
+					int m = tabbedPane.indexOfTab("Ostali podaci");
+					tabbedPane.setEnabledAt(m, true);
+					
+				}
+				else
+				{
+
+					int n = tabbedPane.indexOfTab("Scenarij");
+					tabbedPane.setEnabledAt(n, false);
+					int m = tabbedPane.indexOfTab("Ostali podaci");
+					tabbedPane.setEnabledAt(m, false);
+				}
+
+			}
+		});	
+		
+		*/
+		
 		textField.setBounds(263, 8, 265, 20);
 		panel_3.add(textField);
 		textField.setColumns(10);
 		
+		
 		textField_1 = new JTextField();
-		textField_1.setColumns(10);
+		textField_1.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if(provjeri())
+				{
+					int n = tabbedPane.indexOfTab("Scenarij");
+					tabbedPane.setEnabledAt(n, true);
+					int m = tabbedPane.indexOfTab("Ostali podaci");
+					tabbedPane.setEnabledAt(m, true);
+					
+				}
+				else
+				{
+
+					int n = tabbedPane.indexOfTab("Scenarij");
+					tabbedPane.setEnabledAt(n, false);
+					int m = tabbedPane.indexOfTab("Ostali podaci");
+					tabbedPane.setEnabledAt(m, false);
+				}
+			}
+		});
+	/*	textField_1.addPropertyChangeListener(new PropertyChangeListener() {
+			public void propertyChange(PropertyChangeEvent evt) {
+				if(provjeri())
+				{
+					int n = tabbedPane.indexOfTab("Scenarij");
+					tabbedPane.setEnabledAt(n, true);
+					int m = tabbedPane.indexOfTab("Ostali podaci");
+					tabbedPane.setEnabledAt(m, true);
+					
+				}
+				else
+				{
+
+					int n = tabbedPane.indexOfTab("Scenarij");
+					tabbedPane.setEnabledAt(n, false);
+					int m = tabbedPane.indexOfTab("Ostali podaci");
+					tabbedPane.setEnabledAt(m, false);
+				}
+
+			}});
+			
+			*/
+			textField_1.setColumns(10);
 		textField_1.setBounds(263, 33, 265, 20);
 		panel_3.add(textField_1);
+	
 		
 		textField_2 = new JTextField();
-		textField_2.setColumns(10);
+		textField_2.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if(provjeri())
+				{
+					int n = tabbedPane.indexOfTab("Scenarij");
+					tabbedPane.setEnabledAt(n, true);
+					int m = tabbedPane.indexOfTab("Ostali podaci");
+					tabbedPane.setEnabledAt(m, true);
+					
+				}
+				else
+				{
+
+					int n = tabbedPane.indexOfTab("Scenarij");
+					tabbedPane.setEnabledAt(n, false);
+					int m = tabbedPane.indexOfTab("Ostali podaci");
+					tabbedPane.setEnabledAt(m, false);
+				}
+			}
+		});
+	/*	textField_2.addPropertyChangeListener(new PropertyChangeListener() {
+			public void propertyChange(PropertyChangeEvent evt) {
+				if(provjeri())
+				{
+					int n = tabbedPane.indexOfTab("Scenarij");
+					tabbedPane.setEnabledAt(n, true);
+					int m = tabbedPane.indexOfTab("Ostali podaci");
+					tabbedPane.setEnabledAt(m, true);
+					
+				}
+				else
+				{
+
+					int n = tabbedPane.indexOfTab("Scenarij");
+					tabbedPane.setEnabledAt(n, false);
+					int m = tabbedPane.indexOfTab("Ostali podaci");
+					tabbedPane.setEnabledAt(m, false);
+				}
+			}
+		});
+		
+		*/
+		final JRadioButton rdbtnStariKorisnik = new JRadioButton("Stari korisnik");
+			textField_2.setColumns(10);
 		textField_2.setBounds(263, 58, 265, 20);
 		panel_3.add(textField_2);
 		
 		textField_3 = new JTextField();
-		textField_3.setColumns(10);
+		textField_3.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if(provjeri())
+				{
+					int n = tabbedPane.indexOfTab("Scenarij");
+					tabbedPane.setEnabledAt(n, true);
+					int m = tabbedPane.indexOfTab("Ostali podaci");
+					tabbedPane.setEnabledAt(m, true);
+					
+				}
+				else
+				{
+
+					int n = tabbedPane.indexOfTab("Scenarij");
+					tabbedPane.setEnabledAt(n, false);
+					int m = tabbedPane.indexOfTab("Ostali podaci");
+					tabbedPane.setEnabledAt(m, false);
+				}
+			}
+		});
+	/*	textField_3.addPropertyChangeListener(new PropertyChangeListener() {
+			public void propertyChange(PropertyChangeEvent evt) {
+				if(provjeri())
+				{
+					int n = tabbedPane.indexOfTab("Scenarij");
+					tabbedPane.setEnabledAt(n, true);
+					int m = tabbedPane.indexOfTab("Ostali podaci");
+					tabbedPane.setEnabledAt(m, true);
+					
+				}
+				else
+				{
+
+					int n = tabbedPane.indexOfTab("Scenarij");
+					tabbedPane.setEnabledAt(n, false);
+					int m = tabbedPane.indexOfTab("Ostali podaci");
+					tabbedPane.setEnabledAt(m, false);
+				}
+			}
+		});
+		
+		*/
+				textField_3.setColumns(10);
 		textField_3.setBounds(263, 83, 265, 20);
 		panel_3.add(textField_3);
 		
 		textField_4 = new JTextField();
-		textField_4.setColumns(10);
+		textField_4.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if(provjeri())
+				{
+					int n = tabbedPane.indexOfTab("Scenarij");
+					tabbedPane.setEnabledAt(n, true);
+					int m = tabbedPane.indexOfTab("Ostali podaci");
+					tabbedPane.setEnabledAt(m, true);
+					
+				}
+				else
+				{
+
+					int n = tabbedPane.indexOfTab("Scenarij");
+					tabbedPane.setEnabledAt(n, false);
+					int m = tabbedPane.indexOfTab("Ostali podaci");
+					tabbedPane.setEnabledAt(m, false);
+				}
+			}
+		});
+	/*	textField_4.addPropertyChangeListener(new PropertyChangeListener() {
+			public void propertyChange(PropertyChangeEvent evt) {
+				if(provjeri())
+				{
+					int n = tabbedPane.indexOfTab("Scenarij");
+					tabbedPane.setEnabledAt(n, true);
+					int m = tabbedPane.indexOfTab("Ostali podaci");
+					tabbedPane.setEnabledAt(m, true);
+					
+				}
+				else
+				{
+
+					int n = tabbedPane.indexOfTab("Scenarij");
+					tabbedPane.setEnabledAt(n, false);
+					int m = tabbedPane.indexOfTab("Ostali podaci");
+					tabbedPane.setEnabledAt(m, false);
+				}
+			}
+		});
+		
+		*/
+			textField_4.setColumns(10);
 		textField_4.setBounds(263, 133, 265, 20);
 		panel_3.add(textField_4);
 		
-		JDateChooser dateChooser = new JDateChooser();
+		dateChooser = new JDateChooser();
+		dateChooser.addPropertyChangeListener(new PropertyChangeListener() {
+			public void propertyChange(PropertyChangeEvent evt) {
+				if(provjeri())
+				{
+					int n = tabbedPane.indexOfTab("Scenarij");
+					tabbedPane.setEnabledAt(n, true);
+					int m = tabbedPane.indexOfTab("Ostali podaci");
+					tabbedPane.setEnabledAt(m, true);
+					
+				}
+				else
+				{
+
+					int n = tabbedPane.indexOfTab("Scenarij");
+					tabbedPane.setEnabledAt(n, false);
+					int m = tabbedPane.indexOfTab("Ostali podaci");
+					tabbedPane.setEnabledAt(m, false);
+				}
+			}
+		});
+				
 		dateChooser.setBounds(263, 105, 265, 20);
 		panel_3.add(dateChooser);
 		
@@ -153,9 +436,23 @@ public class KorisnikHome {
 		panel_1.add(scrollPane_1);
 		
 		table_1 = new JTable();
+		
+		table_1.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusGained(FocusEvent e) {
+				
+
+
+			}
+		});
+		table_1.addPropertyChangeListener(new PropertyChangeListener() {
+			public void propertyChange(PropertyChangeEvent evt) {
+								
+			}
+		});
 		table_1.setModel(new DefaultTableModel(
 			new Object[][] {
-				{null, null, null, null, null, null},
+				{"Almedin", "Velija", "aaaaa", "111", "111", "aaaa"},
 				{null, null, null, null, null, null},
 				{null, null, null, null, null, null},
 				{null, null, null, null, null, null},
@@ -168,6 +465,8 @@ public class KorisnikHome {
 			}
 		));
 		scrollPane_1.setViewportView(table_1);
+	
+		
 		
 		JPanel panel_4 = new JPanel();
 		panel_4.setBorder(new LineBorder(new Color(0, 0, 0), 1, true));
@@ -175,12 +474,85 @@ public class KorisnikHome {
 		panel_1.add(panel_4);
 		panel_4.setLayout(null);
 		
-		JRadioButton rdbtnNoviKorisnik = new JRadioButton("Novi korisnik");
+	
+		rdbtnNoviKorisnik = new JRadioButton("Novi korisnik");
+		rdbtnNoviKorisnik.addChangeListener(new ChangeListener() {
+			public void stateChanged(ChangeEvent e) {
+				
+				if(provjeri())
+				{
+					int n = tabbedPane.indexOfTab("Scenarij");
+					tabbedPane.setEnabledAt(n, true);
+					int m = tabbedPane.indexOfTab("Ostali podaci");
+					tabbedPane.setEnabledAt(m, true);
+					
+				}
+				else
+				{
+
+					int n = tabbedPane.indexOfTab("Scenarij");
+					tabbedPane.setEnabledAt(n, false);
+					int m = tabbedPane.indexOfTab("Ostali podaci");
+					tabbedPane.setEnabledAt(m, false);
+				}
+			}
+		});
+		
+	
 		rdbtnNoviKorisnik.setBounds(6, 7, 137, 23);
 		panel_4.add(rdbtnNoviKorisnik);
-		rdbtnNoviKorisnik.setSelected(true);
+		rdbtnNoviKorisnik.setSelected(false);
+	//
 		
-		JRadioButton rdbtnStariKorisnik = new JRadioButton("Stari korisnik");
+		rdbtnStariKorisnik.addChangeListener(new ChangeListener() {
+			public void stateChanged(ChangeEvent e) {
+					if(rdbtnStariKorisnik.isEnabled() && table_1.getSelectedRow()==0)
+			{
+				
+						int n = tabbedPane.indexOfTab("Scenarij");
+						tabbedPane.setEnabledAt(n, true);
+						int m = tabbedPane.indexOfTab("Ostali podaci");
+						tabbedPane.setEnabledAt(m, true);
+							
+						}
+					else 
+					{
+						int n = tabbedPane.indexOfTab("Scenarij");
+						tabbedPane.setEnabledAt(n, false);
+						int m = tabbedPane.indexOfTab("Ostali podaci");
+						tabbedPane.setEnabledAt(m, false);
+					
+					}/*         if(sr!=null)
+						}
+			            {
+					
+						int n = tabbedPane.indexOfTab("Scenarij");
+						tabbedPane.setEnabledAt(n, true);
+						int m = tabbedPane.indexOfTab("Ostali podaci");
+						tabbedPane.setEnabledAt(m, true);
+			            }
+			            else if(sr==null)
+			            {
+
+							int n = tabbedPane.indexOfTab("Scenarij");
+							tabbedPane.setEnabledAt(n, false);
+							int m = tabbedPane.indexOfTab("Ostali podaci");
+							tabbedPane.setEnabledAt(m, false);
+			            }
+			*/}
+				/*	else 
+					{
+
+						int n = tabbedPane.indexOfTab("Scenarij");
+						tabbedPane.setEnabledAt(n, false);
+						int m = tabbedPane.indexOfTab("Ostali podaci");
+						tabbedPane.setEnabledAt(m, false);
+					}*/
+					
+			
+				
+		}
+			);
 		rdbtnStariKorisnik.setBounds(167, 7, 109, 23);
 		panel_4.add(rdbtnStariKorisnik);
 		rdbtnStariKorisnik.setSelected(false);
@@ -209,7 +581,11 @@ public class KorisnikHome {
 		
 		JPanel panel = new JPanel();
 		tabbedPane.addTab("Scenarij", null, panel, null);
-		panel.setLayout(null);
+		
+		int n = tabbedPane.indexOfTab("Scenarij");
+		tabbedPane.setEnabledAt(n, false);
+
+				panel.setLayout(null);
 		
 		JTree tree = new JTree();
 		tree.setBorder(new LineBorder(new Color(0, 0, 0), 1, true));
@@ -262,7 +638,7 @@ public class KorisnikHome {
 		scrollPane.setBounds(0, 76, 381, 266);
 		panel_8.add(scrollPane);
 		
-		table = new JTable();
+		JTable table = new JTable();
 		table.setBorder(new LineBorder(new Color(0, 0, 0), 1, true));
 		table.setModel(new DefaultTableModel(
 			new Object[][] {
@@ -295,6 +671,8 @@ public class KorisnikHome {
 		
 		JPanel panel_2 = new JPanel();
 		tabbedPane.addTab("Ostali podaci", null, panel_2, null);
+		int m = tabbedPane.indexOfTab("Ostali podaci");
+		tabbedPane.setEnabledAt(m, false);
 		panel_2.setLayout(null);
 		
 		JPanel panel_5 = new JPanel();
