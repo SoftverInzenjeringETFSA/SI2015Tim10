@@ -2,6 +2,7 @@ package ba.unsa.etf.si.app.SiDesk.Model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -44,7 +45,7 @@ public class Kategorija implements Serializable{
 	private String putanja;
 
 	@OneToMany(mappedBy="kategorija_pitanja")
-	ArrayList<Pitanje> pitanja;
+	private Set<Pitanje> pitanja;
 	
 	public Kategorija() {
 		
@@ -56,6 +57,22 @@ public class Kategorija implements Serializable{
 	}
 	
 	
+	public Kategorija getParentKategorija() {
+		return parentKategorija;
+	}
+
+	public void setParentKategorija(Kategorija parentKategorija) {
+		this.parentKategorija = parentKategorija;
+	}
+
+	public Set<Pitanje> getPitanja() {
+		return pitanja;
+	}
+
+	public void setPitanja(Set<Pitanje> pitanja) {
+		this.pitanja = pitanja;
+	}
+
 	public String getIme() {
 		return ime;
 	}
@@ -73,15 +90,6 @@ public class Kategorija implements Serializable{
 		this.putanja = putanja;
 	}
 
-	public ArrayList<Pitanje> getPitanja() {
-		return pitanja;
-		
-		// ovdje neka logika dobavljanja pitanja iz baze za kategoriju
-	}
-
-	public void setPitanja(ArrayList<Pitanje> pitanja) {
-		this.pitanja = pitanja;
-	}
 	
 	public Kategorija getParentId() {
 		return parentKategorija;
