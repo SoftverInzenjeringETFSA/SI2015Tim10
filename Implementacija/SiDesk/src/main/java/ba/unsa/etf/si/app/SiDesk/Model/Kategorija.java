@@ -3,13 +3,17 @@ package ba.unsa.etf.si.app.SiDesk.Model;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
 @Entity
+@Table(name = "kategorija")
 public class Kategorija implements Serializable{
 
 	/**
@@ -29,28 +33,14 @@ public class Kategorija implements Serializable{
 		this.id = id;
 	}
 	
-	@OneToOne
-	@JoinColumn(name="parent_id")
-	private Kategorija kategorija;
+	@OneToOne(cascade=CascadeType.ALL)  
+    @JoinColumn(name="parentKategorija")
 	
-	public Kategorija getKategorija() {
-		return kategorija;
-	}
-
-	public void setKategorija(Kategorija kategorija) {
-		this.kategorija = kategorija;
-	}
-
-	@OneToOne(mappedBy="kategorija")
-	
-	
-	
+	Kategorija parentKategorija;
 
 	private String ime;
 	private String putanja;
 	// nisam sigurna trebam li praviti instancu Kategorija
-	
-	private int parentId;
 	
 	ArrayList<Pitanje> pitanja;
 	
@@ -91,12 +81,12 @@ public class Kategorija implements Serializable{
 		this.pitanja = pitanja;
 	}
 	
-	public int getParentId() {
-		return parentId;
+	public Kategorija getParentId() {
+		return parentKategorija;
 	}
 
-	public void setParentId(int parentId) {
-		this.parentId = parentId;
+	public void setParentId(Kategorija parentId) {
+		this.parentKategorija = parentId;
 	}
 
 
