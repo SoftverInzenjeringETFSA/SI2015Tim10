@@ -1,11 +1,17 @@
 package ba.unsa.etf.si.app.SiDesk.Model;
 
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
@@ -18,7 +24,9 @@ public class Pitanje implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 	
+
 	@Id
+	@Column(name="PITANJE_ID")
 	@GeneratedValue
 	long id;
 	public long getId() {
@@ -33,6 +41,11 @@ public class Pitanje implements Serializable {
 	@JoinColumn(name="kategorija_id")
 	private Kategorija kategorija_pitanja;
 
+	
+	@ManyToMany(cascade = {CascadeType.ALL})
+	@JoinTable(name = "PITANJE_POZIV", joinColumns = { @JoinColumn(name = "PITANJE_ID") }, inverseJoinColumns = { @JoinColumn(name = "POZIV_ID") })
+	private Set<TelefonskiPoziv> telefonski_pozivi= new HashSet<TelefonskiPoziv>();
+	
 	private String pitanje;
 	private String odgovor;
 	private String putanja;
@@ -57,6 +70,22 @@ public class Pitanje implements Serializable {
 		this.odgovor = "";
 	}
 	
+	public Kategorija getKategorija_pitanja() {
+		return kategorija_pitanja;
+	}
+
+	public void setKategorija_pitanja(Kategorija kategorija_pitanja) {
+		this.kategorija_pitanja = kategorija_pitanja;
+	}
+
+	public Set<TelefonskiPoziv> getTelefonski_pozivi() {
+		return telefonski_pozivi;
+	}
+
+	public void setTelefonski_pozivi(Set<TelefonskiPoziv> telefonski_pozivi) {
+		this.telefonski_pozivi = telefonski_pozivi;
+	}
+
 	public String getPitanje() {
 		return pitanje;
 	}

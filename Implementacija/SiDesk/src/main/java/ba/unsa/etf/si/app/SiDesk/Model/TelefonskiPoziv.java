@@ -2,11 +2,17 @@ package ba.unsa.etf.si.app.SiDesk.Model;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
@@ -19,15 +25,33 @@ public class TelefonskiPoziv implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 	
+
 	@Id
+	@Column(name="POZIV_ID")
 	@GeneratedValue
 	long id;
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
+	}
 	
 	@ManyToOne
 	@JoinColumn(name="klijent_id")
 	private Klijent klijent;
 	
-	
+	@ManyToMany(mappedBy="telefonski_pozivi")
+	private Set<Pitanje> pitanja=new HashSet<Pitanje>();
+	public Set<Pitanje> getPitanja() {
+		return pitanja;
+	}
+
+	public void setPitanja(Set<Pitanje> pitanja) {
+		this.pitanja = pitanja;
+	}
+
 	private Date poziv;
 	private double trajanjePoziva;
 	private String opisniTekst;
@@ -36,13 +60,7 @@ public class TelefonskiPoziv implements Serializable {
 		poziv = new Date(); 
 	}
 
-	public long getId() {
-		return id;
-	}
 
-	public void setId(long id) {
-		this.id = id;
-	}
 
 	public Klijent getKlijent() {
 		return klijent;
