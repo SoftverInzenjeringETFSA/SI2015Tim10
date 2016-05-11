@@ -5,6 +5,7 @@ import java.awt.event.InputMethodEvent;
 import java.awt.event.InputMethodListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.List;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -36,13 +37,13 @@ import ba.unsa.etf.si.app.SiDesk.View.MenadzerDodavanjeKategorije;
 import ba.unsa.etf.si.app.SiDesk.ViewModel.BrisanjeKategorijeVM;
 import ba.unsa.etf.si.app.SiDesk.ViewModel.DodavanjeKategorijeVM;
 
-
 public class MenadzerHome {
 	private JFrame frmMenadzerHome;
 	protected JMenuItem mntmDodajKategoriju;
 	protected JMenuItem mntmdodajPitanje;
 	protected JMenuItem mntmobrisiKategoriju;
 	private JTree tree;
+	protected String putanja;
 	
 	private JTextField textField;
 
@@ -88,11 +89,11 @@ public class MenadzerHome {
 	
 		
 		tree = new JTree();
-		tree.setBounds(0, 101, 198, 395);
+		tree.setBounds(10, 90, 198, 395);
 		tree.setModel(new DefaultTreeModel(
 			new DefaultMutableTreeNode("Kategorije") {
 				{
-				/*	DefaultMutableTreeNode node_1;
+					DefaultMutableTreeNode node_1;
 					DefaultMutableTreeNode node_2;
 					DefaultMutableTreeNode node_3;
 					node_1 = new DefaultMutableTreeNode("Software");
@@ -109,9 +110,7 @@ public class MenadzerHome {
 							node_2.add(new DefaultMutableTreeNode("CPU"));
 						node_1.add(node_2);
 					add(node_1);
-					add(new DefaultMutableTreeNode("Ostalo")); 
-					
-					*/
+					add(new DefaultMutableTreeNode("Ostalo"));
 				}
 			}
 		));
@@ -128,18 +127,28 @@ public class MenadzerHome {
 		        	//dodavanje kategorije
 		        	
 		        	//trazenje kliknutog elementa
-		        	/*DefaultMutableTreeNode model =(DefaultMutableTreeNode)tree.getSelectionPath().getLastPathComponent();
+		        	//getSelectionPath ne radi u funkcijama addCategory i slicno
+		        	DefaultMutableTreeNode model = (DefaultMutableTreeNode)tree.getSelectionPath().getLastPathComponent();
+		        	putanja = new String();
 		        	//trazenje putanje
 		        	TreeNode[] s = model.getPath();
 		        	for(int i = 0; i < s.length; i++)
 		        	{
-		        		System.out.println(s[i].toString());
+		        			putanja += s[i].toString() + "/";
+		        		//System.out.println(s[i].toString());
 		        	}
+		        	//dodavanje na formu
+		        	DefaultTreeModel model1 = (DefaultTreeModel) tree.getModel();
+		    		
+		    		TreePath path = tree.getSelectionPath();
+		    		MutableTreeNode node = (MutableTreeNode) path.getLastPathComponent();
+		    		tree.expandPath(path);
+		    		MutableTreeNode newNode = new DefaultMutableTreeNode("Nova kategorija");
+		    		
+		    		model1.insertNodeInto(newNode, node, node.getChildCount());
 		        	
-		        	System.out.println("Pritisnuta kategorija " + model.toString());
-		        	//tree.add("New category", s);*/	
-		        	addNewCategory();
-		        	
+		        	System.out.println("Dodavanje putanja " + putanja);
+		        	addNewCategory(putanja, "Nova kategorija");     	
 		        }
 		        else if(event.getActionCommand() == "Dodaj pitanje"){
 		        	//dodavanje pitanja
@@ -147,8 +156,32 @@ public class MenadzerHome {
 		        }
 		        else if(event.getActionCommand() == "Obriši kategoriju")
 		        {
+		        	DefaultMutableTreeNode model = (DefaultMutableTreeNode)tree.getSelectionPath().getLastPathComponent();
+		        	putanja = new String();
+		        	//trazenje putanje
+		        	TreeNode[] s = model.getPath();
+		        	for(int i = 0; i < s.length-1; i++) //mora se oduzeti zadnji cvor tj ime cvora jer se on ne drzi u putanji
+		        	{
+		        			putanja += s[i].toString() + "/";
+		        		//System.out.println(s[i].toString());
+		        	}
+		        	//dodavanje na formu
+		        	System.out.println("Putanja " + putanja);
+		        	
 		        	//brisanje kategorije
-		        	deleteCategory();
+		        	DefaultMutableTreeNode node;
+		    	    DefaultTreeModel model1 = (DefaultTreeModel) (tree.getModel());
+		    	    
+		    	    TreePath[] paths = tree.getSelectionPaths();
+		    	    
+		    	    for (int i = 0; i < paths.length; i++) {
+		    	    	//System.out.println("Ime cvora" + paths[i].getPath());
+		        		node = (DefaultMutableTreeNode) (paths[i].getLastPathComponent());
+		    			model1.removeNodeFromParent(node);
+		    	    }	 
+		    	    String zadnjiCvor = paths[paths.length - 1].getLastPathComponent().toString();
+		    	    System.out.println("Brisanje putanja" + putanja + " ime kategorije koja se brise " + zadnjiCvor);
+		        	deleteCategory(putanja, zadnjiCvor);
 		        }
 		      }
 		    };
@@ -330,43 +363,14 @@ public class MenadzerHome {
 		menuBar.add(mnDodajPitanje);
 	}
 	
-	protected void addNewCategory(){
-		DefaultTreeModel model = (DefaultTreeModel) tree.getModel();
-		
-		TreePath path = tree.getSelectionPath();
-		MutableTreeNode node = (MutableTreeNode) path.getLastPathComponent();
-		tree.expandPath(path);
-		MutableTreeNode newNode = new DefaultMutableTreeNode("Nova kategorija");
-		
-		model.insertNodeInto(newNode, node, node.getChildCount());
-	
-		
-		Kategorija k= new Kategorija();
-		k.setIme("Nova kategorija");
-	//	k.setParentId();
-	//	k.setPutanja();
-		
-		
-		
-		
-		// Dodavanje u bazu...
-		DodavanjeKategorijeVM.dodajKategoriju(k);
+	protected void addNewCategory(String putanja, String imeKategorije){
+		//pozivanje VM za dodavanje kategorije
+		//DodavanjeKategorijeVM.dodajKategoriju(putanja, imeKategorije);
 	}
-	protected void deleteCategory() {
-	    DefaultMutableTreeNode node;
-	    DefaultTreeModel model = (DefaultTreeModel) (tree.getModel());
-	    TreePath[] paths = tree.getSelectionPaths();
-	    for (int i = 0; i < paths.length; i++) {
-	      node = (DefaultMutableTreeNode) (paths[i].getLastPathComponent());
-	      model.removeNodeFromParent(node);
-	    }	    
-	    //brisanje iz baze (ViewModel)
-	    
-	    System.out.println("kategorija " + paths[paths.length - 1].getLastPathComponent().toString());
-	    BrisanjeKategorijeVM.obrisiKategoriju(paths[paths.length - 1].getLastPathComponent().toString());
+	
+	protected void deleteCategory(String putanja, String ime) {
+	    //BrisanjeKategorijeVM.obrisiKategoriju(putanja, ime);
 	  }
-	
-	
 	
 	private static void addPopup(final JTree tree, final JPopupMenu popup) {		
 		tree.addMouseListener(new MouseAdapter() {
