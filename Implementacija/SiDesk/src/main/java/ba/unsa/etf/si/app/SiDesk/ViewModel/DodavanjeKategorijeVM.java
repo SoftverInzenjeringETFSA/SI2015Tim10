@@ -14,17 +14,16 @@ import ba.unsa.etf.si.app.SiDesk.Util.HibernateUtil;
 
 public class DodavanjeKategorijeVM {
 	
-	public static boolean dodajKategoriju(Kategorija kategorija) {
+	public static boolean dodajKategoriju(String putanja, String kategorija) {
 		try {
 		
 			Session sesija = (Session) HibernateUtil.getSessionFactory().openSession();
 	        Transaction tr = sesija.beginTransaction();
 			
 	        Kategorija k= new Kategorija();
-	        k.setId(kategorija.getId());
-	        k.setIme(kategorija.getIme());
-	        k.setParentId(kategorija.getParentId());
-	        k.setPutanja(kategorija.getPutanja());
+	        k.setIme(kategorija);
+	        k.setPutanja(putanja);
+	      //  k.setParentId();
 	        
 	        
 	        

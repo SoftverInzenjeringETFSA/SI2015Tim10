@@ -13,7 +13,7 @@ import ba.unsa.etf.si.app.SiDesk.Util.HibernateUtil;
 
 public class BrisanjeKategorijeVM {
 
-	public static boolean obrisiKategoriju(String ime) {
+	public static boolean obrisiKategoriju(String putanja, String ime) {
 		try {
 			Session session = (Session) HibernateUtil.getSessionFactory().openSession();
 	        Transaction t = session.beginTransaction();

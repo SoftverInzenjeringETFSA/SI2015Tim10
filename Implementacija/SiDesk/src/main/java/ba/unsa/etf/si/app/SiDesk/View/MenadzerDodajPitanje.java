@@ -9,7 +9,14 @@ import javax.swing.JLabel;
 import javax.swing.JTree;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
+import javax.swing.tree.TreePath;
+
+import ba.unsa.etf.si.app.SiDesk.Model.Pitanje;
+import ba.unsa.etf.si.app.SiDesk.ViewModel.DodavanjePitanjaVM;
+
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.event.ActionEvent;
 
 public class MenadzerDodajPitanje {
@@ -59,19 +66,32 @@ public class MenadzerDodajPitanje {
 		lblPitanje.setBounds(269, 22, 56, 14);
 		frmDodajPitanje.getContentPane().add(lblPitanje);
 		
-		JEditorPane editorPane = new JEditorPane();
+		final JEditorPane editorPane = new JEditorPane();
 		editorPane.setBounds(269, 47, 349, 109);
+		editorPane.setEditable(false);
 		frmDodajPitanje.getContentPane().add(editorPane);
 		
 		JLabel lblOdgovor = new JLabel("Odgovor");
 		lblOdgovor.setBounds(269, 180, 83, 14);
 		frmDodajPitanje.getContentPane().add(lblOdgovor);
 		
-		JEditorPane editorPane_1 = new JEditorPane();
+		final JEditorPane editorPane_1 = new JEditorPane();
 		editorPane_1.setBounds(269, 217, 349, 109);
+		editorPane_1.setEditable(false);
 		frmDodajPitanje.getContentPane().add(editorPane_1);
 		
 		JButton btnNewButton = new JButton("Spasi pitanje");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Pitanje p=new Pitanje();
+				p.setPitanje(editorPane.getText());
+				p.setOdgovor(editorPane_1.getText());
+			//	p.setPutanja();
+				
+				DodavanjePitanjaVM.dodajPitanje(p);
+				
+			}
+		});
 		btnNewButton.setBounds(465, 355, 153, 23);
 		frmDodajPitanje.getContentPane().add(btnNewButton);
 		
@@ -85,7 +105,7 @@ public class MenadzerDodajPitanje {
 		btnIzadji.setBounds(282, 354, 153, 23);
 		frmDodajPitanje.getContentPane().add(btnIzadji);
 		
-		JTree tree = new JTree();
+		final JTree tree = new JTree();
 		tree.setModel(new DefaultTreeModel(
 			new DefaultMutableTreeNode("Software") {
 				{
@@ -97,6 +117,32 @@ public class MenadzerDodajPitanje {
 				}
 			}
 		));
+		
+		tree.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				int selRow = tree.getRowForLocation(e.getX(), e.getY());
+				
+				if(selRow>-1)
+				{
+					//detektuje da li je pritisnuto na item
+					
+					TreePath selPath = tree.getPathForLocation(e.getX(), e.getY());
+						tree.setSelectionPath(selPath); 
+						if (selRow>-1)
+						{
+							tree.setSelectionRow(selRow);
+							//index = selRow;
+							
+							editorPane.setEditable(true);
+							editorPane_1.setEditable(true);
+						}
+				}
+			}
+		});
+		
+		
+		
 		tree.setBounds(10, 47, 209, 331);
 		frmDodajPitanje.getContentPane().add(tree);
 	}

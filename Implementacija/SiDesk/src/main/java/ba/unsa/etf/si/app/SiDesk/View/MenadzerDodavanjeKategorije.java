@@ -75,11 +75,10 @@ public class MenadzerDodavanjeKategorije {
 		btnDodajKategoriju.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
-				Kategorija k= new Kategorija();
-				k.setIme(textField.getText());
-				k.setPutanja(choice.getSelectedItem());
+				String kategorija = textField.getText();
+				String putanja = choice.getSelectedItem();
 				
-				DodavanjeKategorijeVM.dodajKategoriju(k);
+				DodavanjeKategorijeVM.dodajKategoriju(kategorija, putanja);
 				
 			}
 		});
