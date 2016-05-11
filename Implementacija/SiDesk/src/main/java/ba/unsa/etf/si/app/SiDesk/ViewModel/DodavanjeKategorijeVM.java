@@ -1,11 +1,35 @@
 package ba.unsa.etf.si.app.SiDesk.ViewModel;
 
+import java.util.Date;
+import java.util.List;
+
+
+import org.hibernate.Criteria;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+import org.hibernate.criterion.Restrictions;
+
 import ba.unsa.etf.si.app.SiDesk.Model.Kategorija;
+import ba.unsa.etf.si.app.SiDesk.Util.HibernateUtil;
 
 public class DodavanjeKategorijeVM {
 	
 	public static boolean dodajKategoriju(Kategorija kategorija) {
 		try {
+		
+			Session sesija = (Session) HibernateUtil.getSessionFactory().openSession();
+	        Transaction tr = sesija.beginTransaction();
+			
+	        Kategorija k= new Kategorija();
+	        k.setId(kategorija.getId());
+	        k.setIme(kategorija.getIme());
+	        k.setParentId(kategorija.getParentId());
+	        k.setPutanja(kategorija.getPutanja());
+	        
+	        
+	        
+	        sesija.save(k);
+			tr.commit();
 			
 		}
 		catch (Exception e) {

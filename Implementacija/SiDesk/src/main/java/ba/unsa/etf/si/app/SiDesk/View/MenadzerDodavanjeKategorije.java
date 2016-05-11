@@ -8,6 +8,12 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
+import ba.unsa.etf.si.app.SiDesk.Model.Kategorija;
+import ba.unsa.etf.si.app.SiDesk.ViewModel.DodavanjeKategorijeVM;
+
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+
 public class MenadzerDodavanjeKategorije {
 
 	protected JFrame frmDodavanjeKategorije;
@@ -54,7 +60,7 @@ public class MenadzerDodavanjeKategorije {
 		lblNewLabel.setBounds(30, 32, 101, 20);
 		frmDodavanjeKategorije.getContentPane().add(lblNewLabel);
 		
-		Choice choice = new Choice();
+		final Choice choice = new Choice();
 		choice.setBounds(170, 32, 300, 22);
 		choice.addItem("Software");
 		frmDodavanjeKategorije.getContentPane().add(choice);
@@ -66,6 +72,17 @@ public class MenadzerDodavanjeKategorije {
 		textField.setColumns(10);
 		
 		JButton btnDodajKategoriju = new JButton("Dodaj kategoriju");
+		btnDodajKategoriju.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+				Kategorija k= new Kategorija();
+				k.setIme(textField.getText());
+				k.setPutanja(choice.getSelectedItem());
+				
+				DodavanjeKategorijeVM.dodajKategoriju(k);
+				
+			}
+		});
 		
 		btnDodajKategoriju.setBounds(301, 122, 169, 23);
 		frmDodavanjeKategorije.getContentPane().add(btnDodajKategoriju);

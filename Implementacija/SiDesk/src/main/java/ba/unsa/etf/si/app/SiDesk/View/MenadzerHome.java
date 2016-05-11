@@ -31,8 +31,10 @@ import java.awt.event.ActionEvent;
 import javax.swing.event.MenuListener;
 import javax.swing.event.MenuEvent;
 
+import ba.unsa.etf.si.app.SiDesk.Model.Kategorija;
 import ba.unsa.etf.si.app.SiDesk.View.MenadzerDodavanjeKategorije;
 import ba.unsa.etf.si.app.SiDesk.ViewModel.BrisanjeKategorijeVM;
+import ba.unsa.etf.si.app.SiDesk.ViewModel.DodavanjeKategorijeVM;
 
 
 public class MenadzerHome {
@@ -86,11 +88,11 @@ public class MenadzerHome {
 	
 		
 		tree = new JTree();
-		tree.setBounds(10, 90, 198, 395);
+		tree.setBounds(0, 101, 198, 395);
 		tree.setModel(new DefaultTreeModel(
 			new DefaultMutableTreeNode("Kategorije") {
 				{
-					DefaultMutableTreeNode node_1;
+				/*	DefaultMutableTreeNode node_1;
 					DefaultMutableTreeNode node_2;
 					DefaultMutableTreeNode node_3;
 					node_1 = new DefaultMutableTreeNode("Software");
@@ -107,7 +109,9 @@ public class MenadzerHome {
 							node_2.add(new DefaultMutableTreeNode("CPU"));
 						node_1.add(node_2);
 					add(node_1);
-					add(new DefaultMutableTreeNode("Ostalo"));
+					add(new DefaultMutableTreeNode("Ostalo")); 
+					
+					*/
 				}
 			}
 		));
@@ -335,6 +339,18 @@ public class MenadzerHome {
 		MutableTreeNode newNode = new DefaultMutableTreeNode("Nova kategorija");
 		
 		model.insertNodeInto(newNode, node, node.getChildCount());
+	
+		
+		Kategorija k= new Kategorija();
+		k.setIme("Nova kategorija");
+	//	k.setParentId();
+	//	k.setPutanja();
+		
+		
+		
+		
+		// Dodavanje u bazu...
+		DodavanjeKategorijeVM.dodajKategoriju(k);
 	}
 	protected void deleteCategory() {
 	    DefaultMutableTreeNode node;
@@ -349,6 +365,8 @@ public class MenadzerHome {
 	    System.out.println("kategorija " + paths[paths.length - 1].getLastPathComponent().toString());
 	    BrisanjeKategorijeVM.obrisiKategoriju(paths[paths.length - 1].getLastPathComponent().toString());
 	  }
+	
+	
 	
 	private static void addPopup(final JTree tree, final JPopupMenu popup) {		
 		tree.addMouseListener(new MouseAdapter() {
