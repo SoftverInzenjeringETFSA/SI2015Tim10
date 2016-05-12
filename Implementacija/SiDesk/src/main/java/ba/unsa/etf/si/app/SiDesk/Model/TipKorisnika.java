@@ -22,7 +22,7 @@ public class TipKorisnika implements java.io.Serializable{
 	@GeneratedValue
 	long id;
 	
-	@OneToMany(mappedBy = "tipKorisnika")
+	@OneToMany(mappedBy = "tipkorisnika")
 	private Set<Korisnik> korisnici;
 	
 	public Set<Korisnik> getKorisnici() {

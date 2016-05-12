@@ -39,7 +39,6 @@ public class Korisnik implements java.io.Serializable{
 	@JoinColumn(name="tipkorisnika_id")
 	private TipKorisnika tipkorisnika;
 	
-	
 	@ManyToOne
 	@JoinColumn(name="operater_id")
 	private Operater operater_korisnik;
