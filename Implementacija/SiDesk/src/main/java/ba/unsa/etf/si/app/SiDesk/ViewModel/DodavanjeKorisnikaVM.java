@@ -28,8 +28,6 @@ public class DodavanjeKorisnikaVM {
 				String adresa,String brojLicne,Date datumZaposljenja, String tipkorisnika) {
 	
 			try{
-	
-				
 				//naci tip korisnika preko imena
 				TipKorisnika tip = null;
 				
@@ -40,9 +38,6 @@ public class DodavanjeKorisnikaVM {
 		        t.commit();
 				System.out.println("Uspjesno dodan korisnik");
 				s.close();
-			
-			
-				
 				
 			} catch (Exception e) {
 				e.printStackTrace();

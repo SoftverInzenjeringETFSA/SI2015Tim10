@@ -5,9 +5,12 @@ import java.awt.event.InputMethodEvent;
 import java.awt.event.InputMethodListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -26,8 +29,14 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.MutableTreeNode;
+import javax.swing.tree.TreeModel;
 import javax.swing.tree.TreeNode;
 import javax.swing.tree.TreePath;
+
+import org.hibernate.Criteria;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+import org.hibernate.criterion.Restrictions;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -35,6 +44,7 @@ import javax.swing.event.MenuListener;
 import javax.swing.event.MenuEvent;
 
 import ba.unsa.etf.si.app.SiDesk.Model.Kategorija;
+import ba.unsa.etf.si.app.SiDesk.Util.HibernateUtil;
 import ba.unsa.etf.si.app.SiDesk.View.MenadzerDodavanjeKategorije;
 import ba.unsa.etf.si.app.SiDesk.ViewModel.BrisanjeKategorijeVM;
 import ba.unsa.etf.si.app.SiDesk.ViewModel.DodavanjeKategorijeVM;
@@ -66,7 +76,7 @@ public class MenadzerHome {
 				}
 			}
 		});
-	}
+	}	
 
 	/**
 	 * Create the application.
@@ -95,7 +105,28 @@ public class MenadzerHome {
 		tree.setModel(new DefaultTreeModel(
 			new DefaultMutableTreeNode("Kategorije") {
 				{
-					DefaultMutableTreeNode node_1;
+					boolean flag = false;
+					Session session = (Session) HibernateUtil.getSessionFactory().openSession();
+			        Transaction t = session.beginTransaction();
+			        //Criteria criteria = session.createCriteria(Kategorija.class).add(Restrictions.like("parentKategorija", null).ignoreCase());
+					Criteria criteria = session.createCriteria(Kategorija.class);
+					List<Kategorija> lista = criteria.list();
+					DefaultMutableTreeNode[] drvo = new DefaultMutableTreeNode[lista.size()];
+					for(int i = 0; i < lista.size(); i++){
+						drvo[i] = new DefaultMutableTreeNode(lista.get(i).getIme());
+						flag = false;
+						for(int j = 0; j < lista.size(); j++){
+							if(lista.get(i).getParentId()==lista.get(j)){
+								drvo[j].add(drvo[i]);
+								flag = true;
+							}
+						}
+						if(!flag) add(drvo[i]);
+					}
+					//add(drvo[0]);
+					
+					
+					/*DefaultMutableTreeNode node_1;
 					DefaultMutableTreeNode node_2;
 					DefaultMutableTreeNode node_3;
 					node_1 = new DefaultMutableTreeNode("Software");
@@ -112,7 +143,7 @@ public class MenadzerHome {
 							node_2.add(new DefaultMutableTreeNode("CPU"));
 						node_1.add(node_2);
 					add(node_1);
-					add(new DefaultMutableTreeNode("Ostalo"));
+					add(new DefaultMutableTreeNode("Ostalo"));*/
 				}
 			}
 		));
@@ -120,15 +151,7 @@ public class MenadzerHome {
 		tree.setEditable(true);
 		//treba povezati event mijenjanja cvora sa bazom
 		
-		String[] idIzBaze;
-		DefaultMutableTreeNode[] ListaCvorova;
-		Map<Integer, DefaultMutableTreeNode> mapa = new HashMap<Integer, DefaultMutableTreeNode>();
-		
-		mapa.put(1, new DefaultMutableTreeNode("Kategorija"));
-		mapa.put(2, new DefaultMutableTreeNode("Software"));//listaKategorija.getID(2).ime
-		mapa.put(3, new DefaultMutableTreeNode("MS Office"));
-		mapa.put(4, new DefaultMutableTreeNode("Hardware"));
-		//tree.set
+		//popuniStablo(tree, root, root.child);
 		
 		frmMenadzerHome.getContentPane().add(tree);
 		
@@ -145,7 +168,7 @@ public class MenadzerHome {
 		        	putanja = new String();
 		        	//trazenje putanje
 		        	TreeNode[] s = model.getPath();
-		        	for(int i = 0; i < s.length; i++)
+		        	for(int i = 1; i < s.length; i++)//zanemari root
 		        	{
 		        			putanja += s[i].toString() + "/";
 		        		//System.out.println(s[i].toString());
@@ -173,8 +196,8 @@ public class MenadzerHome {
 		        	putanja = new String();
 		        	//trazenje putanje
 		        	TreeNode[] s = model.getPath();
-		        	for(int i = 0; i < s.length-1; i++) //mora se oduzeti zadnji cvor tj ime cvora jer se on ne drzi u putanji
-		        	{
+		        	for(int i = 1; i < s.length-1; i++) //mora se oduzeti zadnji cvor tj ime cvora jer se on ne drzi u putanji
+		        	{//od 1 da zanemari root
 		        			putanja += s[i].toString() + "/";
 		        		//System.out.println(s[i].toString());
 		        	}
@@ -375,7 +398,7 @@ public class MenadzerHome {
 		
 		menuBar.add(mnDodajPitanje);
 	}
-	
+
 	protected void addNewCategory(String putanja, String imeKategorije){
 		//pozivanje VM za dodavanje kategorije
 		//DodavanjeKategorijeVM.dodajKategoriju(putanja, imeKategorije);
