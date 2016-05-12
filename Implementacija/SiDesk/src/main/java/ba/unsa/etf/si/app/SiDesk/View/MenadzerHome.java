@@ -400,11 +400,11 @@ public class MenadzerHome {
 
 	protected void addNewCategory(String putanja, String imeKategorije){
 		//pozivanje VM za dodavanje kategorije
-		//DodavanjeKategorijeVM.dodajKategoriju(putanja, imeKategorije);
+		DodavanjeKategorijeVM.dodajKategoriju(putanja, imeKategorije);
 	}
 	
 	protected void deleteCategory(String putanja, String ime) {
-	    //BrisanjeKategorijeVM.obrisiKategoriju(putanja, ime);
+	    BrisanjeKategorijeVM.obrisiKategoriju(putanja, ime);
 	  }
 	
 	private static void addPopup(final JTree tree, final JPopupMenu popup) {		
