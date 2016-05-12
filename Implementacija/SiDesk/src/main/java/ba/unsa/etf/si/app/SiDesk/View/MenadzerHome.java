@@ -5,7 +5,9 @@ import java.awt.event.InputMethodEvent;
 import java.awt.event.InputMethodListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -116,6 +118,16 @@ public class MenadzerHome {
 		));
 		
 		tree.setEditable(true);
+		//treba povezati event mijenjanja cvora sa bazom
+		
+		String[] idIzBaze;
+		DefaultMutableTreeNode[] ListaCvorova;
+		Map<Integer, DefaultMutableTreeNode> mapa = new HashMap<Integer, DefaultMutableTreeNode>();
+		mapa.put(1, new DefaultMutableTreeNode("Kategorija"));
+		mapa.put(2, new DefaultMutableTreeNode("Software"));//listaKategorija.getID(2).ime
+		mapa.put(3, new DefaultMutableTreeNode("MS Office"));
+		mapa.put(4, new DefaultMutableTreeNode("Hardware"));
+		//tree.set
 		
 		frmMenadzerHome.getContentPane().add(tree);
 		
@@ -365,13 +377,11 @@ public class MenadzerHome {
 	
 	protected void addNewCategory(String putanja, String imeKategorije){
 		//pozivanje VM za dodavanje kategorije
-		
-		
-		DodavanjeKategorijeVM.dodajKategoriju(putanja, imeKategorije);
+		//DodavanjeKategorijeVM.dodajKategoriju(putanja, imeKategorije);
 	}
 	
 	protected void deleteCategory(String putanja, String ime) {
-	    BrisanjeKategorijeVM.obrisiKategoriju(putanja, ime);
+	    //BrisanjeKategorijeVM.obrisiKategoriju(putanja, ime);
 	  }
 	
 	private static void addPopup(final JTree tree, final JPopupMenu popup) {		
