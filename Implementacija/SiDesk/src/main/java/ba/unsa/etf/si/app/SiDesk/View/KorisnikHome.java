@@ -35,6 +35,8 @@ import java.sql.Date;
 import java.beans.PropertyChangeEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class KorisnikHome {
 
@@ -522,7 +524,9 @@ public class KorisnikHome {
 						int m = tabbedPane.indexOfTab("Ostali podaci");
 						tabbedPane.setEnabledAt(m, false);
 					
-					}/*         if(sr!=null)
+					}
+					
+					/*         if(sr!=null)
 						}
 			            {
 					
@@ -715,6 +719,17 @@ public class KorisnikHome {
 	
 		
 		JButton btnNewButton_1 = new JButton("Poni\u0161ti");
+		btnNewButton_1.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				textField.setText("");
+				textField_1.setText("");
+				textField_2.setText("");
+				textField_3.setText("");
+				textField_4.setText("");
+				dateChooser.setDate(null);
+			}
+		});
 		btnNewButton_1.setBounds(183, 22, 180, 53);
 		panel_6.add(btnNewButton_1);
 		
