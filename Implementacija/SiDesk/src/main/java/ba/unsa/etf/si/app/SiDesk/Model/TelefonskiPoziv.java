@@ -25,7 +25,6 @@ public class TelefonskiPoziv implements Serializable {
 	
 
 	@Id
-	@Column(name="POZIV_ID")
 	@GeneratedValue
 	long id;
 	public long getId() {

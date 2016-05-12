@@ -20,7 +20,6 @@ public class Operater implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	@Id
-	@Column(name="OPERATER_ID")
 	@GeneratedValue
 	long id;
 	public long getId() {

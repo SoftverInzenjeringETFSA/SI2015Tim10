@@ -43,9 +43,9 @@ public class Kategorija implements Serializable{
 
 	private String ime;
 	private String putanja;
-	// nisam sigurna trebam li praviti instancu Kategorija
 	
-	ArrayList<Pitanje> pitanja;
+	@OneToMany(mappedBy="kategorija_pitanja")
+	private Set<Pitanje> pitanja;
 	
 	public Kategorija() {
 		
@@ -74,13 +74,13 @@ public class Kategorija implements Serializable{
 		this.putanja = putanja;
 	}
 
-	public ArrayList<Pitanje> getPitanja() {
+	public Set<Pitanje> getPitanja() {
 		return pitanja;
 		
 		// ovdje neka logika dobavljanja pitanja iz baze za kategoriju
 	}
 
-	public void setPitanja(ArrayList<Pitanje> pitanja) {
+	public void setPitanja(Set<Pitanje> pitanja) {
 		this.pitanja = pitanja;
 	}
 	

@@ -19,7 +19,6 @@ public class Odjava implements java.io.Serializable{
 	 */
 	private static final long serialVersionUID = 1L;
 	@Id
-	@Column(name="ODJAVA_ID")
 	@GeneratedValue
 	long id;
 

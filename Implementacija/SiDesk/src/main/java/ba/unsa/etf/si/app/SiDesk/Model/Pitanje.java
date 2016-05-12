@@ -26,7 +26,6 @@ public class Pitanje implements Serializable {
 	
 
 	@Id
-	@Column(name="PITANJE_ID")
 	@GeneratedValue
 	long id;
 	public long getId() {
@@ -43,7 +42,7 @@ public class Pitanje implements Serializable {
 
 	
 	@ManyToMany(cascade = {CascadeType.ALL})
-	@JoinTable(name = "PITANJE_POZIV", joinColumns = { @JoinColumn(name = "PITANJE_ID") }, inverseJoinColumns = { @JoinColumn(name = "POZIV_ID") })
+	@JoinTable(name = "pitanje_poziv", joinColumns = { @JoinColumn(name = "pitanje_id") }, inverseJoinColumns = { @JoinColumn(name = "poziv_id") })
 	private Set<TelefonskiPoziv> telefonski_pozivi= new HashSet<TelefonskiPoziv>();
 	
 	private String pitanje;

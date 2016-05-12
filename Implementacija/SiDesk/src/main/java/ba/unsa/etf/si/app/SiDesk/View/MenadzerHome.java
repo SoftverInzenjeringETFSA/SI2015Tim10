@@ -123,6 +123,7 @@ public class MenadzerHome {
 		String[] idIzBaze;
 		DefaultMutableTreeNode[] ListaCvorova;
 		Map<Integer, DefaultMutableTreeNode> mapa = new HashMap<Integer, DefaultMutableTreeNode>();
+		
 		mapa.put(1, new DefaultMutableTreeNode("Kategorija"));
 		mapa.put(2, new DefaultMutableTreeNode("Software"));//listaKategorija.getID(2).ime
 		mapa.put(3, new DefaultMutableTreeNode("MS Office"));

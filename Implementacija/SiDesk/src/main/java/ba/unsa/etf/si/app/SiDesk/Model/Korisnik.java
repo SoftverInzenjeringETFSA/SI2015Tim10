@@ -22,7 +22,7 @@ public class Korisnik implements java.io.Serializable{
 	/**
 	 * 
 	 */
-	private static  long serialVersionUID = 1L;
+	private static final long serialVersionUID = -9013585257542864310L;
 
 	@Id
 	@GeneratedValue
