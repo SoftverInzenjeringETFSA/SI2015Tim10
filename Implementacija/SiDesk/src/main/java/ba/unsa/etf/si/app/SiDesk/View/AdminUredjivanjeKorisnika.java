@@ -69,7 +69,7 @@ public class AdminUredjivanjeKorisnika {
 		JButton button_1 = new JButton("Zatvori");
 		button_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				frmUredjivanjekorisnika.setVisible(false);
+				frmUredjivanjekorisnika.dispose();
 			}
 		});
 		
@@ -227,8 +227,4 @@ public class AdminUredjivanjeKorisnika {
 		frmUredjivanjekorisnika.getContentPane().setLayout(groupLayout);
 	}
 
-	protected static void setVisible(boolean b) {
-		// TODO Auto-generated method stub
-		
-	}
 }

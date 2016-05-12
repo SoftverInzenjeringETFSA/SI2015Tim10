@@ -12,7 +12,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="tipkorisnika")
+@Table(name="tipKorisnika")
 public class TipKorisnika implements java.io.Serializable{
 	/**
 	 * 
@@ -22,7 +22,7 @@ public class TipKorisnika implements java.io.Serializable{
 	@GeneratedValue
 	long id;
 	
-	@OneToMany(mappedBy = "tipkorisnika")
+	@OneToMany(mappedBy = "tipKorisnika")
 	private Set<Korisnik> korisnici;
 	
 	public Set<Korisnik> getKorisnici() {
@@ -43,18 +43,18 @@ public class TipKorisnika implements java.io.Serializable{
 	public String getTipKorisnika() {
 		return tipKorisnika;
 	}
-	public void setTipKorisnika(String tipKorisnika) {
-		this.tipKorisnika = tipKorisnika;
+	public void setTipKorisnika(String tipkorisnika) {
+		postaviTipKorisnika(tipkorisnika);
 	}
-	public TipKorisnika(String tipKorisnika) {
-		postaviTipKorisnika(tipKorisnika);
+	public TipKorisnika(String tipkorisnika) {
+		postaviTipKorisnika(tipkorisnika);
 	}
 	
 	public TipKorisnika() {	}
 	
 	private void postaviTipKorisnika(String tip) {
-		if(tip.equals("m")) this.tipKorisnika="menadzer";
-		if(tip.equals("a")) this.tipKorisnika="administrator";
-		if(tip.equals("u")) this.tipKorisnika="uposlenik";
+		if(tip.equals("Menadžer")) this.tipKorisnika="Menadžer";
+		if(tip.equals("Administrator")) this.tipKorisnika="Administrator";
+		if(tip.equals("Obični korisnik")) this.tipKorisnika="Obični korisnik";
 	}
 }

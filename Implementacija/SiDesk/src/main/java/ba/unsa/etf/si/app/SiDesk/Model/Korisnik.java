@@ -4,13 +4,16 @@ import java.security.SecureRandom;
 import java.util.Date;
 import java.util.Random;
 import java.util.Set;
+import ba.unsa.etf.si.app.SiDesk.Model.TipKorisnika;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.swing.JOptionPane;
 
 @Entity
 @Table(name="korisnik")
@@ -19,8 +22,10 @@ public class Korisnik implements java.io.Serializable{
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 1L;
+	private static  long serialVersionUID = 1L;
+
 	@Id
+	@GeneratedValue
 	long id;
 	public long getId() {
 		return id;
@@ -53,7 +58,7 @@ public class Korisnik implements java.io.Serializable{
 	private String adresa;
 	private String email;
 	private Date datumZaposlenja;
-	//private TipKorisnika tipKorisnika;
+private String tipKorisnika;
 	private String korisnickoIme;
 	private String sifra;
 	
@@ -65,8 +70,9 @@ public class Korisnik implements java.io.Serializable{
 	
 	public Korisnik(String  ime, String prezime, String brojTelefona, 
 			        String jmbg, String brojLicneKarte, String adresa,
-			        String email, Date datumZaposlenja, TipKorisnika tipKorisnika,
+			        String email, Date datumZaposlenja, String tipkorisnika,
 			        String korisnickoIme) {
+		
 		
 		this.ime=ime;
 		this.prezime=prezime;
@@ -76,7 +82,7 @@ public class Korisnik implements java.io.Serializable{
 		this.adresa=adresa;
 		this.email=email;
 		this.datumZaposlenja=datumZaposlenja;
-	//	this.tipKorisnika=tipKorisnika;
+		this.tipKorisnika=tipkorisnika;        
 		this.korisnickoIme=korisnickoIme;
 		this.sifra=generisiLozinku(); // jedinstven ili ne, baza
 	}
@@ -145,13 +151,6 @@ public class Korisnik implements java.io.Serializable{
 		this.datumZaposlenja = datumZaposlenja;
 	}
 
-	public TipKorisnika getTipKorisnika() {
-		return tipkorisnika;
-	}
-
-	public void setTipKorisnika(TipKorisnika tipKorisnika) {
-		this.tipkorisnika = tipKorisnika;
-	}
 
 	public String getKorisnickoIme() {
 		return korisnickoIme;
@@ -172,12 +171,12 @@ public class Korisnik implements java.io.Serializable{
 	
 	// logika za password treba biti u ovoj klasi ovo je ideja
 
-	public TipKorisnika getTipkorisnika() {
-		return tipkorisnika;
+	public String getTipkorisnika() {
+		return tipKorisnika;
 	}
 
-	public void setTipkorisnika(TipKorisnika tipkorisnika) {
-		this.tipkorisnika = tipkorisnika;
+	public void setTipkorisnika(String tipkorisnika) {
+		this.tipKorisnika = tipkorisnika;
 	}
 
 	public Operater getOperater_korisnik() {
