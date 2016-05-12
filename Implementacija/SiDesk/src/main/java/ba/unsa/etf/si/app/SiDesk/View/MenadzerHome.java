@@ -48,6 +48,7 @@ import ba.unsa.etf.si.app.SiDesk.Util.HibernateUtil;
 import ba.unsa.etf.si.app.SiDesk.View.MenadzerDodavanjeKategorije;
 import ba.unsa.etf.si.app.SiDesk.ViewModel.BrisanjeKategorijeVM;
 import ba.unsa.etf.si.app.SiDesk.ViewModel.DodavanjeKategorijeVM;
+import ba.unsa.etf.si.app.SiDesk.ViewModel.TrazenjeKategorijeVM;
 
 public class MenadzerHome {
 	private JFrame frmMenadzerHome;
@@ -106,11 +107,9 @@ public class MenadzerHome {
 			new DefaultMutableTreeNode("Kategorije") {
 				{
 					boolean flag = false;
-					Session session = (Session) HibernateUtil.getSessionFactory().openSession();
-			        Transaction t = session.beginTransaction();
-			        //Criteria criteria = session.createCriteria(Kategorija.class).add(Restrictions.like("parentKategorija", null).ignoreCase());
-					Criteria criteria = session.createCriteria(Kategorija.class);
-					List<Kategorija> lista = criteria.list();
+					
+					List<Kategorija> lista = TrazenjeKategorijeVM.nadjiKategorije();
+					
 					DefaultMutableTreeNode[] drvo = new DefaultMutableTreeNode[lista.size()];
 					for(int i = 0; i < lista.size(); i++){
 						drvo[i] = new DefaultMutableTreeNode(lista.get(i).getIme());
