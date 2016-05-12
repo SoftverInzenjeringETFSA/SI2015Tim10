@@ -8,6 +8,7 @@ import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
@@ -20,8 +21,14 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 
+import org.hibernate.Session;
+
 import com.toedter.calendar.JDateChooser;
 import com.toedter.calendar.JTextFieldDateEditor;
+
+import ba.unsa.etf.si.app.SiDesk.Util.HibernateUtil;
+import ba.unsa.etf.si.app.SiDesk.ViewModel.DodavanjeKlijentaVM;
+import ba.unsa.etf.si.app.SiDesk.ViewModel.DodavanjeKorisnikaVM;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -728,12 +735,32 @@ public class KorisnikHome {
 				textField_3.setText("");
 				textField_4.setText("");
 				dateChooser.setDate(null);
+				JOptionPane.showMessageDialog(null, "Ponisteno","Info", JOptionPane.INFORMATION_MESSAGE);
 			}
 		});
 		btnNewButton_1.setBounds(183, 22, 180, 53);
 		panel_6.add(btnNewButton_1);
 		
 		JButton btnSpasi = new JButton("Spasi");
+		btnSpasi.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				try{
+					
+					//Validacija unesenih podataka...
+					
+					Session s1= HibernateUtil.getSessionFactory().openSession();			
+								
+					DodavanjeKlijentaVM.dodajKlijenta(textField.getText(),textField_1.getText(),textField_2.getText(),textField_3.getText());
+							
+								JOptionPane.showMessageDialog(null, "Klijent je uspješno dodan","Info", JOptionPane.INFORMATION_MESSAGE);	
+							}
+							catch(Exception ex){
+								JOptionPane.showMessageDialog(null, "Greška u dodavanju", "Info " + "Error"+ex.getMessage(), JOptionPane.INFORMATION_MESSAGE);		
+							}
+						}
+			
+		});
 		btnSpasi.setBounds(398, 22, 180, 53);
 		panel_6.add(btnSpasi);
 		

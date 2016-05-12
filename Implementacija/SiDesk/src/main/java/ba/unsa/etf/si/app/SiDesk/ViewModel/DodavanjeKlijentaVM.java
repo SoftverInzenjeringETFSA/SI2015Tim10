@@ -1,20 +1,32 @@
 package ba.unsa.etf.si.app.SiDesk.ViewModel;
 
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+
 import ba.unsa.etf.si.app.SiDesk.Model.Klijent;
+import ba.unsa.etf.si.app.SiDesk.Model.Korisnik;
+import ba.unsa.etf.si.app.SiDesk.Model.TipKorisnika;
+import ba.unsa.etf.si.app.SiDesk.Util.HibernateUtil;
 
 public class DodavanjeKlijentaVM {
 
-	public static boolean dodajKlijenta(Klijent klijent) {
+	public static boolean dodajKlijenta(String ime, String prezime, String brojTelefona, String zaposlenje ) {
 		
 		try {
 			// ovdje bi moglo po telefonskom idu
 			//klijenti.add(klijent);
+			
+			Session s1 = (Session) HibernateUtil.getSessionFactory().openSession();
+	       Transaction tt = s1.beginTransaction();
+	        Klijent k= new Klijent (ime, prezime, brojTelefona, 0, zaposlenje); 
+	        s1.save(k);
+	        tt.commit();
 		}
 		
 		catch (Exception e) {
 			e.printStackTrace();
 			return false;
 		}
-		return true;
+             return true;
 	}
 }
