@@ -5,6 +5,7 @@ import java.util.Set;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
@@ -17,7 +18,7 @@ public class Klijent implements java.io.Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	long id;
 	
 	@OneToMany(mappedBy="klijent")

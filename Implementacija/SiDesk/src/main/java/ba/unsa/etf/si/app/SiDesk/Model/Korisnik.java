@@ -8,6 +8,7 @@ import ba.unsa.etf.si.app.SiDesk.Model.TipKorisnika;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -25,7 +26,7 @@ public class Korisnik implements java.io.Serializable{
 	private static final long serialVersionUID = -9013585257542864310L;
 
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	long id;
 	public long getId() {
 		return id;
@@ -57,11 +58,8 @@ public class Korisnik implements java.io.Serializable{
 	private String adresa;
 	private String email;
 	private Date datumZaposlenja;
-private String tipKorisnika;
 	private String korisnickoIme;
 	private String sifra;
-	
-	
 
 	public Korisnik() {
 		
@@ -69,7 +67,7 @@ private String tipKorisnika;
 	
 	public Korisnik(String  ime, String prezime, String brojTelefona, 
 			        String jmbg, String brojLicneKarte, String adresa,
-			        String email, Date datumZaposlenja, String tipkorisnika,
+			        String email, Date datumZaposlenja, TipKorisnika tipkorisnika,
 			        String korisnickoIme) {
 		
 		
@@ -81,7 +79,7 @@ private String tipKorisnika;
 		this.adresa=adresa;
 		this.email=email;
 		this.datumZaposlenja=datumZaposlenja;
-		this.tipKorisnika=tipkorisnika;        
+		this.tipkorisnika=tipkorisnika;        
 		this.korisnickoIme=korisnickoIme;
 		this.sifra=generisiLozinku(); // jedinstven ili ne, baza
 	}
@@ -169,14 +167,6 @@ private String tipKorisnika;
 	}
 	
 	// logika za password treba biti u ovoj klasi ovo je ideja
-
-	public String getTipkorisnika() {
-		return tipKorisnika;
-	}
-
-	public void setTipkorisnika(String tipkorisnika) {
-		this.tipKorisnika = tipkorisnika;
-	}
 
 	public Operater getOperater_korisnik() {
 		return operater_korisnik;

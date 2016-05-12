@@ -30,10 +30,12 @@ public class DodavanjeKorisnikaVM {
 			try{
 	
 				
+				//naci tip korisnika preko imena
+				TipKorisnika tip = null;
 				
 		        Transaction t = s.beginTransaction();
 		        Korisnik k= new Korisnik (ime, prezime, brojTelefona, jmbg, brojLicne, adresa, email, datumZaposljenja,
-		        		tipkorisnika, username);
+		        		tip, username);
 		        s.save(k);
 		        t.commit();
 				System.out.println("Uspjesno dodan korisnik");
