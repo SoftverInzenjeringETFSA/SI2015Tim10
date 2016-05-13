@@ -12,6 +12,7 @@ import ba.unsa.etf.si.app.SiDesk.Util.HibernateUtil;
 
 import org.hibernate.Criteria;
 import org.hibernate.Transaction;
+import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Restrictions;
 
 public class DodavanjePitanjaVM {
@@ -50,7 +51,7 @@ public class DodavanjePitanjaVM {
 			Session session = (Session) HibernateUtil.getSessionFactory().openSession();
 	        Transaction tr =  session.beginTransaction();
 			
-	        Criteria criteria = session.createCriteria(Pitanje.class).add(Restrictions.like("pitanje", kljucnaRijec).ignoreCase());
+	        Criteria criteria = session.createCriteria(Pitanje.class).add(Restrictions.like("pitanje", kljucnaRijec, MatchMode.ANYWHERE).ignoreCase());
 		    lista = criteria.list();
 			
 			}

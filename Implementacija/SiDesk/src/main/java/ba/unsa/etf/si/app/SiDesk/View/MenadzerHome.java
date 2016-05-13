@@ -246,10 +246,20 @@ public class MenadzerHome {
 			listaPitanja = DodavanjePitanjaVM.pretraziPitanja(kljucnaRijec);
 			
 	// jos napravit dodavanje u tabeluuu
-			DefaultTableModel modelt = new DefaultTableModel();
-			modelt.addRow(new Object[]{listaPitanja.get(0).getPitanje(), listaPitanja.get(0).getOdgovor()});
-		//	modelt.addRow(listaPitanja.get(0).getPitanje(), listaPitanja.get(0).getOdgovor());
-			tabela_pitanja.setModel(modelt);
+			
+			String[][] tabelaPitanja = new String[listaPitanja.size()][2];
+			for(int i = 0; i < listaPitanja.size(); i++)
+			{
+				tabelaPitanja[i][0] = listaPitanja.get(i).getPitanje();
+				tabelaPitanja[i][1] = listaPitanja.get(i).getOdgovor();
+			}
+			
+			tabela_pitanja.setModel(new DefaultTableModel(
+					tabelaPitanja,
+					new String[] {
+						"Pitanja", "Odgovori"
+					}
+				));
 		
 			}
 		});
