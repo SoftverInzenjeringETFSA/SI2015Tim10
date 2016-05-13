@@ -361,19 +361,18 @@ public class MenadzerHome {
 		mnNewMenu.add(mntmIzvjetajPoKategoriji);
 		
 		JMenu mnDodajPitanje = new JMenu("Dodaj pitanje");
+				
+		menuBar.add(mnDodajPitanje);
 		
-		mnDodajPitanje.addMenuListener(new MenuListener() {
-			public void menuCanceled(MenuEvent e) {
-			}
-			public void menuDeselected(MenuEvent e) {
-			}
-			public void menuSelected(MenuEvent e) {
-				MenadzerDodajPitanje window = new MenadzerDodajPitanje();		
+		JMenuItem mntmDodajPitanje = new JMenuItem("Dodaj pitanje");
+		mntmDodajPitanje.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				MenadzerDodajPitanje window= new MenadzerDodajPitanje();
 				window.frmDodajPitanje.setVisible(true);
+				
 			}
 		});
-		
-		menuBar.add(mnDodajPitanje);
+		mnDodajPitanje.add(mntmDodajPitanje);
 	}
 
 	protected void addNewCategory(String putanja, String imeKategorije){
