@@ -13,6 +13,7 @@ import ba.unsa.etf.si.app.SiDesk.ViewModel.DodavanjeKategorijeVM;
 import ba.unsa.etf.si.app.SiDesk.ViewModel.TrazenjeKategorijeVM;
 
 import java.awt.event.ActionListener;
+import java.util.List;
 import java.awt.event.ActionEvent;
 import java.awt.ComponentOrientation;
 
@@ -64,7 +65,16 @@ public class MenadzerDodavanjeKategorije {
 		
 		final Choice choice = new Choice();
 		choice.setBounds(170, 32, 300, 22);
-		choice.addItem("Software/MS office/Word/");
+		//choice.addItem("Software/MS office/Word/");
+		List<Kategorija> kategorije = TrazenjeKategorijeVM.nadjiKategorije();
+		for(int i = 0; i < kategorije.size(); i++)
+		{
+			String putanjaChoice = new String();
+			if(kategorije.get(i).getPutanja() != null)
+				putanjaChoice = kategorije.get(i).getPutanja();
+			putanjaChoice += kategorije.get(i).getIme() + "/";
+			choice.addItem(putanjaChoice);
+		}
 		frmDodavanjeKategorije.getContentPane().add(choice);
 		
 		
