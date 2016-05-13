@@ -32,6 +32,8 @@ import javax.swing.tree.TreePath;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.event.MenuListener;
+import javax.swing.event.TreeModelEvent;
+import javax.swing.event.TreeModelListener;
 import javax.swing.event.MenuEvent;
 import ba.unsa.etf.si.app.SiDesk.Model.Kategorija;
 import ba.unsa.etf.si.app.SiDesk.Model.Pitanje;
@@ -39,7 +41,15 @@ import ba.unsa.etf.si.app.SiDesk.View.MenadzerDodavanjeKategorije;
 import ba.unsa.etf.si.app.SiDesk.ViewModel.BrisanjeKategorijeVM;
 import ba.unsa.etf.si.app.SiDesk.ViewModel.DodavanjeKategorijeVM;
 import ba.unsa.etf.si.app.SiDesk.ViewModel.DodavanjePitanjaVM;
+import ba.unsa.etf.si.app.SiDesk.ViewModel.ModifikacijaKategorijeVM;
 import ba.unsa.etf.si.app.SiDesk.ViewModel.TrazenjeKategorijeVM;
+import javax.swing.event.TreeSelectionListener;
+import javax.swing.event.TreeSelectionEvent;
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeEvent;
+import java.beans.VetoableChangeListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class MenadzerHome {
 	private JFrame frmMenadzerHome;
@@ -48,7 +58,7 @@ public class MenadzerHome {
 	protected JMenuItem mntmobrisiKategoriju;
 	private JTree tree;
 	protected String putanja;
-	
+	static String kliknutiCvorString;
 	private JTextField textField_pretragaPitanja;
 
 	/**
@@ -91,8 +101,8 @@ public class MenadzerHome {
 		frmMenadzerHome.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmMenadzerHome.getContentPane().setLayout(null);
 	
-		
 		tree = new JTree();
+		
 		tree.setBounds(10, 90, 198, 395);
 		tree.setModel(new DefaultTreeModel(
 			new DefaultMutableTreeNode("Kategorije") {
@@ -117,6 +127,34 @@ public class MenadzerHome {
 			}
 		));
 		
+		tree.getModel().addTreeModelListener(new TreeModelListener() {
+			public void treeStructureChanged(TreeModelEvent e) {
+			}
+			public void treeNodesRemoved(TreeModelEvent e) {
+			}
+			public void treeNodesInserted(TreeModelEvent e) {
+			}
+			public void treeNodesChanged(TreeModelEvent e) {
+				//spasavanje editovanog cvora u bazi
+				//trazenje kliknutog elementa
+	        	//getSelectionPath ne radi u funkcijama addCategory i slicno
+	        	DefaultMutableTreeNode model = (DefaultMutableTreeNode)tree.getSelectionPath().getLastPathComponent();
+	        	putanja = new String();
+	        	//trazenje putanje
+	        	TreeNode[] s = model.getPath();
+	        	for(int i = 1; i < s.length-1; i++)//zanemari root
+	        	{
+	        			putanja += s[i].toString() + "/";
+	        	}
+	        	//nalazenje imena starog cvora
+	        	String staroImeKategorije = kliknutiCvorString;
+	        	
+	        	if(putanja == "") putanja = null;
+	        	String novoImeKategorije = s[s.length-1].toString();
+	        	System.out.println("Putanja" + putanja + " staro ime " + staroImeKategorije + " novo: " + novoImeKategorije);;
+	        	ModifikacijaKategorijeVM.modifikacijaKategorije(putanja, staroImeKategorije, novoImeKategorije);
+			}
+		});
 		tree.setEditable(true);
 		//treba povezati event mijenjanja cvora sa bazom
 		
@@ -139,7 +177,6 @@ public class MenadzerHome {
 		        	for(int i = 1; i < s.length; i++)//zanemari root
 		        	{
 		        			putanja += s[i].toString() + "/";
-		        		//System.out.println(s[i].toString());
 		        	}
 		        	//dodavanje na formu
 		        	DefaultTreeModel model1 = (DefaultTreeModel) tree.getModel();
@@ -415,6 +452,8 @@ public class MenadzerHome {
 	
 	private static void addPopup(final JTree tree, final JPopupMenu popup) {		
 		tree.addMouseListener(new MouseAdapter() {
+			
+
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if(SwingUtilities.isRightMouseButton(e))
@@ -425,10 +464,13 @@ public class MenadzerHome {
 						tree.setSelectionPath(selPath); 
 						if (selRow>-1){
 							tree.setSelectionRow(selRow);
-							//index = selRow;
 							popup.show(e.getComponent(), e.getX(), e.getY());
 							mousePressed(e);
 						}
+				} else if(SwingUtilities.isLeftMouseButton(e))
+				{
+					TreePath selPath = tree.getPathForLocation(e.getX(), e.getY());
+					kliknutiCvorString = selPath.getLastPathComponent().toString();
 				}
 			}
 		});
