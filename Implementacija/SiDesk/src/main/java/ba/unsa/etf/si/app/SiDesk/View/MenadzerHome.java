@@ -387,12 +387,21 @@ public class MenadzerHome {
 
 	protected void addNewCategory(String putanja, String imeKategorije){
 		//pozivanje VM za dodavanje kategorije
+		String imeParentKategorija = null;
+		String putanjaParentKategorija = null;
+		if(putanja.length() > 0)
+		{
+			imeParentKategorija = putanja.substring(0,putanja.length()-1);
+			imeParentKategorija = imeParentKategorija.substring(imeParentKategorija.lastIndexOf("/") + 1);
 		
-		String imeParentKategorija = putanja.substring(0,putanja.length()-1);
-	    imeParentKategorija = imeParentKategorija.substring(imeParentKategorija.lastIndexOf("/") + 1);
-		String putanjaParentKategorija = putanja.substring(0, putanja.length()-imeParentKategorija.length()-1);
-					
+			if(putanja.length() - imeParentKategorija.length()-1 > 0)
+			{
+				putanjaParentKategorija = putanja.substring(0, putanja.length() - imeParentKategorija.length()-1);
+			} 
+		}			
 		System.out.println(imeParentKategorija);
+		
+		if(putanja == "") putanja = null;
 
 		Kategorija parent = TrazenjeKategorijeVM.nadjiKategoriju(putanjaParentKategorija, imeParentKategorija);
 		DodavanjeKategorijeVM.dodajKategoriju(putanja, imeKategorije, parent);

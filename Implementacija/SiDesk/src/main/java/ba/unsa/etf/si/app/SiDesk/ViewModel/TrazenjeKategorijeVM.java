@@ -19,9 +19,11 @@ public class TrazenjeKategorijeVM {
 		try {
 			Session session = (Session) HibernateUtil.getSessionFactory().openSession();
 	        Transaction t = session.beginTransaction();
+	        if(putanja != null)
 		    criteria = session.createCriteria(Kategorija.class).add(Restrictions.like("ime", ime).ignoreCase()).add(Restrictions.like("putanja", putanja).ignoreCase());
-	
-			lista = criteria.list();
+	        else if(ime != null)criteria = session.createCriteria(Kategorija.class).add(Restrictions.like("ime", ime).ignoreCase());
+	        else return null;
+	        lista = criteria.list();
 
 			t.commit();	
 			session.close();
