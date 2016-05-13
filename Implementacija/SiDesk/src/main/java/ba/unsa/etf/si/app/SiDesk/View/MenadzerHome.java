@@ -409,6 +409,7 @@ public class MenadzerHome {
 	}
 	
 	protected void deleteCategory(String putanja, String ime) {
+		if(putanja == "") putanja = null;
 	    BrisanjeKategorijeVM.obrisiKategoriju(putanja, ime);
 	  }
 	
