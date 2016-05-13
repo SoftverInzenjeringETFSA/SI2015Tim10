@@ -119,15 +119,10 @@ public class MenadzerDodajPitanje {
 					//detektuje da li je pritisnuto na item
 					
 					TreePath selPath = tree.getPathForLocation(e.getX(), e.getY());
-						tree.setSelectionPath(selPath); 
-						if (selRow>-1)
-						{
-							tree.setSelectionRow(selRow);
-							//index = selRow;
-							
-							editorPane.setEditable(true);
-							editorPane_1.setEditable(true);
-						}
+					tree.setSelectionPath(selPath); 
+					tree.setSelectionRow(selRow);
+					editorPane.setEditable(true);
+					editorPane_1.setEditable(true);
 				}
 			}
 		});
@@ -155,12 +150,23 @@ public class MenadzerDodajPitanje {
 				p.setPutanja(putanja);
 				
 				
-				String imeParentKategorija = putanja.substring(0,putanja.length()-1);
-			    imeParentKategorija = imeParentKategorija.substring(imeParentKategorija.lastIndexOf("/") + 1);
-				String putanjaParentKategorija = putanja.substring(0, putanja.length()-imeParentKategorija.length()-1);
-							
+				String imeParentKategorija = null;
+				String putanjaParentKategorija = null;
+				if(putanja.length() > 0)
+				{
+					imeParentKategorija = putanja.substring(0,putanja.length()-1);
+					imeParentKategorija = imeParentKategorija.substring(imeParentKategorija.lastIndexOf("/") + 1);
+				
+					if(putanja.length() - imeParentKategorija.length()-1 > 0)
+					{
+						putanjaParentKategorija = putanja.substring(0, putanja.length() - imeParentKategorija.length()-1);
+					} 
+				}			
+				System.out.println(imeParentKategorija);
+				
+				if(putanja == "") putanja = null;
 				Kategorija parent = TrazenjeKategorijeVM.nadjiKategoriju(putanjaParentKategorija, imeParentKategorija);
-			    p.setKategorija_pitanja(parent);
+				p.setKategorija_pitanja(parent);
 
 				DodavanjePitanjaVM.dodajPitanje(p);
 				
