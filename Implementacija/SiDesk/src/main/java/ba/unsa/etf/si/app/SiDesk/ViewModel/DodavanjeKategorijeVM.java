@@ -3,6 +3,7 @@ package ba.unsa.etf.si.app.SiDesk.ViewModel;
 import java.util.Date;
 import java.util.List;
 
+import javax.swing.JOptionPane;
 
 import org.hibernate.Criteria;
 import org.hibernate.Session;
@@ -14,7 +15,7 @@ import ba.unsa.etf.si.app.SiDesk.Util.HibernateUtil;
 
 public class DodavanjeKategorijeVM {
 	
-	public static boolean dodajKategoriju(String putanja, String kategorija) {
+	public static boolean dodajKategoriju(String putanja, String kategorija, Kategorija parent) {
 		try {
 		
 			Session sesija = (Session) HibernateUtil.getSessionFactory().openSession();
@@ -23,13 +24,10 @@ public class DodavanjeKategorijeVM {
 	        Kategorija k= new Kategorija();
 	        k.setIme(kategorija);
 	        k.setPutanja(putanja);
-	      //  k.setParentId();
-	        
-	        
-	        
+	        k.setParentId(parent);
+	        	        
 	        sesija.save(k);
-			tr.commit();
-			
+			tr.commit();			
 		}
 		catch (Exception e) {
 			e.printStackTrace();

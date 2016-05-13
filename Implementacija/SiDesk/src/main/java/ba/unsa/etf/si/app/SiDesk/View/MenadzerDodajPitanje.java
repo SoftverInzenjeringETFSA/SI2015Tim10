@@ -9,10 +9,14 @@ import javax.swing.JLabel;
 import javax.swing.JTree;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
+import javax.swing.tree.TreeNode;
 import javax.swing.tree.TreePath;
 
+import java.util.List;
+import ba.unsa.etf.si.app.SiDesk.Model.Kategorija;
 import ba.unsa.etf.si.app.SiDesk.Model.Pitanje;
 import ba.unsa.etf.si.app.SiDesk.ViewModel.DodavanjePitanjaVM;
+import ba.unsa.etf.si.app.SiDesk.ViewModel.TrazenjeKategorijeVM;
 
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -80,40 +84,27 @@ public class MenadzerDodajPitanje {
 		editorPane_1.setEditable(false);
 		frmDodajPitanje.getContentPane().add(editorPane_1);
 		
-		JButton btnNewButton = new JButton("Spasi pitanje");
-		btnNewButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				Pitanje p=new Pitanje();
-				p.setPitanje(editorPane.getText());
-				p.setOdgovor(editorPane_1.getText());
-			//	p.setPutanja();
-				
-				DodavanjePitanjaVM.dodajPitanje(p);
-				
-			}
-		});
-		btnNewButton.setBounds(465, 355, 153, 23);
-		frmDodajPitanje.getContentPane().add(btnNewButton);
-		
-		JButton btnIzadji = new JButton("Izlaz");
-		    btnIzadji.addActionListener(new ActionListener() {
-		        public void actionPerformed(ActionEvent e) {
-		        	frmDodajPitanje.setVisible(false);
-		        }
-
-		});
-		btnIzadji.setBounds(282, 354, 153, 23);
-		frmDodajPitanje.getContentPane().add(btnIzadji);
 		
 		final JTree tree = new JTree();
 		tree.setModel(new DefaultTreeModel(
-			new DefaultMutableTreeNode("Software") {
+			new DefaultMutableTreeNode("Kategorije") {
 				{
-					DefaultMutableTreeNode node_1;
-					node_1 = new DefaultMutableTreeNode("MS Office");
-						node_1.add(new DefaultMutableTreeNode("Excel\t"));
-						node_1.add(new DefaultMutableTreeNode("Word"));
-					add(node_1);
+					boolean flag = false;
+					
+					List<Kategorija> lista = TrazenjeKategorijeVM.nadjiKategorije();
+					
+					DefaultMutableTreeNode[] drvo = new DefaultMutableTreeNode[lista.size()];
+					for(int i = 0; i < lista.size(); i++){
+						drvo[i] = new DefaultMutableTreeNode(lista.get(i).getIme());
+						flag = false;
+						for(int j = 0; j < lista.size(); j++){
+							if(lista.get(i).getParentId()==lista.get(j)){
+								drvo[j].add(drvo[i]);
+								flag = true;
+							}
+						}
+						if(!flag) add(drvo[i]);
+					}
 				}
 			}
 		));
@@ -141,10 +132,54 @@ public class MenadzerDodajPitanje {
 			}
 		});
 		
-		
-		
 		tree.setBounds(10, 47, 209, 331);
 		frmDodajPitanje.getContentPane().add(tree);
+		
+		
+		JButton btnNewButton = new JButton("Spasi pitanje");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				DefaultMutableTreeNode model = (DefaultMutableTreeNode)tree.getSelectionPath().getLastPathComponent();
+	        	String putanja = new String();
+	        	//trazenje putanje
+	        	TreeNode[] s = model.getPath();
+	        	for(int i = 1; i < s.length; i++)//zanemari root
+	        	{
+        			putanja += s[i].toString() + "/";
+	        	}
+				
+				Pitanje p = new Pitanje();
+				p.setPitanje(editorPane.getText());
+				p.setOdgovor(editorPane_1.getText());
+				p.setPutanja(putanja);
+				
+				
+				String imeParentKategorija = putanja.substring(0,putanja.length()-1);
+			    imeParentKategorija = imeParentKategorija.substring(imeParentKategorija.lastIndexOf("/") + 1);
+				String putanjaParentKategorija = putanja.substring(0, putanja.length()-imeParentKategorija.length()-1);
+							
+				Kategorija parent = TrazenjeKategorijeVM.nadjiKategoriju(putanjaParentKategorija, imeParentKategorija);
+			    p.setKategorija_pitanja(parent);
+
+				DodavanjePitanjaVM.dodajPitanje(p);
+				
+			}
+		});
+		btnNewButton.setBounds(465, 355, 153, 23);
+		frmDodajPitanje.getContentPane().add(btnNewButton);
+		
+		JButton btnIzadji = new JButton("Izlaz");
+		    btnIzadji.addActionListener(new ActionListener() {
+		        public void actionPerformed(ActionEvent e) {
+		        	frmDodajPitanje.setVisible(false);
+		        }
+
+		});
+		btnIzadji.setBounds(282, 354, 153, 23);
+		frmDodajPitanje.getContentPane().add(btnIzadji);
+		
+		
 	}
 
 }

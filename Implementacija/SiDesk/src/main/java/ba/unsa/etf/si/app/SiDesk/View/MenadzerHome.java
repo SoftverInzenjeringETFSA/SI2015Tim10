@@ -6,11 +6,7 @@ import java.awt.event.InputMethodListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -29,25 +25,20 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.MutableTreeNode;
-import javax.swing.tree.TreeModel;
+
 import javax.swing.tree.TreeNode;
 import javax.swing.tree.TreePath;
-
-import org.hibernate.Criteria;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
-import org.hibernate.criterion.Restrictions;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.event.MenuListener;
 import javax.swing.event.MenuEvent;
-
 import ba.unsa.etf.si.app.SiDesk.Model.Kategorija;
-import ba.unsa.etf.si.app.SiDesk.Util.HibernateUtil;
+import ba.unsa.etf.si.app.SiDesk.Model.Pitanje;
 import ba.unsa.etf.si.app.SiDesk.View.MenadzerDodavanjeKategorije;
 import ba.unsa.etf.si.app.SiDesk.ViewModel.BrisanjeKategorijeVM;
 import ba.unsa.etf.si.app.SiDesk.ViewModel.DodavanjeKategorijeVM;
+import ba.unsa.etf.si.app.SiDesk.ViewModel.DodavanjePitanjaVM;
 import ba.unsa.etf.si.app.SiDesk.ViewModel.TrazenjeKategorijeVM;
 
 public class MenadzerHome {
@@ -58,7 +49,7 @@ public class MenadzerHome {
 	private JTree tree;
 	protected String putanja;
 	
-	private JTextField textField;
+	private JTextField textField_pretragaPitanja;
 
 	/**
 	 * Launch the application.
@@ -122,27 +113,6 @@ public class MenadzerHome {
 						}
 						if(!flag) add(drvo[i]);
 					}
-					//add(drvo[0]);
-					
-					
-					/*DefaultMutableTreeNode node_1;
-					DefaultMutableTreeNode node_2;
-					DefaultMutableTreeNode node_3;
-					node_1 = new DefaultMutableTreeNode("Software");
-						node_2 = new DefaultMutableTreeNode("MS Office");
-							node_3 = new DefaultMutableTreeNode("MS Word");
-								node_3.add(new DefaultMutableTreeNode("Editovanje teksta"));
-							node_2.add(node_3);
-							node_2.add(new DefaultMutableTreeNode("MS Excel"));
-						node_1.add(node_2);
-					add(node_1);
-					node_1 = new DefaultMutableTreeNode("Hardware");
-						node_2 = new DefaultMutableTreeNode("Mainboard");
-							node_2.add(new DefaultMutableTreeNode("RAM"));
-							node_2.add(new DefaultMutableTreeNode("CPU"));
-						node_1.add(node_2);
-					add(node_1);
-					add(new DefaultMutableTreeNode("Ostalo"));*/
 				}
 			}
 		));
@@ -150,12 +120,11 @@ public class MenadzerHome {
 		tree.setEditable(true);
 		//treba povezati event mijenjanja cvora sa bazom
 		
-		//popuniStablo(tree, root, root.child);
 		
 		frmMenadzerHome.getContentPane().add(tree);
 		
 		JPopupMenu popupMenu = new JPopupMenu();
-		//novo
+		
 		ActionListener menuListener = new ActionListener() {
 		      public void actionPerformed(ActionEvent event) {
 		        if(event.getActionCommand() == "Dodaj kategoriju"){
@@ -183,7 +152,7 @@ public class MenadzerHome {
 		    		model1.insertNodeInto(newNode, node, node.getChildCount());
 		        	
 		        	System.out.println("Dodavanje putanja " + putanja);
-		        	addNewCategory(putanja, "Nova kategorija");     	
+		        	addNewCategory(putanja, "Nova kategorija");     	// provjeriti
 		        }
 		        else if(event.getActionCommand() == "Dodaj pitanje"){
 		        	//dodavanje pitanja
@@ -234,20 +203,18 @@ public class MenadzerHome {
 		mntmobrisiKategoriju = new JMenuItem("Obriši kategoriju");
 		mntmobrisiKategoriju.addActionListener(menuListener);
 		popupMenu.add(mntmobrisiKategoriju);
-		
-		
-		
-		textField = new JTextField();
-		textField.setBounds(10, 28, 447, 26);
-		textField.addInputMethodListener(new InputMethodListener() {
+			
+		textField_pretragaPitanja = new JTextField();
+		textField_pretragaPitanja.setBounds(10, 28, 447, 26);
+		textField_pretragaPitanja.addInputMethodListener(new InputMethodListener() {
 			public void caretPositionChanged(InputMethodEvent arg0) {
 			}
 			public void inputMethodTextChanged(InputMethodEvent arg0) {
 				
 			}
 		});
-		frmMenadzerHome.getContentPane().add(textField);
-		textField.setColumns(10);
+		frmMenadzerHome.getContentPane().add(textField_pretragaPitanja);
+		textField_pretragaPitanja.setColumns(10);
 		
 		JLabel lblMenader = new JLabel("Kategorije");
 		lblMenader.setBounds(10, 64, 60, 26);
@@ -257,20 +224,11 @@ public class MenadzerHome {
 		lblPretragaPitanjaPo.setBounds(10, 11, 156, 14);
 		frmMenadzerHome.getContentPane().add(lblPretragaPitanjaPo);
 		ImageIcon ikona = new ImageIcon("src/main/resources/toolbar_find.png");
-		JButton btnNewButton = new JButton(ikona);
-		btnNewButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				
-			}
-		});
-		btnNewButton.setBounds(479, 28, 27, 26);
-		frmMenadzerHome.getContentPane().add(btnNewButton);
+	
+		JScrollPane scrollPane = new JScrollPane();		
 		
-		JScrollPane scrollPane = new JScrollPane();
-		
-		
-		JTable table = new JTable();
-		table.setModel(new DefaultTableModel(
+		final JTable tabela_pitanja = new JTable();
+		tabela_pitanja.setModel(new DefaultTableModel(
 			new Object[][] {
 				{"Kako se instalira MS Office", "Instalira se .."},
 				{"Kako se pokrece MS Office", "Pokrece se.."},
@@ -279,7 +237,27 @@ public class MenadzerHome {
 				"Pitanja", "Odgovori"
 			}
 		));
-		scrollPane.setViewportView(table);
+		
+		JButton btnNewButton = new JButton(ikona);
+		btnNewButton.addActionListener(new ActionListener() {
+		public void actionPerformed(ActionEvent e) {
+			String kljucnaRijec = textField_pretragaPitanja.getText();
+			List<Pitanje> listaPitanja= new ArrayList<Pitanje>(); 
+			listaPitanja = DodavanjePitanjaVM.pretraziPitanja(kljucnaRijec);
+			
+	// jos napravit dodavanje u tabeluuu
+			DefaultTableModel modelt = new DefaultTableModel();
+			modelt.addRow(new Object[]{listaPitanja.get(0).getPitanje(), listaPitanja.get(0).getOdgovor()});
+		//	modelt.addRow(listaPitanja.get(0).getPitanje(), listaPitanja.get(0).getOdgovor());
+			tabela_pitanja.setModel(modelt);
+		
+			}
+		});
+		
+		btnNewButton.setBounds(479, 28, 27, 26);
+		frmMenadzerHome.getContentPane().add(btnNewButton);
+		
+		scrollPane.setViewportView(tabela_pitanja);
 		
 		scrollPane.setBounds(236, 90, 427, 395);
 		frmMenadzerHome.getContentPane().add(scrollPane);
@@ -400,7 +378,16 @@ public class MenadzerHome {
 
 	protected void addNewCategory(String putanja, String imeKategorije){
 		//pozivanje VM za dodavanje kategorije
-		DodavanjeKategorijeVM.dodajKategoriju(putanja, imeKategorije);
+		
+		String imeParentKategorija = putanja.substring(0,putanja.length()-1);
+	    imeParentKategorija = imeParentKategorija.substring(imeParentKategorija.lastIndexOf("/") + 1);
+		String putanjaParentKategorija = putanja.substring(0, putanja.length()-imeParentKategorija.length()-1);
+					
+		System.out.println(imeParentKategorija);
+
+		Kategorija parent = TrazenjeKategorijeVM.nadjiKategoriju(putanjaParentKategorija, imeParentKategorija);
+		DodavanjeKategorijeVM.dodajKategoriju(putanja, imeKategorije, parent);
+		
 	}
 	
 	protected void deleteCategory(String putanja, String ime) {
@@ -427,4 +414,4 @@ public class MenadzerHome {
 			}
 		});
 	}
-}
+};

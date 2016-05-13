@@ -10,9 +10,11 @@ import javax.swing.JTextField;
 
 import ba.unsa.etf.si.app.SiDesk.Model.Kategorija;
 import ba.unsa.etf.si.app.SiDesk.ViewModel.DodavanjeKategorijeVM;
+import ba.unsa.etf.si.app.SiDesk.ViewModel.TrazenjeKategorijeVM;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.ComponentOrientation;
 
 public class MenadzerDodavanjeKategorije {
 
@@ -62,7 +64,7 @@ public class MenadzerDodavanjeKategorije {
 		
 		final Choice choice = new Choice();
 		choice.setBounds(170, 32, 300, 22);
-		choice.addItem("Software");
+		choice.addItem("Software/MS office/Word/");
 		frmDodavanjeKategorije.getContentPane().add(choice);
 		
 		
@@ -77,8 +79,15 @@ public class MenadzerDodavanjeKategorije {
 				
 				String kategorija = textField.getText();
 				String putanja = choice.getSelectedItem();
+				String imeParentKategorija = putanja.substring(0,putanja.length()-1);
+			    imeParentKategorija = imeParentKategorija.substring(imeParentKategorija.lastIndexOf("/") + 1);
+				String putanjaParentKategorija = putanja.substring(0, putanja.length()-imeParentKategorija.length()-1);
+							
+			System.out.println(imeParentKategorija);
+		
+			Kategorija parent = TrazenjeKategorijeVM.nadjiKategoriju(putanjaParentKategorija, imeParentKategorija);
+				DodavanjeKategorijeVM.dodajKategoriju(putanja, kategorija, parent);
 				
-				DodavanjeKategorijeVM.dodajKategoriju(kategorija, putanja);
 				
 			}
 		});
