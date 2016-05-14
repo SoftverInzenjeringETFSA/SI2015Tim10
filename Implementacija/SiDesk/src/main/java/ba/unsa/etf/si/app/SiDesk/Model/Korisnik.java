@@ -67,8 +67,8 @@ public class Korisnik implements java.io.Serializable{
 	
 	public Korisnik(String  ime, String prezime, String brojTelefona, 
 			        String jmbg, String brojLicneKarte, String adresa,
-			        String email, Date datumZaposlenja, TipKorisnika tipkorisnika,
-			        String korisnickoIme) {
+			        String email, Date datumZaposlenja, TipKorisnika tk,
+			        String korisnickoIme, Operater o) {
 		
 		
 		this.ime=ime;
@@ -79,9 +79,11 @@ public class Korisnik implements java.io.Serializable{
 		this.adresa=adresa;
 		this.email=email;
 		this.datumZaposlenja=datumZaposlenja;
-		this.tipkorisnika=tipkorisnika;        
+		this.setTipkorisnika(tk);        
 		this.korisnickoIme=korisnickoIme;
-		this.sifra=generisiLozinku(); // jedinstven ili ne, baza
+		this.sifra=generisiLozinku();// jedinstven ili ne, baza
+		this.operater_korisnik=o;
+		
 	}
 	
 	public String getIme() {
@@ -204,6 +206,17 @@ public class Korisnik implements java.io.Serializable{
 		}
 		
 		return new String(result);
+	}
+	public String toString() {
+		return this.getIme()+" "+this.getPrezime();
+	}
+
+	public TipKorisnika getTipkorisnika() {
+		return tipkorisnika;
+	}
+
+	public void setTipkorisnika(TipKorisnika tipkorisnika) {
+		this.tipkorisnika = tipkorisnika;
 	}
 	
 

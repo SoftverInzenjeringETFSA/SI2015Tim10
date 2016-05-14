@@ -2,11 +2,15 @@ package ba.unsa.etf.si.app.SiDesk.View;
 
 import java.awt.Color;
 import java.awt.EventQueue;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.AbstractListModel;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.DefaultListModel;
 import javax.swing.GroupLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -14,6 +18,7 @@ import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
@@ -22,14 +27,23 @@ import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.border.LineBorder;
 
+import org.hibernate.Session;
+
+import ba.unsa.etf.si.app.SiDesk.Model.Korisnik;
+import ba.unsa.etf.si.app.SiDesk.Model.TipKorisnika;
+import ba.unsa.etf.si.app.SiDesk.Util.HibernateUtil;
 import ba.unsa.etf.si.app.SiDesk.View.AdminDodavanjeKorisnika;
 import ba.unsa.etf.si.app.SiDesk.View.AdminUredjivanjeKorisnika;
+import ba.unsa.etf.si.app.SiDesk.ViewModel.BrisanjeKorisnikaVM;
+import ba.unsa.etf.si.app.SiDesk.ViewModel.ModifikacijaKorisnikaVM;
+import ba.unsa.etf.si.app.SiDesk.ViewModel.PretragaKorisnikaJedinstvenaVM;
+import ba.unsa.etf.si.app.SiDesk.ViewModel.PretragaKorisnikaNejedinstvenaVM;
 
 public class AdminHome {
 
 	private JFrame frmManager;
-	private JTextField textField_pretragaKorisnika;
-	private JTextField textField;
+	private JTextField textField_ime;
+	private JTextField textField_prezime;
 	private JTextField textField_1;
 
 	/**
@@ -67,18 +81,11 @@ public class AdminHome {
 		ImageIcon ikona = new ImageIcon("src/main/resources/toolbar_find.png");
 		
 		JLabel lblRezultatiPretrage = new JLabel("Korisnici:");
-		
-		JList list_korisnici = new JList();
+		final DefaultListModel model = new DefaultListModel();
+		 final JList list_korisnici = new JList(model);
 		list_korisnici.setBorder(new LineBorder(Color.GRAY));
-		list_korisnici.setModel(new AbstractListModel() {
-			String[] values = new String[] {"Hasan Hasani\u0107", "James Bond", "Korisnik Korisnikovi\u0107", ""};
-			public int getSize() {
-				return values.length;
-			}
-			public Object getElementAt(int index) {
-				return values[index];
-			}
-		});
+		
+	
 		list_korisnici.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		
 		JButton btnIzmjeni = new JButton("Izmjeni");
@@ -86,14 +93,55 @@ public class AdminHome {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					AdminUredjivanjeKorisnika window = new AdminUredjivanjeKorisnika();
+					
+					if(list_korisnici.getSelectedIndex()!=-1)
+					{
+					AdminUredjivanjeKorisnika.lista(list_korisnici);
 					window.frmUredjivanjekorisnika.setVisible(true);
+					}
+					else
+					{
+						JOptionPane.showMessageDialog(null, "Greska, nije odabran nijedan korisnik!","Info", JOptionPane.INFORMATION_MESSAGE);	
+						
+					}
+						
+				
+					
+					
+					
 				} catch (Exception e1) {
 					e1.printStackTrace();
+					
 				}
 			}
 		});
 		
+		
 		JButton btnObriši = new JButton("Obri\u0161i");
+		btnObriši.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				try
+				{
+					if(list_korisnici.getSelectedIndex()!=-1)
+					{
+						
+				Session sesija= HibernateUtil.getSessionFactory().openSession();
+				BrisanjeKorisnikaVM.BrisiKorisnika(sesija,list_korisnici);
+				
+				JOptionPane.showMessageDialog(null, "Korisnik je uspješno obrisan","Info", JOptionPane.INFORMATION_MESSAGE);	
+			
+					}
+					else
+					{
+						JOptionPane.showMessageDialog(null, "Greska pri brisanju, nije odabran nijedan korisnik!","Info", JOptionPane.INFORMATION_MESSAGE);	
+						
+					}
+					}
+			catch(Exception ex){
+				JOptionPane.showMessageDialog(null, "Greska pri brisanju korisnika", "Info " , JOptionPane.INFORMATION_MESSAGE);		
+			}
+			}
+		});
 		
 		JButton btnDodajNovog = new JButton("Dodaj novog");
 		btnDodajNovog.addActionListener(new ActionListener() {
@@ -132,7 +180,7 @@ public class AdminHome {
 		panel_1.setBorder(new LineBorder(new Color(128, 128, 128), 1, true));
 		
 		textField_1 = new JTextField();
-		textField_1.setToolTipText("Ime Korisnika");
+		textField_1.setToolTipText("JMBG");
 		textField_1.setColumns(10);
 		textField_1.setBounds(107, 11, 106, 20);
 		panel_1.add(textField_1);
@@ -140,6 +188,27 @@ public class AdminHome {
 		JButton button_2 = new JButton(ikona);
 		button_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				try{
+					if(list_korisnici.getModel().getSize() != 0)
+					{
+						model.clear();
+					}
+						
+					//Validacija unesenih podataka...
+					Session sesija= HibernateUtil.getSessionFactory().openSession();
+
+		
+					Korisnik k= new Korisnik();
+									
+				 k=PretragaKorisnikaJedinstvenaVM.pretraziKorisnikaJMBG(sesija,textField_1.getText());
+					//iz meni nepoznatog razloga ne prihvaca (Date)dateChooser_datumZaposlenja.getDate()
+				
+				model.addElement(k);
+			   
+			    		}
+							catch(Exception ex){
+								JOptionPane.showMessageDialog(null, "Nepostoji korisnik sa takvim JMBG", "Info " + "Error"+ex.getMessage(), JOptionPane.INFORMATION_MESSAGE);		
+							}
 			}
 		});
 		
@@ -210,19 +279,62 @@ public class AdminHome {
 		);
 		panel.setLayout(null);
 		
-		textField_pretragaKorisnika = new JTextField();
-		textField_pretragaKorisnika.setBounds(107, 11, 106, 20);
-		panel.add(textField_pretragaKorisnika);
-		textField_pretragaKorisnika.setToolTipText("Ime Korisnika");
-		textField_pretragaKorisnika.setColumns(10);
+		textField_ime = new JTextField();
+		textField_ime.setBounds(107, 11, 106, 20);
+		panel.add(textField_ime);
+		textField_ime.setToolTipText("Ime korisnika");
+		textField_ime.setColumns(10);
+
+		final JComboBox comboBox_tipKorisnika = new JComboBox();
+		comboBox_tipKorisnika.setModel(new DefaultComboBoxModel(new String[] {"Administrator", "Menadzer", "Obicni korisnik"}));
+		comboBox_tipKorisnika.setBounds(107, 77, 106, 20);
+		panel.add(comboBox_tipKorisnika);
 		
 		JButton btnNewButton_pretrazi = new JButton(ikona);
 		btnNewButton_pretrazi.setBounds(223, 11, 30, 20);
 		panel.add(btnNewButton_pretrazi);
 		btnNewButton_pretrazi.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				if(textField_ime.getText()!="")
+				{
+				try{
+					
+					//Validacija unesenih podataka...
+	
+	if(list_korisnici.getModel().getSize() != 0)
+	{
+		model.clear();
+	}
+					Session sesija= HibernateUtil.getSessionFactory().openSession();
+
+		
+				
+					
+					
+									
+					List<Korisnik> k=PretragaKorisnikaNejedinstvenaVM.pretraziKorisnikaPoImenu(sesija,textField_ime.getText());
+					//iz meni nepoznatog razloga ne prihvaca (Date)dateChooser_datumZaposlenja.getDate()
+					for (Korisnik p : k) {
+						model.addElement(p);
+
+					}
+					
+			    	
+			    sesija.close();
+								//JOptionPane.showMessageDialog(null, "Korisnik je uspješno dodan","Info", JOptionPane.INFORMATION_MESSAGE);	
+							}
+							catch(Exception ex){
+								JOptionPane.showMessageDialog(null, "Nepostoji korisnik sa takvim imenom", "Info " + "Error"+ex.getMessage(), JOptionPane.INFORMATION_MESSAGE);		
+							}
+				
 			}
-		});
+			else
+			{
+				JOptionPane.showMessageDialog(null, "Unesite ime", "Info " , JOptionPane.INFORMATION_MESSAGE);		
+
+			}
+				
+		}});
 
 		
 		JLabel lblIme = new JLabel("Ime:");
@@ -235,27 +347,102 @@ public class AdminHome {
 		lblPrezime.setBounds(22, 49, 75, 14);
 		panel.add(lblPrezime);
 		
-		textField = new JTextField();
-		textField.setToolTipText("Ime Korisnika");
-		textField.setColumns(10);
-		textField.setBounds(107, 46, 106, 20);
-		panel.add(textField);
+		textField_prezime = new JTextField();
+		textField_prezime.setToolTipText("Prezime korisnika");
+		textField_prezime.setColumns(10);
+		textField_prezime.setBounds(107, 46, 106, 20);
+		panel.add(textField_prezime);
 		
 		JLabel lblTipKorisnika = new JLabel("Tip korisnika:");
 		lblTipKorisnika.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblTipKorisnika.setBounds(10, 80, 87, 14);
 		panel.add(lblTipKorisnika);
 		
-		JComboBox comboBox = new JComboBox();
-		comboBox.setModel(new DefaultComboBoxModel(new String[] {"Administrator", "Menad\u017Eer", "Obi\u010Dni korisnik"}));
-		comboBox.setBounds(107, 77, 106, 20);
-		panel.add(comboBox);
 		
 		JButton button = new JButton(ikona);
+		button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				if(textField_prezime.getText()!="")
+				{
+				if(list_korisnici.getModel().getSize() != 0)
+				{
+					model.clear();
+				}
+				
+				try{
+				
+								Session sesija= HibernateUtil.getSessionFactory().openSession();
+
+					
+							
+								
+								
+												
+								List<Korisnik> k=PretragaKorisnikaNejedinstvenaVM.pretraziKorisnikaPoPrezimenu(sesija,textField_prezime.getText() );
+								//iz meni nepoznatog razloga ne prihvaca (Date)dateChooser_datumZaposlenja.getDate()
+								for (Korisnik p : k) {
+									model.addElement(p);
+									//JOptionPane.showMessageDialog(null, p.getIme(),"Info", JOptionPane.INFORMATION_MESSAGE);	
+
+								}
+								
+						    	
+						    
+											//JOptionPane.showMessageDialog(null, "Korisnik je uspješno dodan","Info", JOptionPane.INFORMATION_MESSAGE);	
+										}
+			
+										catch(Exception ex){
+											JOptionPane.showMessageDialog(null, "Nepostoji korisnik sa takvim prezimenom", "Info " + "Error"+ex.getMessage(), JOptionPane.INFORMATION_MESSAGE);		
+										}
+				}
+				else
+				{
+					JOptionPane.showMessageDialog(null, "Unesite prezime", "Info " , JOptionPane.INFORMATION_MESSAGE);		
+
+				}
+				
+			
+							
+				
+			}
+		});
 		button.setBounds(223, 45, 30, 20);
 		panel.add(button);
 		
 		JButton button_1 = new JButton(ikona);
+		button_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(list_korisnici.getModel().getSize() != 0)
+				{
+					model.clear();
+				}
+				try{
+								Session sesija= HibernateUtil.getSessionFactory().openSession();
+
+					
+							
+								
+								
+			
+								List<Korisnik> k=PretragaKorisnikaNejedinstvenaVM.pretraziKorisnikaPoTipu(sesija,comboBox_tipKorisnika.getSelectedItem().toString());
+								//iz meni nepoznatog razloga ne prihvaca (Date)dateChooser_datumZaposlenja.getDate()
+								for (Korisnik p : k) {
+									model.addElement(p);
+									//JOptionPane.showMessageDialog(null, p.getIme(),"Info", JOptionPane.INFORMATION_MESSAGE);	
+
+								}
+								
+						    	
+						    
+											//JOptionPane.showMessageDialog(null, "Korisnik je uspješno dodan","Info", JOptionPane.INFORMATION_MESSAGE);	
+										}
+			
+										catch(Exception ex){
+											JOptionPane.showMessageDialog(null, ex.getMessage(), "Info " + "Error"+ex.getMessage(), JOptionPane.INFORMATION_MESSAGE);		
+										}
+				
+			}
+		});
 		button_1.setBounds(223, 77, 30, 20);
 		panel.add(button_1);
 		frmManager.getContentPane().setLayout(groupLayout);

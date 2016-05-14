@@ -11,6 +11,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.swing.JOptionPane;
 
 @Entity
 @Table(name="tipKorisnika")
@@ -54,8 +55,21 @@ public class TipKorisnika implements java.io.Serializable{
 	public TipKorisnika() {	}
 	
 	private void postaviTipKorisnika(String tip) {
-		if(tip.equals("Menadžer")) this.tipKorisnika="Menadžer";
-		if(tip.equals("Administrator")) this.tipKorisnika="Administrator";
-		if(tip.equals("Obični korisnik")) this.tipKorisnika="Obični korisnik";
+		
+		if(tip.equals("Menadzer"))
+{
+			
+			this.tipKorisnika="Menadzer";
+			
+}
+		if(tip.equals("Administrator")){
+			this.tipKorisnika="Administrator";
+		}
+		if(tip.equals("Obicni korisnik"))
+			{
+			
+			this.tipKorisnika="Obicni korisnik";
+		
+			}
 	}
 }

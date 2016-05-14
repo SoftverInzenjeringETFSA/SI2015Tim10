@@ -57,6 +57,11 @@ public class Operater implements Serializable{
 		this.ime = ime;
 		this.adresa = adresa;
 	}
+	public Operater(String ime)
+	{
+		this.ime=ime;
+	
+	}
 	
 	public Set<Korisnik> getKorisnici() {
 		return korisnici;

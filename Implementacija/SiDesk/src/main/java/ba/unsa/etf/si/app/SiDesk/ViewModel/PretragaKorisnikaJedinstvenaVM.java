@@ -1,27 +1,32 @@
 package ba.unsa.etf.si.app.SiDesk.ViewModel;
 
+import java.util.List;
+
+import javax.swing.JOptionPane;
+
+import org.hibernate.Criteria;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+import org.hibernate.criterion.Restrictions;
+
 import ba.unsa.etf.si.app.SiDesk.Model.Korisnik;
 
 public class PretragaKorisnikaJedinstvenaVM {
 
-	public static Korisnik pretraziKorisnikaJMBG(String jmbg) {
-
-		Korisnik k = new Korisnik(); // nako stavila
-		try {
-
-			/*
-			 * for (Korisnik k : korisnici) { if(k.getJmbg().equals(jmbg)) {
-			 * return k; } }
-			 */
-
-		} catch (Exception e) {
-			e.printStackTrace();
-			// ovo onako stavila
-			return new Korisnik();
-		}
-
-		return k; // nako stavila
-
+	
+	public static Korisnik pretraziKorisnikaJMBG(Session s, String jmbg) {
+		
+		Transaction t = s.beginTransaction();
+		Criteria criteria = s.createCriteria(Korisnik.class).add(Restrictions.like("jmbg", jmbg).ignoreCase());
+		
+		List<Korisnik> lista = criteria.list();
+		
+		Korisnik k = lista.get(0);
+		t.commit();
+		return k;
+		
+		// TODO Auto-generated method stub
+		
 	}
 
 }

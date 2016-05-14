@@ -1,29 +1,68 @@
 package ba.unsa.etf.si.app.SiDesk.ViewModel;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+import javax.swing.JOptionPane;
+
+import org.hibernate.Criteria;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+import org.hibernate.criterion.Restrictions;
 
 import ba.unsa.etf.si.app.SiDesk.Model.Korisnik;
 import ba.unsa.etf.si.app.SiDesk.Model.TipKorisnika;
 
 public class PretragaKorisnikaNejedinstvenaVM {
 	
-public static ArrayList<Korisnik> pretraziKorisnikaImePrezimeTip(String ime, String prezime, TipKorisnika tip) {
+
+
+public static List<Korisnik> pretraziKorisnikaPoImenu(Session sesija, String ime) {
+	
+	Transaction t = sesija.beginTransaction();
+	
+	Criteria criteria = sesija.createCriteria(Korisnik.class).add(Restrictions.like("ime", ime).ignoreCase());
 		
-		ArrayList<Korisnik> rezultatPretrage = new ArrayList<Korisnik>();
+	List<Korisnik> lista = criteria.list();
+	t.commit();
+	if(lista.isEmpty())return Collections.emptyList();
+	return lista;
+	
+
+	 
+}
+public static List<Korisnik> pretraziKorisnikaPoPrezimenu(Session sesija, String prezime) {
+	
+	Transaction t = sesija.beginTransaction();
+	
+	
+		Criteria criteria = sesija.createCriteria(Korisnik.class).add(Restrictions.like("prezime", prezime).ignoreCase());		
+		List<Korisnik> lista = criteria.list();
+		//t.commit();
+		if(lista.isEmpty())return Collections.emptyList();
+		return lista;
 		
-		try {
-			/*for (Korisnik k : korisnici) {
-				if(k.getIme().equals(ime) || k.getPrezime().equals(prezime) || k.getTipKorisnika().equals(tip))
-					rezultatPretrage.add(k);
-			}*/
-		} catch (Exception e) {
-			e.printStackTrace();
-			// vraca praznu listu?
-		}
-		
-		
-		return rezultatPretrage;
-	}
+	 
+}
+
+public static List<Korisnik> pretraziKorisnikaPoTipu(Session sesija, String tip) {
+	
+	Transaction t = sesija.beginTransaction();
+	
+
+	TipKorisnika tipk = (TipKorisnika) sesija.createCriteria(TipKorisnika.class).add(Restrictions.eq("tipKorisnika", tip)).uniqueResult();
+	
+	Criteria criteria1 = sesija.createCriteria(Korisnik.class).add(Restrictions.eq("tipkorisnika", tipk));		
+	List<Korisnik> lista = criteria1.list();
+
+	
+	//t.commit();
+	if(lista.isEmpty())return Collections.emptyList();
+	return lista;
+
+}
+
 	
 
 }

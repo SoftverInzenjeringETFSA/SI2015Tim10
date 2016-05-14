@@ -24,11 +24,14 @@ import org.hibernate.Session;
 //import JDatePicker;
 import com.toedter.calendar.JDateChooser;
 
+import ba.unsa.etf.si.app.SiDesk.Model.TipKorisnika;
 import ba.unsa.etf.si.app.SiDesk.Util.HibernateUtil;
 import ba.unsa.etf.si.app.SiDesk.ViewModel.DodavanjeKorisnikaVM;
-
+import ba.unsa.etf.si.app.SiDesk.Validation.Validator;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 
 public class AdminDodavanjeKorisnika {
 
@@ -173,6 +176,10 @@ public class AdminDodavanjeKorisnika {
 		textField_email.setBounds(131, 210, 186, 20);
 		textField_email.setToolTipText("");
 		textField_email.setColumns(10);
+
+		final JDateChooser dateChooser_datumZaposlenja = new JDateChooser();
+		dateChooser_datumZaposlenja.setDateFormatString("YYYY-MM-d");
+		dateChooser_datumZaposlenja.setBounds(131, 68, 186, 20);
 		
 		JLabel lblEmail = new JLabel("eMail:");
 		lblEmail.setBounds(11, 213, 102, 14);
@@ -180,8 +187,10 @@ public class AdminDodavanjeKorisnika {
 		
 		final JComboBox comboBox_tipKorisnika = new JComboBox();
 		comboBox_tipKorisnika.setBounds(131, 239, 186, 20);
-		comboBox_tipKorisnika.setModel(new DefaultComboBoxModel(new String[] {"Administrator", "Menad\u017Eer", "Obi\u010Dni korisnik"}));
-		
+		comboBox_tipKorisnika.setModel(new DefaultComboBoxModel(new String[] {"Administrator", "Menadzer", "Obicni korisnik"}));
+		final JComboBox comboBox_tipOperatera = new JComboBox();
+		comboBox_tipOperatera.setModel(new DefaultComboBoxModel(new String[] {"Foca", "Ustikolina", "Petrovac", "Gacko"}));
+        
 		JLabel lblTipKorisnika = new JLabel("Tip korisnika:");
 		lblTipKorisnika.setBounds(11, 242, 102, 14);
 		lblTipKorisnika.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -218,6 +227,27 @@ public class AdminDodavanjeKorisnika {
 		btnDodajKorisnika.setBounds(53, 355, 127, 23);
 		btnDodajKorisnika.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				String s1 = ((JTextField)dateChooser_datumZaposlenja.getDateEditor().getUiComponent()).getText();
+				if (s1.equals("")) {
+				    JOptionPane.showMessageDialog(null, "Unesite ispravan datum!", "Info", JOptionPane.ERROR_MESSAGE);
+				}
+				int g =dateChooser_datumZaposlenja.getDate().getYear()+1;
+				int m=dateChooser_datumZaposlenja.getDate().getMonth()-6;
+				int day=dateChooser_datumZaposlenja.getDate().getDay()-11;
+				Date d=new Date(g,m,day);
+					
+
+		if(!Validator.validirajIme(textField_ime.getText()) || !Validator.validirajPrezime(textField_prezime.getText()) ||
+				!Validator.validairajJMBG(textField_jmbg.getText()) || !Validator.validirajBrojTelefona(textField_brojTelefona.getText()) ||
+				!Validator.validirajEmail(textField_email.getText()) || !Validator.validirajBrojLicneKarte(textField_brojLicneKarte.getText())
+					||	!Validator.validirajDatumZaposlenja(d))
+				{
+			JOptionPane.showMessageDialog(null, "Unijeli ste pogresne podatke!","Info", JOptionPane.INFORMATION_MESSAGE);	
+
+				}
+		else
+		{
+				
 	try{
 					
 		//Validacija unesenih podataka...
@@ -227,31 +257,34 @@ public class AdminDodavanjeKorisnika {
 		
 		Session s= HibernateUtil.getSessionFactory().openSession();			
 					
-					String tipKorisnika;	
-					if( comboBox_tipKorisnika.getSelectedItem().toString()=="Administrator") tipKorisnika = "Administrator";
-					else if( comboBox_tipKorisnika.getSelectedItem().toString()=="Menadžer") tipKorisnika="Menadžer";
-					else tipKorisnika="Obični korisnik";
-
-				
+					String tipKorisnika = comboBox_tipKorisnika.getSelectedItem().toString();
 					
+					String imeOperatera=comboBox_tipOperatera.getSelectedItem().toString();
+					
+					
+					
+					
+
+								
 	DodavanjeKorisnikaVM.DodajKorisnika
 	(s,textField_ime.getText(), textField_prezime.getText(), textField_jmbg.getText(),
 								textField_brojTelefona.getText(), textField_email.getText(),
 								textField_username.getText(),  textField_password.getText(),
 								textField_adresa.getText(), 
 								 textField_brojLicneKarte.getText(),
-								 new Date(01,01,2016),tipKorisnika
+								d,tipKorisnika, imeOperatera
 								);
 	
-		//iz meni nepoznatog razloga ne prihvaca (Date)dateChooser_datumZaposlenja.getDate()
-				
-					JOptionPane.showMessageDialog(null, "Korisnik je uspješno dodan","Info", JOptionPane.INFORMATION_MESSAGE);	
+		
+		PonistiPolja();
+				JOptionPane.showMessageDialog(null, "Korisnik je uspješno dodan","Info", JOptionPane.INFORMATION_MESSAGE);	
 				}
 				catch(Exception ex){
-					JOptionPane.showMessageDialog(null, "Greška u dodavanju", "Info " + "Error"+ex.getMessage(), JOptionPane.INFORMATION_MESSAGE);		
+					JOptionPane.showMessageDialog(null, "Greška u dodavanju da", "Info " + "Error"+ex.getMessage(), JOptionPane.ERROR_MESSAGE);		
 				}
 			}
 			
+		}
 		});
 		
 		JLabel lblAdresa = new JLabel("Adresa:");
@@ -300,8 +333,6 @@ public class AdminDodavanjeKorisnika {
 		lblDatumZaposljenja.setBounds(11, 73, 102, 14);
 		panel_dodavanjeKorisnika.add(lblDatumZaposljenja);
 		
-		JDateChooser dateChooser_datumZaposlenja = new JDateChooser();
-		dateChooser_datumZaposlenja.setBounds(131, 68, 186, 20);
 		panel_dodavanjeKorisnika.add(dateChooser_datumZaposlenja);
 		
 		JDateChooser dateChooser_1 = new JDateChooser();
@@ -314,10 +345,7 @@ public class AdminDodavanjeKorisnika {
 		panel_dodavanjeKorisnika.add(lblTipOperatera);
 		
 
-        String[] items = new String[] {"Foča", "Ustikolina", "Petrovac", "Gacko"};
-		JComboBox comboBox_tipOperatera = new JComboBox(items);
-		comboBox_tipOperatera.setModel(new DefaultComboBoxModel(new String[] {"Foča", "Ustikolina", "Petrovac", "Gacko"}));
-        
+		
 		comboBox_tipOperatera.setBounds(131, 268, 186, 20);
 		panel_dodavanjeKorisnika.add(comboBox_tipOperatera);
 		frmDodavanjeNovogKorisnika.getContentPane().setLayout(groupLayout);

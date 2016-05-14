@@ -5,7 +5,7 @@ import java.util.Date;
 import java.util.regex.Pattern;
 
 // posebno implementirati validacije za jedinstvenost
-class Validator {
+public class Validator {
 	
 	private static final int brojZnakovaJmbg = 13;
 	private static final int minBrojZnakovaLicnaKarta = 9;
