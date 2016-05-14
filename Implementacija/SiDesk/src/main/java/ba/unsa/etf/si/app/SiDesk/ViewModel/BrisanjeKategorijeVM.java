@@ -44,7 +44,10 @@ public class BrisanjeKategorijeVM {
 				//pretraga pitanja djece	
 				//session.delete(listaDjece.get(i));
 				children = session.createCriteria(Pitanje.class).add(Restrictions.like("kategorija_pitanja", listaDjece.get(i)));
-				listaPitanja.addAll(children.list());
+				if(children.list().size() != 0) 
+				{
+					listaPitanja.addAll(children.list());
+				}
 			}
 			
 			for(int i = 0; i < listaPitanja.size(); i++)

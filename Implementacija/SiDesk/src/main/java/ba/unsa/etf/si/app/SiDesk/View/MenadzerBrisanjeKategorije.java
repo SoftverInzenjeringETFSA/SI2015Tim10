@@ -8,10 +8,20 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
+import ba.unsa.etf.si.app.SiDesk.Model.Kategorija;
+import ba.unsa.etf.si.app.SiDesk.ViewModel.BrisanjeKategorijeVM;
+import ba.unsa.etf.si.app.SiDesk.ViewModel.TrazenjeKategorijeVM;
+
+import java.util.List;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import java.awt.Color;
+
+
 public class MenadzerBrisanjeKategorije {
 
 	protected JFrame frmBrisanjeKategorije;
-	private JTextField textField;
+	private JTextField textField_imeKategorije;
 
 	/**
 	 * Launch the application.
@@ -50,25 +60,76 @@ public class MenadzerBrisanjeKategorije {
 		lblImeKategorije.setBounds(28, 65, 130, 30);
 		frmBrisanjeKategorije.getContentPane().add(lblImeKategorije);
 		
+		final JLabel lblPoruka = new JLabel("Pogrešna kategorija, unesite ponovo");
+		lblPoruka.setForeground(Color.RED);
+		lblPoruka.setBounds(180, 97, 248, 14);
+		lblPoruka.setVisible(false);
+		frmBrisanjeKategorije.getContentPane().add(lblPoruka);
+		
 		JLabel lblNewLabel = new JLabel("Scenarij");
 		lblNewLabel.setBounds(30, 32, 101, 20);
 		frmBrisanjeKategorije.getContentPane().add(lblNewLabel);
 		
-		Choice choice = new Choice();
-		choice.setBounds(170, 32, 300, 22);
-		choice.addItem("Software");
-		frmBrisanjeKategorije.getContentPane().add(choice);
+		final Choice choice_brisanjeKategorije = new Choice();
+		choice_brisanjeKategorije.setBounds(170, 32, 300, 22);
+		
+		List<Kategorija> kategorije = TrazenjeKategorijeVM.nadjiKategorije();
+		for(int i = 0; i < kategorije.size(); i++)
+		{
+			String putanjaChoice = new String();
+			if(kategorije.get(i).getPutanja() != null)
+				putanjaChoice = kategorije.get(i).getPutanja();
+
+			choice_brisanjeKategorije.addItem(putanjaChoice);
+		}		
+		frmBrisanjeKategorije.getContentPane().add(choice_brisanjeKategorije);
 		
 		
-		textField = new JTextField();
-		textField.setBounds(170, 70, 300, 20);
-		frmBrisanjeKategorije.getContentPane().add(textField);
-		textField.setColumns(10);
+		textField_imeKategorije = new JTextField();
+		textField_imeKategorije.setBounds(170, 75, 300, 20);
+		frmBrisanjeKategorije.getContentPane().add(textField_imeKategorije);
+		textField_imeKategorije.setColumns(10);
 		
 		JButton btnDodajKategoriju = new JButton("Obri\u0161i kategoriju");
+		btnDodajKategoriju.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				String kategZaBrisanje = textField_imeKategorije.getText();
+				String putanja = choice_brisanjeKategorije.getSelectedItem();
+				Kategorija k = TrazenjeKategorijeVM.nadjiKategoriju(putanja, kategZaBrisanje);
+				
+			 if	(k != null)
+			 {
+				
+				BrisanjeKategorijeVM.obrisiKategoriju(putanja, kategZaBrisanje); 
+				
+				List<Kategorija> kategorije = TrazenjeKategorijeVM.nadjiKategorije();
+				for(int i = 0; i < kategorije.size(); i++)
+				{
+					String putanjaChoice = new String();
+					if(kategorije.get(i).getPutanja() != null)
+						putanjaChoice = kategorije.get(i).getPutanja();
+
+					choice_brisanjeKategorije.addItem(putanjaChoice);
+					
+				}
+				
+				lblPoruka.setVisible(false);
+				
+			 }
+			 
+			 else
+			 {
+				 lblPoruka.setVisible(true);
+			 }
+				
+				
+			}
+		});
 		
 		btnDodajKategoriju.setBounds(301, 122, 169, 23);
 		frmBrisanjeKategorije.getContentPane().add(btnDodajKategoriju);
+		
+		
 	}
-
 }
