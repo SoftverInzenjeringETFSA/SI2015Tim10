@@ -3,6 +3,7 @@ package ba.unsa.etf.si.app.SiDesk.View;
 import java.awt.Color;
 import java.awt.EventQueue;
 
+import javax.swing.AbstractButton;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -18,17 +19,28 @@ import javax.swing.JTextField;
 import javax.swing.JTree;
 import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumn;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
+import javax.swing.tree.TreeNode;
+import javax.swing.tree.TreePath;
 
 import org.hibernate.Session;
 
+import com.mysql.jdbc.Connection;
+import com.mysql.jdbc.PreparedStatement;
 import com.toedter.calendar.JDateChooser;
 import com.toedter.calendar.JTextFieldDateEditor;
 
+import ba.unsa.etf.si.app.SiDesk.Model.Kategorija;
+import ba.unsa.etf.si.app.SiDesk.Model.Pitanje;
 import ba.unsa.etf.si.app.SiDesk.Util.HibernateUtil;
 import ba.unsa.etf.si.app.SiDesk.ViewModel.DodavanjeKlijentaVM;
 import ba.unsa.etf.si.app.SiDesk.ViewModel.DodavanjeKorisnikaVM;
+import ba.unsa.etf.si.app.SiDesk.ViewModel.DodavanjePitanjaVM;
+import ba.unsa.etf.si.app.SiDesk.ViewModel.ModifikacijaKategorijeVM;
+import ba.unsa.etf.si.app.SiDesk.ViewModel.PretragaPitanjaVM;
+import ba.unsa.etf.si.app.SiDesk.ViewModel.TrazenjeKategorijeVM;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -39,11 +51,19 @@ import java.awt.event.FocusEvent;
 import java.awt.event.ItemEvent;
 import java.beans.PropertyChangeListener;
 import java.sql.Date;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.text.DateFormat;
+import java.util.Calendar;
+import java.util.List;
 import java.beans.PropertyChangeEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+
+
 
 public class KorisnikHome {
 
@@ -56,8 +76,10 @@ public class KorisnikHome {
 	private JTextField textField_4;
 	private JTextField textField_5;
 	private JTextField textField_7;
-	private JTable table;
+	private JTable table_2;
 	private JTable table_1;
+	protected String putanja;
+	protected String kliknutiCvorString;
 
 	private JDateChooser dateChooser;
 
@@ -102,6 +124,7 @@ public class KorisnikHome {
 		else return true;
 	
 	}
+	
 	
 	/*
 	public boolean provjeri_tabelu()
@@ -183,31 +206,7 @@ public class KorisnikHome {
 					tabbedPane.setEnabledAt(m, false);
 				}
 			}
-		});
-	/*	textField.addPropertyChangeListener(new PropertyChangeListener() {
-			public void propertyChange(PropertyChangeEvent arg0) {
-				if(provjeri())
-				{
-					int n = tabbedPane.indexOfTab("Scenarij");
-					tabbedPane.setEnabledAt(n, true);
-					int m = tabbedPane.indexOfTab("Ostali podaci");
-					tabbedPane.setEnabledAt(m, true);
-					
-				}
-				else
-				{
-
-					int n = tabbedPane.indexOfTab("Scenarij");
-					tabbedPane.setEnabledAt(n, false);
-					int m = tabbedPane.indexOfTab("Ostali podaci");
-					tabbedPane.setEnabledAt(m, false);
-				}
-
-			}
 		});	
-		
-		*/
-		
 		textField.setBounds(263, 8, 265, 20);
 		panel_3.add(textField);
 		textField.setColumns(10);
@@ -432,6 +431,14 @@ public class KorisnikHome {
 		dateChooser.setBounds(263, 105, 265, 20);
 		panel_3.add(dateChooser);
 		
+		JButton btnPretraga = new JButton("Pretraga");
+		btnPretraga.setBounds(538, 7, 89, 23);
+		panel_3.add(btnPretraga);
+		
+		JButton button = new JButton("Pretraga");
+		button.setBounds(538, 32, 89, 23);
+		panel_3.add(button);
+		
 		JLabel lblUnosPodataka = new JLabel("Unos podataka");
 		lblUnosPodataka.setBounds(10, 55, 124, 14);
 		panel_1.add(lblUnosPodataka);
@@ -454,11 +461,7 @@ public class KorisnikHome {
 
 			}
 		});
-		table_1.addPropertyChangeListener(new PropertyChangeListener() {
-			public void propertyChange(PropertyChangeEvent evt) {
-								
-			}
-		});
+	
 		table_1.setModel(new DefaultTableModel(
 			new Object[][] {
 				{"Almedin", "Velija", "aaaaa", "111", "111", "aaaa"},
@@ -598,28 +601,71 @@ public class KorisnikHome {
 
 				panel.setLayout(null);
 		
-		JTree tree = new JTree();
+		final JTree tree = new JTree();
+		tree.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				TreePath selPath = tree.getPathForLocation(e.getX(), e.getY());
+				int selRow = tree.getRowForLocation(e.getX(), e.getY());
+				if(selRow > -1){ 
+					DefaultMutableTreeNode model = (DefaultMutableTreeNode)tree.getSelectionPath().getLastPathComponent();
+		        	putanja = new String();
+		        	//trazenje putanje
+		        	TreeNode[] s = model.getPath();
+		        	for(int i = 1; i < s.length-1; i++)//zanemari root
+		        	{
+		        			putanja += s[i].toString() + "/";
+		        	}
+		        	
+					kliknutiCvorString = selPath.getLastPathComponent().toString();
+					System.out.println("Putanja " + putanja + "cvor " + kliknutiCvorString);
+					String kljucnaRijec = textField_7.getText();
+					Kategorija oznacenaKategorija = TrazenjeKategorijeVM.nadjiKategoriju(putanja, kliknutiCvorString);
+					String putanjaZaKategorije = null;
+					if (oznacenaKategorija == null)  putanjaZaKategorije = "";
+					else if(kliknutiCvorString != null) putanjaZaKategorije = putanja + kliknutiCvorString;
+					
+					List<Pitanje> listaPitanja = DodavanjePitanjaVM.pretraziPitanja(kljucnaRijec, putanjaZaKategorije);
+					
+					//dodavanje u tabelu
+					String[][] tabelaPitanja = new String[listaPitanja.size()][2];
+					for(int i = 0; i < listaPitanja.size(); i++)
+					{
+						tabelaPitanja[i][0] = listaPitanja.get(i).getPitanje();
+						tabelaPitanja[i][1] = listaPitanja.get(i).getOdgovor();
+					}
+					
+					table_2.setModel(new DefaultTableModel(
+							tabelaPitanja,
+							new String[] {
+								"Pitanja", "Odgovori"
+							}
+						));
+				}	
+				
+			}
+		});
 		tree.setBorder(new LineBorder(new Color(0, 0, 0), 1, true));
 		tree.setModel(new DefaultTreeModel(
 			new DefaultMutableTreeNode("Kategorija") {
 				{
-					DefaultMutableTreeNode node_1;
-					DefaultMutableTreeNode node_2;
-					node_1 = new DefaultMutableTreeNode("Word");
-						node_2 = new DefaultMutableTreeNode("Formatiranje teksta");
-							node_2.add(new DefaultMutableTreeNode("Promjena boje"));
-							node_2.add(new DefaultMutableTreeNode("Promjena fonta"));
-						node_1.add(node_2);
-						node_1.add(new DefaultMutableTreeNode("Dodavanje tabele"));
-						node_1.add(new DefaultMutableTreeNode("Printanje"));
-					add(node_1);
-					node_1 = new DefaultMutableTreeNode("Excel");
-						node_1.add(new DefaultMutableTreeNode("basketball"));
-						node_1.add(new DefaultMutableTreeNode("soccer"));
-						node_1.add(new DefaultMutableTreeNode("football"));
-						node_1.add(new DefaultMutableTreeNode("hockey"));
-					add(node_1);
-					add(new DefaultMutableTreeNode(""));
+					boolean flag = false;
+					
+					List<Kategorija> lista = TrazenjeKategorijeVM.nadjiKategorije();
+					
+					DefaultMutableTreeNode[] drvo = new DefaultMutableTreeNode[lista.size()];
+					for(int i = 0; i < lista.size(); i++){
+						drvo[i] = new DefaultMutableTreeNode(lista.get(i).getIme());
+						flag = false;
+						for(int j = 0; j < lista.size(); j++){
+							if(lista.get(i).getParentId() == null ) continue;
+							if(lista.get(i).getParentId()==lista.get(j)){
+								drvo[j].add(drvo[i]);
+								flag = true;
+							}
+						}
+						if(!flag) add(drvo[i]);
+					}
 				}
 			}
 		));
@@ -641,7 +687,36 @@ public class KorisnikHome {
 		panel_8.add(lblPretragaPoRijei);
 		
 		textField_7 = new JTextField();
-		textField_7.setBounds(24, 25, 333, 26);
+	 /*	textField_7.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent arg0) {
+				String kljucnaRijec = textField_7.getText();
+				//provjera je li oznacena kategorija
+				
+				Kategorija oznacenaKategorija = TrazenjeKategorijeVM.nadjiKategoriju(putanja, kliknutiCvorString);
+				String putanjaZaKategorije = null;
+				if (oznacenaKategorija == null)  putanjaZaKategorije = "";
+				else if(kliknutiCvorString != null) putanjaZaKategorije = putanja + kliknutiCvorString;
+				List<Pitanje> listaPitanja = DodavanjePitanjaVM.pretraziPitanja(kljucnaRijec, putanjaZaKategorije);
+				
+				//dodavanje u tabelu
+				String[][] tabelaPitanja = new String[listaPitanja.size()][2];
+				for(int i = 0; i < listaPitanja.size(); i++)
+				{
+					tabelaPitanja[i][0] = listaPitanja.get(i).getPitanje();
+					tabelaPitanja[i][1] = listaPitanja.get(i).getOdgovor();
+				}
+				
+				table_2.setModel(new DefaultTableModel(
+						tabelaPitanja,
+						new String[] {
+							"Pitanja", "Odgovori"
+						}
+					));
+			
+				}
+		}); */
+		textField_7.setBounds(24, 25, 246, 26);
 		panel_8.add(textField_7);
 		textField_7.setColumns(10);
 		
@@ -649,9 +724,9 @@ public class KorisnikHome {
 		scrollPane.setBounds(0, 76, 381, 266);
 		panel_8.add(scrollPane);
 		
-		JTable table = new JTable();
-		table.setBorder(new LineBorder(new Color(0, 0, 0), 1, true));
-		table.setModel(new DefaultTableModel(
+		table_2 = new JTable();
+		table_2.setBorder(new LineBorder(new Color(0, 0, 0), 1, true));
+		table_2.setModel(new DefaultTableModel(
 			new Object[][] {
 				{null, null},
 				{null, null},
@@ -674,7 +749,41 @@ public class KorisnikHome {
 				"Pitanja", "Odgovori"
 			}
 		));
-		scrollPane.setViewportView(table);
+		scrollPane.setViewportView(table_2);
+		
+		JButton btnNewButton_2 = new JButton("Pretraži");
+		btnNewButton_2.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				String kljucnaRijec = textField_7.getText();
+				//provjera je li oznacena kategorija
+				
+				Kategorija oznacenaKategorija = TrazenjeKategorijeVM.nadjiKategoriju(putanja, kliknutiCvorString);
+				String putanjaZaKategorije = null;
+				if (oznacenaKategorija == null)  putanjaZaKategorije = "";
+				else if(kliknutiCvorString != null) putanjaZaKategorije = putanja + kliknutiCvorString;
+				List<Pitanje> listaPitanja = DodavanjePitanjaVM.pretraziPitanja(kljucnaRijec, putanjaZaKategorije);
+				
+				//dodavanje u tabelu
+				String[][] tabelaPitanja = new String[listaPitanja.size()][2];
+				for(int i = 0; i < listaPitanja.size(); i++)
+				{
+					tabelaPitanja[i][0] = listaPitanja.get(i).getPitanje();
+					tabelaPitanja[i][1] = listaPitanja.get(i).getOdgovor();
+				}
+				
+				table_2.setModel(new DefaultTableModel(
+						tabelaPitanja,
+						new String[] {
+							"Pitanja", "Odgovori"
+						}
+					));
+			
+				
+			}
+		});
+		btnNewButton_2.setBounds(280, 25, 89, 25);
+		panel_8.add(btnNewButton_2);
 		
 		JLabel label = new JLabel("Pretraga scenarija");
 		label.setBounds(415, 11, 174, 14);
@@ -749,9 +858,13 @@ public class KorisnikHome {
 					
 					//Validacija unesenih podataka...
 					
-					Session s1= HibernateUtil.getSessionFactory().openSession();			
+					Session s1= HibernateUtil.getSessionFactory().openSession();	
+					
+					int year = Calendar.getInstance().get(Calendar.YEAR);
+                   int staro =  dateChooser.getDate().getYear()+1900;
+                   int starost = year-staro;
 								
-					DodavanjeKlijentaVM.dodajKlijenta(textField.getText(),textField_1.getText(),textField_2.getText(),textField_3.getText());
+					DodavanjeKlijentaVM.dodajKlijenta(textField.getText(),textField_1.getText(),textField_2.getText(),starost,textField_3.getText());
 							
 								JOptionPane.showMessageDialog(null, "Klijent je uspješno dodan","Info", JOptionPane.INFORMATION_MESSAGE);	
 							}
@@ -759,6 +872,10 @@ public class KorisnikHome {
 								JOptionPane.showMessageDialog(null, "Greška u dodavanju", "Info " + "Error"+ex.getMessage(), JOptionPane.INFORMATION_MESSAGE);		
 							}
 						}
+			
+			
+			
+			
 			
 		});
 		btnSpasi.setBounds(398, 22, 180, 53);
@@ -772,5 +889,4 @@ public class KorisnikHome {
 		lblIzlazakIzScenarija.setBounds(20, 11, 120, 14);
 		panel_2.add(lblIzlazakIzScenarija);
 	}
-
 }

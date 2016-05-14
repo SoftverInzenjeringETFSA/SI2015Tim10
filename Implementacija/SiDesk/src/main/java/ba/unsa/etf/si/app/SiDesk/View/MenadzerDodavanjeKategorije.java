@@ -70,6 +70,7 @@ public class MenadzerDodavanjeKategorije {
 		for(int i = 0; i < kategorije.size(); i++)
 		{
 			String putanjaChoice = new String();
+			if(kategorije.get(i).getPutanja() == null) break;
 			if(kategorije.get(i).getPutanja() != null)
 				putanjaChoice = kategorije.get(i).getPutanja();
 			putanjaChoice += kategorije.get(i).getIme() + "/";

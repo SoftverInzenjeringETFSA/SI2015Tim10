@@ -10,15 +10,14 @@ import ba.unsa.etf.si.app.SiDesk.Util.HibernateUtil;
 
 public class DodavanjeKlijentaVM {
 
-	public static boolean dodajKlijenta(String ime, String prezime, String brojTelefona, String zaposlenje ) {
+	public static boolean dodajKlijenta(String ime, String prezime, String brojTelefona, int starost, String zaposlenje ) {
 		
 		try {
-			// ovdje bi moglo po telefonskom idu
-			//klijenti.add(klijent);
+			
 			
 			Session s1 = (Session) HibernateUtil.getSessionFactory().openSession();
 	       Transaction tt = s1.beginTransaction();
-	        Klijent k= new Klijent (ime, prezime, brojTelefona, 0, zaposlenje); 
+	        Klijent k= new Klijent (ime, prezime, brojTelefona, starost, zaposlenje); 
 	        s1.save(k);
 	        tt.commit();
 		}
