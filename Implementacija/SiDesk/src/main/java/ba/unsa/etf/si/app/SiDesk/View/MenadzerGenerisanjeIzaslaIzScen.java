@@ -2,14 +2,25 @@ package ba.unsa.etf.si.app.SiDesk.View;
 
 import java.awt.Choice;
 import java.awt.EventQueue;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.text.ParseException;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JTextField;
+
+import ba.unsa.etf.si.app.SiDesk.ViewModel.GenerisiIzvjestajIzlazakIzScenarija;
+import ba.unsa.etf.si.app.SiDesk.ViewModel.GenerisiIzvjestajVremenskiPeriod;
 
 public class MenadzerGenerisanjeIzaslaIzScen {
 
 	protected JFrame frmGenerisanjeIzvjetaja;
+	private Choice choice;
 
 	/**
 	 * Launch the application.
@@ -49,13 +60,41 @@ public class MenadzerGenerisanjeIzaslaIzScen {
 		lblOperater.setBounds(41, 57, 56, 16);
 		frmGenerisanjeIzvjetaja.getContentPane().add(lblOperater);
 		
-		Choice choice = new Choice();
+		choice = new Choice();
 		choice.setBounds(149, 57, 189, 22);
+		choice.add("Foča");
+		choice.add("Ustikolina");
+		choice.add("Pretrovac");
+		choice.add("Gacko");
 		frmGenerisanjeIzvjetaja.getContentPane().add(choice);
 		
 		JButton btnKreirajIzvjetaj = new JButton("Kreiraj izvje\u0161taj");
 		btnKreirajIzvjetaj.setBounds(200, 102, 138, 25);
 		frmGenerisanjeIzvjetaja.getContentPane().add(btnKreirajIzvjetaj);
+		
+		//generisanje izvještaja
+		btnKreirajIzvjetaj.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String command = e.getActionCommand();
+				
+				if (command.equals("Kreiraj izvje\u0161taj")) {
+					try {
+						GenerisiIzvjestajIzlazakIzScenarija.generisi(choice.getSelectedItem());
+					} catch (MalformedURLException e1) {
+						JOptionPane.showMessageDialog(null, "Izvještaj nije generisan");
+					} catch (IOException e1) {
+						JOptionPane.showMessageDialog(null, "Izvještaj nije generisan");
+					} catch (ParseException e1) {
+						JOptionPane.showMessageDialog(null, "Izvještaj nije generisan");
+
+					}
+
+					JOptionPane.showMessageDialog(null, "Izvještaj je uspješno generisan");
+
+				} 
+					
+			}
+		});
 	}
 
 }
