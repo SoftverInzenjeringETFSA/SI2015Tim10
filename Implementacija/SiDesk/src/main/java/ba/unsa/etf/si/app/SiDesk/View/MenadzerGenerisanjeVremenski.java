@@ -2,16 +2,30 @@ package ba.unsa.etf.si.app.SiDesk.View;
 
 import java.awt.Choice;
 import java.awt.EventQueue;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.text.ParseException;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JSpinner;
+import javax.swing.JTextField;
+
 import com.toedter.calendar.JDateChooser;
+
+import ba.unsa.etf.si.app.SiDesk.ViewModel.GenerisiIzvjestajStarosnaDob;
+import ba.unsa.etf.si.app.SiDesk.ViewModel.GenerisiIzvjestajVremenskiPeriod;
 
 public class MenadzerGenerisanjeVremenski {
 
 	protected JFrame frmKreiranjeIzvjetaja;
+	private Choice choice;
+	private JDateChooser dateChooser;
+	private JDateChooser dateChooser_1;
 
 	/**
 	 * Launch the application.
@@ -51,8 +65,12 @@ public class MenadzerGenerisanjeVremenski {
 		lblOperater.setBounds(52, 36, 56, 16);
 		frmKreiranjeIzvjetaja.getContentPane().add(lblOperater);
 		
-		Choice choice = new Choice();
+		choice = new Choice();
 		choice.setBounds(163, 36, 219, 22);
+		choice.add("Foča");
+		choice.add("Ustikolina");
+		choice.add("Pretrovac");
+		choice.add("Gacko");
 		frmKreiranjeIzvjetaja.getContentPane().add(choice);
 		
 		JLabel lblOd = new JLabel("Od:");
@@ -67,12 +85,38 @@ public class MenadzerGenerisanjeVremenski {
 		btnKreirajIzvjetaj.setBounds(236, 205, 146, 25);
 		frmKreiranjeIzvjetaja.getContentPane().add(btnKreirajIzvjetaj);
 		
-		JDateChooser dateChooser = new JDateChooser();
+		dateChooser = new JDateChooser();
+		dateChooser.setDateFormatString("dd-MM-YYYY");
 		dateChooser.setBounds(163, 90, 219, 20);
 		frmKreiranjeIzvjetaja.getContentPane().add(dateChooser);
 		
-		JDateChooser dateChooser_1 = new JDateChooser();
+		dateChooser_1 = new JDateChooser();
+		dateChooser_1.setDateFormatString("dd-MM-YYYY");
 		dateChooser_1.setBounds(163, 133, 219, 20);
 		frmKreiranjeIzvjetaja.getContentPane().add(dateChooser_1);
+		//generisanje izvještaja
+		btnKreirajIzvjetaj.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String command = e.getActionCommand();
+				
+				if (command.equals("Kreiraj izvje\u0161taj")) {
+					try {
+						GenerisiIzvjestajVremenskiPeriod.generisi(choice.getSelectedItem(),((JTextField)dateChooser.getDateEditor().getUiComponent()).getText(),
+								((JTextField)dateChooser_1.getDateEditor().getUiComponent()).getText());
+					} catch (MalformedURLException e1) {
+						JOptionPane.showMessageDialog(null, "Izvještaj nije generisan");
+					} catch (IOException e1) {
+						JOptionPane.showMessageDialog(null, "Izvještaj nije generisan");
+					} catch (ParseException e1) {
+						JOptionPane.showMessageDialog(null, "Izvještaj nije generisan");
+
+					}
+
+					JOptionPane.showMessageDialog(null, "Izvještaj je uspješno generisan");
+
+				} 
+					
+			}
+		});
 	}
 }
