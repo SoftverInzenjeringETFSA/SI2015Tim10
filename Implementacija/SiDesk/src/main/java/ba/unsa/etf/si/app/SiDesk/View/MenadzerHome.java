@@ -30,10 +30,8 @@ import javax.swing.tree.TreePath;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import javax.swing.event.MenuListener;
 import javax.swing.event.TreeModelEvent;
 import javax.swing.event.TreeModelListener;
-import javax.swing.event.MenuEvent;
 import ba.unsa.etf.si.app.SiDesk.Model.Kategorija;
 import ba.unsa.etf.si.app.SiDesk.Model.Pitanje;
 import ba.unsa.etf.si.app.SiDesk.View.MenadzerDodavanjeKategorije;
@@ -42,13 +40,6 @@ import ba.unsa.etf.si.app.SiDesk.ViewModel.DodavanjeKategorijeVM;
 import ba.unsa.etf.si.app.SiDesk.ViewModel.DodavanjePitanjaVM;
 import ba.unsa.etf.si.app.SiDesk.ViewModel.ModifikacijaKategorijeVM;
 import ba.unsa.etf.si.app.SiDesk.ViewModel.TrazenjeKategorijeVM;
-import javax.swing.event.TreeSelectionListener;
-import javax.swing.event.TreeSelectionEvent;
-import java.beans.PropertyChangeListener;
-import java.beans.PropertyChangeEvent;
-import java.beans.VetoableChangeListener;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 
 public class MenadzerHome {
 	private JFrame frmMenadzerHome;
@@ -57,7 +48,7 @@ public class MenadzerHome {
 	protected JMenuItem mntmobrisiKategoriju;
 	private JTree tree;
 	protected String putanja;
-	static String kliknutiCvorString;
+	protected String kliknutiCvorString;
 	private JTextField textField_pretragaPitanja;
 
 	/**
