@@ -8,10 +8,18 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
+import ba.unsa.etf.si.app.SiDesk.Model.Kategorija;
+import ba.unsa.etf.si.app.SiDesk.ViewModel.ModifikacijaKategorijeVM;
+import ba.unsa.etf.si.app.SiDesk.ViewModel.TrazenjeKategorijeVM;
+
+import java.util.List;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+
 public class MenadzerModifikovanjeKategorije {
 
 	protected JFrame frmModifikovanjeKategorije;
-	private JTextField textField;
+	private JTextField textField_novoIme;
 
 	/**
 	 * Launch the application.
@@ -46,7 +54,7 @@ public class MenadzerModifikovanjeKategorije {
 		frmModifikovanjeKategorije.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmModifikovanjeKategorije.getContentPane().setLayout(null);
 		
-		JLabel lblImeKategorije = new JLabel("Ime kategorije");
+		JLabel lblImeKategorije = new JLabel("Novo ime kategorije");
 		lblImeKategorije.setBounds(28, 65, 130, 30);
 		frmModifikovanjeKategorije.getContentPane().add(lblImeKategorije);
 		
@@ -54,18 +62,51 @@ public class MenadzerModifikovanjeKategorije {
 		lblNewLabel.setBounds(30, 32, 101, 20);
 		frmModifikovanjeKategorije.getContentPane().add(lblNewLabel);
 		
-		Choice choice = new Choice();
-		choice.setBounds(170, 32, 300, 22);
-		choice.addItem("Software");
-		frmModifikovanjeKategorije.getContentPane().add(choice);
+		final Choice choice_modifikovanjeKategorije = new Choice();
+		choice_modifikovanjeKategorije.setBounds(170, 32, 300, 22);
+		List<Kategorija> kategorije = TrazenjeKategorijeVM.nadjiKategorije();
+		for(int i = 0; i < kategorije.size(); i++)
+		{
+			String putanjaChoice = new String();
+			if(kategorije.get(i).getPutanja() != null)
+				putanjaChoice = kategorije.get(i).getPutanja();
+			putanjaChoice += kategorije.get(i).getIme();
+			choice_modifikovanjeKategorije.addItem(putanjaChoice);
+		}
+		
+		frmModifikovanjeKategorije.getContentPane().add(choice_modifikovanjeKategorije);
 		
 		
-		textField = new JTextField();
-		textField.setBounds(170, 70, 300, 20);
-		frmModifikovanjeKategorije.getContentPane().add(textField);
-		textField.setColumns(10);
+		textField_novoIme = new JTextField();
+		textField_novoIme.setBounds(170, 70, 300, 20);
+		frmModifikovanjeKategorije.getContentPane().add(textField_novoIme);
+		textField_novoIme.setColumns(10);
 		
 		JButton btnDodajKategoriju = new JButton("Modifikuj kategoriju");
+		btnDodajKategoriju.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				String novoImeKategorije = textField_novoIme.getText();
+				String putanja = choice_modifikovanjeKategorije.getSelectedItem();
+				String staroIme = null;
+				if(!putanja.contains("/")) 
+				{
+					staroIme = putanja;
+					putanja = null;
+				}
+				else
+				{
+				    staroIme = putanja.substring(putanja.lastIndexOf("/") + 1);
+					putanja = putanja.substring(0, putanja.length() - staroIme.length()-1);
+					putanja +="/";
+				}	
+							
+				ModifikacijaKategorijeVM.modifikacijaKategorije(putanja, staroIme, novoImeKategorije);
+				
+			}
+
+				
+			
+		});
 		
 		btnDodajKategoriju.setBounds(301, 122, 169, 23);
 		frmModifikovanjeKategorije.getContentPane().add(btnDodajKategoriju);
