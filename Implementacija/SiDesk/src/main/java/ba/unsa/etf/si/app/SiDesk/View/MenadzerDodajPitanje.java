@@ -170,6 +170,9 @@ public class MenadzerDodajPitanje {
 
 				DodavanjePitanjaVM.dodajPitanje(p);
 				
+				editorPane.setText(null);
+				editorPane_1.setText(null);
+				
 			}
 		});
 		btnNewButton.setBounds(465, 355, 153, 23);
