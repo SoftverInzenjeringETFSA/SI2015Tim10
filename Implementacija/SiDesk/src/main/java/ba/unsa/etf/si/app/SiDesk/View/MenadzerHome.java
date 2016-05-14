@@ -56,7 +56,7 @@ public class MenadzerHome {
 	protected JMenuItem mntmdodajPitanje;
 	protected JMenuItem mntmobrisiKategoriju;
 	private JTree tree;
-	protected static String putanja;
+	protected String putanja;
 	static String kliknutiCvorString;
 	private JTextField textField_pretragaPitanja;
 
@@ -453,10 +453,8 @@ public class MenadzerHome {
 	    BrisanjeKategorijeVM.obrisiKategoriju(putanja, ime);
 	  }
 	
-	private static void addPopup(final JTree tree, final JPopupMenu popup) {		
+	private void addPopup(final JTree tree, final JPopupMenu popup) {		
 		tree.addMouseListener(new MouseAdapter() {
-			
-
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if(SwingUtilities.isRightMouseButton(e))
