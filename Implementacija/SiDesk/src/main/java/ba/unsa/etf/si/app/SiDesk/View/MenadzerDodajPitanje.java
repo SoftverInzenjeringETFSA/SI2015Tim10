@@ -92,12 +92,12 @@ public class MenadzerDodajPitanje {
 					boolean flag = false;
 					
 					List<Kategorija> lista = TrazenjeKategorijeVM.nadjiKategorije();
-					
 					DefaultMutableTreeNode[] drvo = new DefaultMutableTreeNode[lista.size()];
 					for(int i = 0; i < lista.size(); i++){
 						drvo[i] = new DefaultMutableTreeNode(lista.get(i).getIme());
 						flag = false;
 						for(int j = 0; j < lista.size(); j++){
+							if(lista.get(j).getParentId() == null ) break;
 							if(lista.get(i).getParentId()==lista.get(j)){
 								drvo[j].add(drvo[i]);
 								flag = true;
