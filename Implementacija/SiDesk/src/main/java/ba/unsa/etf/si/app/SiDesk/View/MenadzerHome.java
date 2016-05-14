@@ -282,7 +282,7 @@ public class MenadzerHome {
 			Kategorija oznacenaKategorija = TrazenjeKategorijeVM.nadjiKategoriju(putanja, kliknutiCvorString);
 			String putanjaZaKategorije = null;
 			if (oznacenaKategorija == null)  putanjaZaKategorije = "";
-			putanjaZaKategorije = putanja + kliknutiCvorString;
+			else if(kliknutiCvorString != null) putanjaZaKategorije = putanja + kliknutiCvorString;
 			List<Pitanje> listaPitanja = DodavanjePitanjaVM.pretraziPitanja(kljucnaRijec, putanjaZaKategorije);
 			
 			//dodavanje u tabelu
