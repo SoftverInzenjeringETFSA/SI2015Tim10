@@ -97,7 +97,7 @@ public class MenadzerDodajPitanje {
 						drvo[i] = new DefaultMutableTreeNode(lista.get(i).getIme());
 						flag = false;
 						for(int j = 0; j < lista.size(); j++){
-							if(lista.get(j).getParentId() == null ) break;
+							if(lista.get(i).getParentId() == null) continue;
 							if(lista.get(i).getParentId()==lista.get(j)){
 								drvo[j].add(drvo[i]);
 								flag = true;

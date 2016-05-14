@@ -109,12 +109,13 @@ public class MenadzerHome {
 					boolean flag = false;
 					
 					List<Kategorija> lista = TrazenjeKategorijeVM.nadjiKategorije();
-					
+					//if(lista.size() == 0) 
 					DefaultMutableTreeNode[] drvo = new DefaultMutableTreeNode[lista.size()];
 					for(int i = 0; i < lista.size(); i++){
 						drvo[i] = new DefaultMutableTreeNode(lista.get(i).getIme());
 						flag = false;
 						for(int j = 0; j < lista.size(); j++){
+							if(lista.get(i).getParentId() == null) continue;
 							if(lista.get(i).getParentId()==lista.get(j)){
 								drvo[j].add(drvo[i]);
 								flag = true;

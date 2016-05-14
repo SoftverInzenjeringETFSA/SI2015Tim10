@@ -26,13 +26,11 @@ public class BrisanjeKategorijeVM {
 			List<Kategorija> lista = criteria.list();		
 			if(lista.size() == 0) return false; 
 			Kategorija k = lista.get(0);
-			
-			
-			
+		
 			//pretraga djece cvora, djecu ne mora imati
 			Criteria children = session.createCriteria(Kategorija.class).add(Restrictions.like("putanja", putanja + ime, MatchMode.ANYWHERE));
 			List<Kategorija> listaDjece = null;
-			if(children.list().get(0) != null) 
+			if(children.list().size() != 0) 
 				listaDjece = children.list();
 			
 			//pretraga pitanja povezanih sa kategorijom i podkategorijama, pitanja ne mora naci
@@ -44,12 +42,16 @@ public class BrisanjeKategorijeVM {
 				session.delete(listaPitanja.get(i));
 			}
 			
-			//brise se od kraja radi parent id
-			for(int i = listaDjece.size()-1; i >= 0; i--)
+			if(listaDjece != null)
 			{
-					listaDjece.get(i).setParentId(null);
-					session.delete(listaDjece.get(i));
+				//brise se od kraja radi parent id
+				for(int i = listaDjece.size()-1; i >= 0; i--)
+				{
+						listaDjece.get(i).setParentId(null);
+						session.delete(listaDjece.get(i));
+				}
 			}
+			
 			k.setParentId(null);
 			session.delete(k);
 			
