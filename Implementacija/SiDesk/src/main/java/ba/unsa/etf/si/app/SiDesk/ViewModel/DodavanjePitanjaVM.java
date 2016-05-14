@@ -44,14 +44,14 @@ public class DodavanjePitanjaVM {
 	}
 	
 
-	public static List<Pitanje> pretraziPitanja(String kljucnaRijec) {
+	public static List<Pitanje> pretraziPitanja(String kljucnaRijec, String putanja) {
 		
 		List<Pitanje> lista= null;
 		try {
 			Session session = (Session) HibernateUtil.getSessionFactory().openSession();
 	        Transaction tr =  session.beginTransaction();
 			
-	        Criteria criteria = session.createCriteria(Pitanje.class).add(Restrictions.like("pitanje", kljucnaRijec, MatchMode.ANYWHERE).ignoreCase());
+	        Criteria criteria = session.createCriteria(Pitanje.class).add(Restrictions.like("pitanje", kljucnaRijec, MatchMode.ANYWHERE).ignoreCase()).add(Restrictions.like("putanja", putanja, MatchMode.ANYWHERE).ignoreCase());
 		    lista = criteria.list();
 			
 			}

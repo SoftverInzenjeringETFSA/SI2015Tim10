@@ -57,7 +57,7 @@ public class MenadzerHome {
 	protected JMenuItem mntmdodajPitanje;
 	protected JMenuItem mntmobrisiKategoriju;
 	private JTree tree;
-	protected String putanja;
+	protected static String putanja;
 	static String kliknutiCvorString;
 	private JTextField textField_pretragaPitanja;
 
@@ -151,7 +151,7 @@ public class MenadzerHome {
 	        	
 	        	if(putanja == "") putanja = null;
 	        	String novoImeKategorije = s[s.length-1].toString();
-	        	System.out.println("Putanja" + putanja + " staro ime " + staroImeKategorije + " novo: " + novoImeKategorije);;
+	        	//System.out.println("Putanja" + putanja + " staro ime " + staroImeKategorije + " novo: " + novoImeKategorije);;
 	        	ModifikacijaKategorijeVM.modifikacijaKategorije(putanja, staroImeKategorije, novoImeKategorije);
 			}
 		});
@@ -279,11 +279,14 @@ public class MenadzerHome {
 		btnNewButton.addActionListener(new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
 			String kljucnaRijec = textField_pretragaPitanja.getText();
-			List<Pitanje> listaPitanja= new ArrayList<Pitanje>(); 
-			listaPitanja = DodavanjePitanjaVM.pretraziPitanja(kljucnaRijec);
+			//provjera je li oznacena kategorija
+			Kategorija oznacenaKategorija = TrazenjeKategorijeVM.nadjiKategoriju(putanja, kliknutiCvorString);
+			String putanjaZaKategorije = null;
+			if (oznacenaKategorija == null)  putanjaZaKategorije = "";
+			putanjaZaKategorije = putanja + kliknutiCvorString;
+			List<Pitanje> listaPitanja = DodavanjePitanjaVM.pretraziPitanja(kljucnaRijec, putanjaZaKategorije);
 			
-	// jos napravit dodavanje u tabeluuu
-			
+			//dodavanje u tabelu
 			String[][] tabelaPitanja = new String[listaPitanja.size()][2];
 			for(int i = 0; i < listaPitanja.size(); i++)
 			{
@@ -470,7 +473,20 @@ public class MenadzerHome {
 				} else if(SwingUtilities.isLeftMouseButton(e))
 				{
 					TreePath selPath = tree.getPathForLocation(e.getX(), e.getY());
-					kliknutiCvorString = selPath.getLastPathComponent().toString();
+					int selRow = tree.getRowForLocation(e.getX(), e.getY());
+					if(selRow > -1){ 
+						DefaultMutableTreeNode model = (DefaultMutableTreeNode)tree.getSelectionPath().getLastPathComponent();
+			        	putanja = new String();
+			        	//trazenje putanje
+			        	TreeNode[] s = model.getPath();
+			        	for(int i = 1; i < s.length-1; i++)//zanemari root
+			        	{
+			        			putanja += s[i].toString() + "/";
+			        	}
+			        	
+						kliknutiCvorString = selPath.getLastPathComponent().toString();
+						System.out.println("Putanja " + putanja + "cvor " + kliknutiCvorString);
+					}
 				}
 			}
 		});

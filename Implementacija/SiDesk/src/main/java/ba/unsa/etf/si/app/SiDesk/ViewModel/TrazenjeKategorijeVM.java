@@ -5,6 +5,7 @@ import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Restrictions;
 
 import ba.unsa.etf.si.app.SiDesk.Model.Kategorija;
@@ -46,9 +47,22 @@ public class TrazenjeKategorijeVM {
 		}
 		return (List<Kategorija>)criteria.list();
 	}
-
-
-
 	
+	//putanja = putanja + ime kategorije
+	public static List<Kategorija> nadjiKategorijeSaPutanjom(String putanja){
+		List<Kategorija> listaKategorija = null;
+		try{
+			Session session = (Session) HibernateUtil.getSessionFactory().openSession();
+	        Transaction t = session.beginTransaction();
+			
+			Criteria criteria = session.createCriteria(Kategorija.class).add(Restrictions.like("putanja", putanja, MatchMode.ANYWHERE).ignoreCase());
+			listaKategorija = criteria.list();		
+			
+			session.close();
+		} catch(Exception e){
+			e.printStackTrace();
+		}
+		return listaKategorija;
+	}
 	
 }
