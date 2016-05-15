@@ -52,6 +52,7 @@ public class AdminUredjivanjeKorisnika {
 	private JComboBox comboBox_1;
 	static JList listaKorisnika;
 	private static JDateChooser dateChooser;
+	final static Logger logger = Logger.getLogger(AdminUredjivanjeKorisnika.class);
 
 	public static void lista(JList l) {
 				

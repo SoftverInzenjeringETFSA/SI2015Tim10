@@ -8,6 +8,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import org.apache.log4j.Logger;
 public class MenadzerGenerisanjeKategorija {
+	final static Logger logger = Logger.getLogger(MenadzerGenerisanjeKategorija.class);
 
 	protected JFrame frmGenerisanjeIzvjetaja;
 

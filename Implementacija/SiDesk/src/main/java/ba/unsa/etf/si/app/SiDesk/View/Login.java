@@ -26,6 +26,7 @@ public class Login {
 	public JFrame frmSidesklogin;
 	private JTextField textField_Username;
 	private JTextField textField_Password;
+	final static Logger logger = Logger.getLogger(Login.class);
 
 
 	/**

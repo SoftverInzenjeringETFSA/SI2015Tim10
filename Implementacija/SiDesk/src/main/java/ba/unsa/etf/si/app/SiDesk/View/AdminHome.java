@@ -46,6 +46,7 @@ public class AdminHome {
 	private JTextField textField_ime;
 	private JTextField textField_prezime;
 	private JTextField textField_1;
+	final static Logger logger = Logger.getLogger(AdminHome.class);
 
 	/**
 	 * Launch the application.

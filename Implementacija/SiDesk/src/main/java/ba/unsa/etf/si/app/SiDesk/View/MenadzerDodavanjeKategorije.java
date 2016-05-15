@@ -18,6 +18,7 @@ import java.awt.event.ActionEvent;
 import java.awt.ComponentOrientation;
 import org.apache.log4j.Logger;
 public class MenadzerDodavanjeKategorije {
+	final static Logger logger = Logger.getLogger(MenadzerDodavanjeKategorije.class);
 
 	protected JFrame frmDodavanjeKategorije;
 	private JTextField textField;

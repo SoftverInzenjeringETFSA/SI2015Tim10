@@ -17,6 +17,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import org.apache.log4j.Logger;
 public class MenadzerModifikovanjeKategorije {
+	final static Logger logger = Logger.getLogger(MenadzerModifikovanjeKategorije.class);
 
 	protected JFrame frmModifikovanjeKategorije;
 	private JTextField textField_novoIme;

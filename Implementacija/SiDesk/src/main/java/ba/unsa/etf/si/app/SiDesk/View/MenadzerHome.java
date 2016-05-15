@@ -42,6 +42,8 @@ import ba.unsa.etf.si.app.SiDesk.ViewModel.ModifikacijaKategorijeVM;
 import ba.unsa.etf.si.app.SiDesk.ViewModel.TrazenjeKategorijeVM;
 import org.apache.log4j.Logger;
 public class MenadzerHome {
+	final static Logger logger = Logger.getLogger(MenadzerHome.class);
+
 	protected JFrame frmMenadzerHome;
 	protected JMenuItem mntmDodajKategoriju;
 	protected JMenuItem mntmdodajPitanje;

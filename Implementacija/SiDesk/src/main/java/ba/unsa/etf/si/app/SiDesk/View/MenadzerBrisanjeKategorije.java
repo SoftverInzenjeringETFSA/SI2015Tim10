@@ -19,6 +19,7 @@ import java.awt.event.ActionEvent;
 import java.awt.Color;
 import org.apache.log4j.Logger;
 public class MenadzerBrisanjeKategorije {
+	final static Logger logger = Logger.getLogger(MenadzerBrisanjeKategorije.class);
 
 	protected JFrame frmBrisanjeKategorije;
 	private JTextField textField_imeKategorije;

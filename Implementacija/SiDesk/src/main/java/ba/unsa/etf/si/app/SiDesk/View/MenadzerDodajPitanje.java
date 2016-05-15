@@ -24,6 +24,8 @@ import java.awt.event.MouseEvent;
 import java.awt.event.ActionEvent;
 import org.apache.log4j.Logger;
 public class MenadzerDodajPitanje {
+	final static Logger logger = Logger.getLogger(MenadzerDodajPitanje.class);
+
 	protected JFrame frmDodajPitanje;
 
 	/**

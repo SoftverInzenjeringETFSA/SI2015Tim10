@@ -21,6 +21,7 @@ import ba.unsa.etf.si.app.SiDesk.ViewModel.GenerisiIzvjestajStarosnaDob;
 import ba.unsa.etf.si.app.SiDesk.ViewModel.GenerisiIzvjestajVremenskiPeriod;
 import org.apache.log4j.Logger;
 public class MenadzerGenerisanjeVremenski {
+	final static Logger logger = Logger.getLogger(MenadzerGenerisanjeVremenski.class);
 
 	protected JFrame frmKreiranjeIzvjetaja;
 	private Choice choice;

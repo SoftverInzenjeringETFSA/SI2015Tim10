@@ -18,6 +18,7 @@ import ba.unsa.etf.si.app.SiDesk.ViewModel.GenerisiIzvjestajIzlazakIzScenarija;
 import ba.unsa.etf.si.app.SiDesk.ViewModel.GenerisiIzvjestajVremenskiPeriod;
 import org.apache.log4j.Logger;
 public class MenadzerGenerisanjeIzaslaIzScen {
+	final static Logger logger = Logger.getLogger(MenadzerGenerisanjeIzaslaIzScen.class);
 
 	protected JFrame frmGenerisanjeIzvjetaja;
 	private Choice choice;
