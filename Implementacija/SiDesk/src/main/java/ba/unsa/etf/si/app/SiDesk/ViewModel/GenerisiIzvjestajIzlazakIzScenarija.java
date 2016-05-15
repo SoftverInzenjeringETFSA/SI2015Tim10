@@ -29,7 +29,7 @@ import com.lowagie.text.pdf.PdfWriter;
 import ba.unsa.etf.si.app.SiDesk.Model.Operater;
 import ba.unsa.etf.si.app.SiDesk.Model.TelefonskiPoziv;
 import ba.unsa.etf.si.app.SiDesk.Util.HibernateUtil;
-
+import org.apache.log4j.Logger;
 public final class GenerisiIzvjestajIzlazakIzScenarija {
 
 	public static Boolean generisi(String operater) throws MalformedURLException, IOException, ParseException {

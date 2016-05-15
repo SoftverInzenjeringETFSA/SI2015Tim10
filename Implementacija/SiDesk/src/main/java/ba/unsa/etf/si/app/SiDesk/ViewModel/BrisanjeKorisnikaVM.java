@@ -11,7 +11,7 @@ import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
 
 import ba.unsa.etf.si.app.SiDesk.Model.Korisnik;
-
+import org.apache.log4j.Logger;
 public class BrisanjeKorisnikaVM {
 
 	public static void BrisiKorisnika(Session sesija, JList lista) {

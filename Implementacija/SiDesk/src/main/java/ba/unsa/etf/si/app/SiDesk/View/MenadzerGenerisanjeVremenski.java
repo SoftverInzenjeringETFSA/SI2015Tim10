@@ -19,7 +19,7 @@ import com.toedter.calendar.JDateChooser;
 
 import ba.unsa.etf.si.app.SiDesk.ViewModel.GenerisiIzvjestajStarosnaDob;
 import ba.unsa.etf.si.app.SiDesk.ViewModel.GenerisiIzvjestajVremenskiPeriod;
-
+import org.apache.log4j.Logger;
 public class MenadzerGenerisanjeVremenski {
 
 	protected JFrame frmKreiranjeIzvjetaja;

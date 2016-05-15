@@ -6,7 +6,7 @@ import java.awt.EventQueue;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-
+import org.apache.log4j.Logger;
 public class MenadzerGenerisanjeKategorija {
 
 	protected JFrame frmGenerisanjeIzvjetaja;

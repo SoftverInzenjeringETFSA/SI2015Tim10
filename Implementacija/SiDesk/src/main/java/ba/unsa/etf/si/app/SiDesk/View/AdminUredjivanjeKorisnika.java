@@ -36,7 +36,7 @@ import ba.unsa.etf.si.app.SiDesk.ViewModel.ModifikacijaKorisnikaVM;
 import java.awt.event.ContainerAdapter;
 import java.awt.event.ContainerEvent;
 import java.text.SimpleDateFormat;
-
+import org.apache.log4j.Logger;
 public class AdminUredjivanjeKorisnika {
 
 	JFrame frmUredjivanjekorisnika;

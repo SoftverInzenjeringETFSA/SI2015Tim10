@@ -13,7 +13,7 @@ import org.hibernate.criterion.Restrictions;
 import ba.unsa.etf.si.app.SiDesk.Model.Kategorija;
 import ba.unsa.etf.si.app.SiDesk.Model.Pitanje;
 import ba.unsa.etf.si.app.SiDesk.Util.HibernateUtil;
-
+import org.apache.log4j.Logger;
 public class BrisanjeKategorijeVM {
 
 	public static boolean obrisiKategoriju(String putanja, String ime) {

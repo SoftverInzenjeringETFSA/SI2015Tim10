@@ -16,7 +16,7 @@ import ba.unsa.etf.si.app.SiDesk.Model.Operater;
 import ba.unsa.etf.si.app.SiDesk.Model.TelefonskiPoziv;
 import ba.unsa.etf.si.app.SiDesk.Util.HibernateUtil;
 import ba.unsa.etf.si.app.SiDesk.Model.Pitanje;
-
+import org.apache.log4j.Logger;
 public class SpašavanjeTelefonskogPozivaVM {
 
 	public static boolean spasiPoziv(String opisniTekst,Klijent klijent_id ) {

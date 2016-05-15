@@ -16,7 +16,7 @@ import java.awt.event.ActionListener;
 import java.util.List;
 import java.awt.event.ActionEvent;
 import java.awt.ComponentOrientation;
-
+import org.apache.log4j.Logger;
 public class MenadzerDodavanjeKategorije {
 
 	protected JFrame frmDodavanjeKategorije;

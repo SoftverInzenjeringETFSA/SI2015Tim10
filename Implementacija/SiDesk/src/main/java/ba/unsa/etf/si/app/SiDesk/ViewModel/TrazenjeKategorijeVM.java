@@ -10,7 +10,7 @@ import org.hibernate.criterion.Restrictions;
 
 import ba.unsa.etf.si.app.SiDesk.Model.Kategorija;
 import ba.unsa.etf.si.app.SiDesk.Util.HibernateUtil;
-
+import org.apache.log4j.Logger;
 public class TrazenjeKategorijeVM {
 	
 	public static Kategorija  nadjiKategoriju(String putanja, String ime) {

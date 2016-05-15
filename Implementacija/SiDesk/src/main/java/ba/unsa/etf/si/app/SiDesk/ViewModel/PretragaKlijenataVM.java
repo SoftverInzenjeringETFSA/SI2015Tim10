@@ -11,7 +11,7 @@ import org.hibernate.criterion.Restrictions;
 import ba.unsa.etf.si.app.SiDesk.Model.Kategorija;
 import ba.unsa.etf.si.app.SiDesk.Model.Klijent;
 import ba.unsa.etf.si.app.SiDesk.Util.HibernateUtil;
-
+import org.apache.log4j.Logger;
 public class PretragaKlijenataVM {
 	
 	public static Klijent nadjiKlijenta(String ime, String prezime, String adresaIzTabele, String brojTelefonaIzTabele,int xd, String zaposlenjeIzTabele) {

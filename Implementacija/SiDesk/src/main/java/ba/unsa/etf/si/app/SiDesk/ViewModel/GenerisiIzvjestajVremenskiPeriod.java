@@ -33,7 +33,7 @@ import ba.unsa.etf.si.app.SiDesk.Model.Operater;
 import ba.unsa.etf.si.app.SiDesk.Model.Pitanje;
 import ba.unsa.etf.si.app.SiDesk.Model.TelefonskiPoziv;
 import ba.unsa.etf.si.app.SiDesk.Util.HibernateUtil;
-
+import org.apache.log4j.Logger;
 public final class GenerisiIzvjestajVremenskiPeriod {
 
 	public static Boolean generisi(String operater, Date datum_od, Date datum_do) throws MalformedURLException, IOException, ParseException {

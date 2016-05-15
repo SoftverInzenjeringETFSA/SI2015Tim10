@@ -1,6 +1,7 @@
 package ba.unsa.etf.si.app.SiDesk.View;
 
 import java.awt.EventQueue;
+import org.apache.log4j.Logger;
 import java.awt.Font;
 
 import javax.swing.GroupLayout;

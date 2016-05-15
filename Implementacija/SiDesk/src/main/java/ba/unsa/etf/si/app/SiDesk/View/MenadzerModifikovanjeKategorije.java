@@ -15,7 +15,7 @@ import ba.unsa.etf.si.app.SiDesk.ViewModel.TrazenjeKategorijeVM;
 import java.util.List;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-
+import org.apache.log4j.Logger;
 public class MenadzerModifikovanjeKategorije {
 
 	protected JFrame frmModifikovanjeKategorije;
