@@ -30,8 +30,9 @@ public class ModifikacijaKorisnikaVM {
 			novi = (Korisnik) s.createCriteria(Korisnik.class).add(Restrictions.eq("jmbg", jmbg)).uniqueResult();
 			TipKorisnika tip = (TipKorisnika) s.createCriteria(TipKorisnika.class)
 					.add(Restrictions.eq("tipKorisnika", tipkorisnika)).uniqueResult();
-			Operater o = (Operater) s.createCriteria(Operater.class).add(Restrictions.eq("imeOperatera", imeOperatera))
+			Operater o = (Operater) s.createCriteria(Operater.class).add(Restrictions.eq("ime", imeOperatera))
 					.uniqueResult();
+			
 
 			novi.setIme(ime);
 			novi.setPrezime(prezime);
