@@ -16,7 +16,7 @@ import javax.swing.JTextField;
 
 import ba.unsa.etf.si.app.SiDesk.ViewModel.GenerisiIzvjestajIzlazakIzScenarija;
 import ba.unsa.etf.si.app.SiDesk.ViewModel.GenerisiIzvjestajVremenskiPeriod;
-
+import org.apache.log4j.Logger;
 public class MenadzerGenerisanjeIzaslaIzScen {
 
 	protected JFrame frmGenerisanjeIzvjetaja;

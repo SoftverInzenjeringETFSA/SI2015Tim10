@@ -14,7 +14,7 @@ import org.hibernate.Criteria;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Restrictions;
-
+import org.apache.log4j.Logger;
 public class DodavanjePitanjaVM {
 	
 	public static Boolean dodajPitanje(Pitanje pitanje) {

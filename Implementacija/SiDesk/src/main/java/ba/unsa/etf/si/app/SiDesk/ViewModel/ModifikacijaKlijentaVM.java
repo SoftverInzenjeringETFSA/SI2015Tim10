@@ -11,7 +11,7 @@ import org.hibernate.criterion.Restrictions;
 
 import ba.unsa.etf.si.app.SiDesk.Model.Klijent;
 import ba.unsa.etf.si.app.SiDesk.Util.HibernateUtil;
-
+import org.apache.log4j.Logger;
 public class ModifikacijaKlijentaVM {
 	public static List<Klijent> nadjiKlijenta(String ime){
 		List<Klijent> listaKlijenta = null;

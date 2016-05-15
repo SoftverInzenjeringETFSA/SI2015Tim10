@@ -15,7 +15,7 @@ import ba.unsa.etf.si.app.SiDesk.Model.Korisnik;
 import ba.unsa.etf.si.app.SiDesk.Model.Operater;
 import ba.unsa.etf.si.app.SiDesk.Model.TipKorisnika;
 import ba.unsa.etf.si.app.SiDesk.Util.HibernateUtil;
-
+import org.apache.log4j.Logger;
 public class PretragaKorisnikaNejedinstvenaVM {
 
 	public static List<Korisnik> pretraziKorisnikaPoImenu(Session sesija, String ime) {

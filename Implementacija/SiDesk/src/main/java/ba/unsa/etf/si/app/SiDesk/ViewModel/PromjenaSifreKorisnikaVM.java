@@ -1,7 +1,7 @@
 package ba.unsa.etf.si.app.SiDesk.ViewModel;
 
 import ba.unsa.etf.si.app.SiDesk.Model.Korisnik;
-
+import org.apache.log4j.Logger;
 public class PromjenaSifreKorisnikaVM {
 
 	public static boolean promijeniSifruKorisnika(Korisnik korisnik, String novaSifra, String staraSifra) {

@@ -1,5 +1,5 @@
 package ba.unsa.etf.si.app.SiDesk.View;
-
+import org.apache.log4j.Logger;
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
@@ -51,6 +51,7 @@ public class AdminDodavanjeKorisnika {
 	private JDateChooser dateChooser_datumZaposlenja;
 	private JComboBox comboBox_tipOperatera;
 	private JComboBox comboBox_tipKorisnika;
+	final static Logger logger = Logger.getLogger(AdminDodavanjeKorisnika.class);
 
 	/**
 	 * Launch the application.
@@ -62,6 +63,7 @@ public class AdminDodavanjeKorisnika {
 					AdminDodavanjeKorisnika window = new AdminDodavanjeKorisnika();
 					window.frmDodavanjeNovogKorisnika.setVisible(true);
 				} catch (Exception e) {
+					logger.error("Došlo je do greške:", e);
 					e.printStackTrace();
 				}
 			}
@@ -265,6 +267,7 @@ public class AdminDodavanjeKorisnika {
 							}
 					
 					} catch (Exception ex) {
+						logger.error("Došlo je do greške:", ex);
 						JOptionPane.showMessageDialog(null, "Greška u dodavanju!",
 								"Info " + "Error" + ex.getMessage(), JOptionPane.ERROR_MESSAGE);
 					}

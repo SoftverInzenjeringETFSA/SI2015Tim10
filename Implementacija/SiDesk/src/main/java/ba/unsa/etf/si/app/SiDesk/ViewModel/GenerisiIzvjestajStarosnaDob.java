@@ -29,7 +29,7 @@ import ba.unsa.etf.si.app.SiDesk.Model.Klijent;
 import ba.unsa.etf.si.app.SiDesk.Model.Operater;
 import ba.unsa.etf.si.app.SiDesk.Model.TelefonskiPoziv;
 import ba.unsa.etf.si.app.SiDesk.Util.HibernateUtil;
-
+import org.apache.log4j.Logger;
 public final class GenerisiIzvjestajStarosnaDob {
 
 	public static Boolean generisi(String from, String to, String operater) throws MalformedURLException, IOException {

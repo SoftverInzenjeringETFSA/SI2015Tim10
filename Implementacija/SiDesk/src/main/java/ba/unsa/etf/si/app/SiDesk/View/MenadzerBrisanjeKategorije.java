@@ -17,7 +17,7 @@ import java.util.List;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.Color;
-
+import org.apache.log4j.Logger;
 public class MenadzerBrisanjeKategorije {
 
 	protected JFrame frmBrisanjeKategorije;

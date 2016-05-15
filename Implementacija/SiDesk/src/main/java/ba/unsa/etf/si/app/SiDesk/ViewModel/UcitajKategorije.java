@@ -8,7 +8,7 @@ import org.hibernate.Transaction;
 
 import ba.unsa.etf.si.app.SiDesk.Model.Kategorija;
 import ba.unsa.etf.si.app.SiDesk.Util.HibernateUtil;
-
+import org.apache.log4j.Logger;
 public class UcitajKategorije {
 	
 	public static List<Kategorija> ucitajKategorije() {

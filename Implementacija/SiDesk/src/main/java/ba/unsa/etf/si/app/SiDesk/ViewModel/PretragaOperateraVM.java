@@ -10,7 +10,7 @@ import org.hibernate.criterion.Restrictions;
 import ba.unsa.etf.si.app.SiDesk.Model.Korisnik;
 import ba.unsa.etf.si.app.SiDesk.Model.Operater;
 import ba.unsa.etf.si.app.SiDesk.Util.HibernateUtil;
-
+import org.apache.log4j.Logger;
 public class PretragaOperateraVM {
 
 	public static Operater nadjiOperatera(String username) {

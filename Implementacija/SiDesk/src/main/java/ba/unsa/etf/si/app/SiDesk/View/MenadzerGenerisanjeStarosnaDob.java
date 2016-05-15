@@ -14,7 +14,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 import ba.unsa.etf.si.app.SiDesk.ViewModel.GenerisiIzvjestajStarosnaDob;
-
+import org.apache.log4j.Logger;
 public class MenadzerGenerisanjeStarosnaDob {
 
 	protected JFrame frmGenerisanjeIzvjetaja;

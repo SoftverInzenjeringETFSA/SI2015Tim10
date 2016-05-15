@@ -31,7 +31,7 @@ import ba.unsa.etf.si.app.SiDesk.Model.Operater;
 import ba.unsa.etf.si.app.SiDesk.Model.Pitanje;
 import ba.unsa.etf.si.app.SiDesk.Model.TelefonskiPoziv;
 import ba.unsa.etf.si.app.SiDesk.Util.HibernateUtil;
-
+import org.apache.log4j.Logger;
 public final class GenerisiIzvjestajKategorija {
 
 	public static Boolean generisi(String kategorija, String operater) throws MalformedURLException, IOException {

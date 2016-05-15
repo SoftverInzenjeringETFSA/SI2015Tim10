@@ -15,7 +15,7 @@ import ba.unsa.etf.si.app.SiDesk.Model.Korisnik;
 import ba.unsa.etf.si.app.SiDesk.Model.Operater;
 import ba.unsa.etf.si.app.SiDesk.Model.TipKorisnika;
 import ba.unsa.etf.si.app.SiDesk.Util.HibernateUtil;
-
+import org.apache.log4j.Logger;
 public class ModifikacijaKorisnikaVM {
 
 	public static void modifikacijaKorisnika(Session s, JList lista, String ime, String prezime, String jmbg, String brojTelefona,

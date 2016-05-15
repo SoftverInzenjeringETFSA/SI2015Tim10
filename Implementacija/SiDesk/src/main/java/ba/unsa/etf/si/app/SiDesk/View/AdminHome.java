@@ -39,7 +39,7 @@ import ba.unsa.etf.si.app.SiDesk.ViewModel.BrisanjeKorisnikaVM;
 import ba.unsa.etf.si.app.SiDesk.ViewModel.ModifikacijaKorisnikaVM;
 import ba.unsa.etf.si.app.SiDesk.ViewModel.PretragaKorisnikaJedinstvenaVM;
 import ba.unsa.etf.si.app.SiDesk.ViewModel.PretragaKorisnikaNejedinstvenaVM;
-
+import org.apache.log4j.Logger;
 public class AdminHome {
 
 	protected JFrame frmManager;
