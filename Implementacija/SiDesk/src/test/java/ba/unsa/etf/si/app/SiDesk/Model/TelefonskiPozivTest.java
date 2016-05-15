@@ -5,4 +5,6 @@ import junit.framework.TestCase;
 public class TelefonskiPozivTest extends TestCase 
 {
 	// još nema metoda za testiranje
+	public void test()
+	{}
 }
