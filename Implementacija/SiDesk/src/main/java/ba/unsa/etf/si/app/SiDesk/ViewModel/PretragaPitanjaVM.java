@@ -28,4 +28,21 @@ public class PretragaPitanjaVM {
 		}
 		return listaPitanja;
 	}
+
+
+/*	public static List<Pitanje> nadjiPitanjaSaImenom(String pitanje){
+	List<Pitanje> listaPitanja1 = null;
+	try{
+		Session session = (Session) HibernateUtil.getSessionFactory().openSession();
+        Transaction t = session.beginTransaction();
+		
+		Criteria criteria = session.createCriteria(Pitanje.class).add(Restrictions.like("pitanje", pitanje, MatchMode.ANYWHERE).ignoreCase());
+		listaPitanja1 = criteria.list();		
+		
+		session.close();
+	} catch(Exception e){
+		e.printStackTrace();
+	}
+	return listaPitanja1.get(0);
+} */
 }
