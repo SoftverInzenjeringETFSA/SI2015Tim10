@@ -782,27 +782,27 @@ public class KorisnikHome {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 
-				/*
-				 * String s2 = ((JTextField)
-				 * dateChooser.getDateEditor().getUiComponent()).getText(); if
-				 * (s2.equals("")) { JOptionPane.showMessageDialog(null,
-				 * "Unesite ispravan datum!", "Info",
-				 * JOptionPane.ERROR_MESSAGE);
-				 * 
-				 * } int year1 = Calendar.getInstance().get(Calendar.YEAR); int
-				 * staro1 = dateChooser.getDate().getYear() + 1900; int starost1
-				 * = year1 - staro1;
-				 * 
-				 * if (!Validator.validirajIme(textField.getText()) ||
-				 * !Validator.validirajPrezime(textField_1.getText()) ||
-				 * !Validator.validirajStarost(starost1) ||
-				 * !Validator.validirajBrojTelefona(textField_3.getText())) {
-				 * JOptionPane.showMessageDialog(null,
-				 * "Unijeli ste pogresne podatke!", "Info",
-				 * JOptionPane.INFORMATION_MESSAGE);
-				 * 
-				 * } else
-				 */
+				
+				  String s2 = ((JTextField)
+				  dateChooser.getDateEditor().getUiComponent()).getText(); if
+				 (s2.equals("")) { JOptionPane.showMessageDialog(null,
+				  "Unesite ispravan datum!", "Info",
+				  JOptionPane.ERROR_MESSAGE);
+				  
+				  } int year1 = Calendar.getInstance().get(Calendar.YEAR); int
+				  staro1 = dateChooser.getDate().getYear() + 1900; int starost1
+				  = year1 - staro1;
+				  
+				  if (!Validator.validirajIme(textField.getText()) ||
+				  !Validator.validirajPrezime(textField_1.getText()) ||
+				  !Validator.validirajStarost(starost1) ||
+				  !Validator.validirajBrojTelefona(textField_3.getText())) {
+				  JOptionPane.showMessageDialog(null,
+				  "Unijeli ste pogresne podatke!", "Info",
+				  JOptionPane.INFORMATION_MESSAGE);
+				  
+				  } else
+				 
 
 				try {
 					Klijent klijent = null;
