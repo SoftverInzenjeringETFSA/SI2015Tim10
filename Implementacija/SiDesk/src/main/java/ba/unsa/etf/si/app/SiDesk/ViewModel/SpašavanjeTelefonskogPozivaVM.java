@@ -2,10 +2,11 @@ package ba.unsa.etf.si.app.SiDesk.ViewModel;
 
 
 
+import java.util.Date;
+
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
-import ba.unsa.etf.si.app.SiDesk.Model.Kategorija;
 import ba.unsa.etf.si.app.SiDesk.Model.Klijent;
 import ba.unsa.etf.si.app.SiDesk.Model.Operater;
 import ba.unsa.etf.si.app.SiDesk.Model.TelefonskiPoziv;
@@ -25,8 +26,7 @@ public class SpašavanjeTelefonskogPozivaVM {
 	        b.setOpisniTekst(opisniTekst);
 	        b.setKlijent(klijent_id);
 	     //   b.setOperater(operater_id);
-	       
-	        	        
+      
 	        s2.save(b);
 			tr.commit();			
 		}
@@ -36,6 +36,23 @@ public class SpašavanjeTelefonskogPozivaVM {
 		}
 		
 		return true;
+	}
+
+	public static void spasiPoziv(Klijent klijent, Pitanje pitanje, Operater operater, Date kal) {
+		try {
+			Session s2 = (Session) HibernateUtil.getSessionFactory().openSession();
+	        Transaction tr = s2.beginTransaction();
+	        
+	        TelefonskiPoziv t = new TelefonskiPoziv(klijent, pitanje, operater, kal);
+      
+	        s2.save(t);
+			tr.commit();			
+			
+			s2.close();
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
 	} 
 	
 /*	public static boolean spasiPitanje(Pitanje pitanje_id,TelefonskiPoziv poziv_id ) {

@@ -45,6 +45,7 @@ import ba.unsa.etf.si.app.SiDesk.ViewModel.DodavanjePitanjaVM;
 import ba.unsa.etf.si.app.SiDesk.ViewModel.ModifikacijaKategorijeVM;
 import ba.unsa.etf.si.app.SiDesk.ViewModel.ModifikacijaKlijentaVM;
 import ba.unsa.etf.si.app.SiDesk.ViewModel.PretragaKlijenataVM;
+import ba.unsa.etf.si.app.SiDesk.ViewModel.PretragaOperateraVM;
 import ba.unsa.etf.si.app.SiDesk.ViewModel.PretragaPitanjaVM;
 import ba.unsa.etf.si.app.SiDesk.ViewModel.SpašavanjeTelefonskogPozivaVM;
 import ba.unsa.etf.si.app.SiDesk.ViewModel.TrazenjeKategorijeVM;
@@ -57,11 +58,12 @@ import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.awt.event.ItemEvent;
 import java.beans.PropertyChangeListener;
-import java.sql.Date;
+import java.util.Date;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
 import java.beans.PropertyChangeEvent;
@@ -85,6 +87,7 @@ public class KorisnikHome {
 	private JTable table_1;
 	protected String putanja;
 	protected String kliknutiCvorString;
+	protected String username = new String();
 
 	private JDateChooser dateChooser;
 
@@ -97,7 +100,8 @@ public class KorisnikHome {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					KorisnikHome window = new KorisnikHome();
+					String username1 = "aaaa";
+					KorisnikHome window = new KorisnikHome(username1);
 					window.frameKorisnik.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -109,8 +113,9 @@ public class KorisnikHome {
 	/**
 	 * Create the application.
 	 */
-	public KorisnikHome() {
+	public KorisnikHome(String username) {
 		initialize();
+		this.username = username;
 	}
 
 	/**
@@ -467,7 +472,7 @@ public class KorisnikHome {
 		});
 
 		table_1.setModel(new DefaultTableModel(
-				new Object[][] { { "Almedin", "Velija", "aaaaaT", "111", "111", null },
+				new Object[][] { { null, null, null, null, null, null },
 						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
 						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
 						{ null, null, null, null, null, null }, { null, null, null, null, null, null }, },
@@ -802,9 +807,15 @@ public class KorisnikHome {
 				 * 
 				 * } else
 				 */
-
+				
+				
 				try {
 					Klijent klijent = null;
+					//trazenje pitanja na osnovu teksta
+					String username = "aaaa";
+					Operater operater = PretragaOperateraVM.nadjiOperatera(username);
+					DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+					Date date = new Date();
 					if (rdbtnNoviKorisnik.isSelected() == true) {
 						int year = Calendar.getInstance().get(Calendar.YEAR);
 						int staro = dateChooser.getDate().getYear() + 1900;
@@ -815,17 +826,13 @@ public class KorisnikHome {
 						if (chckbxIzlazakIzScenarija.isSelected() == true) {
 							SpašavanjeTelefonskogPozivaVM.spasiPoziv(textField_5.getText(), klijent);
 						}
-						Kategorija oznacenaKategorija = TrazenjeKategorijeVM.nadjiKategoriju(putanja, kliknutiCvorString);
-						String putanjaZaKategorije = null;
-						int selectedRow = table_1.getSelectedRow();
-						selectedRow = table_1.convertRowIndexToModel(selectedRow);
-						String pitanjeIzTabele = (String) table_2.getModel().getValueAt(selectedRow, 0);
-						if (oznacenaKategorija == null)
-							putanjaZaKategorije = "";
-						else if (kliknutiCvorString != null)
-							putanjaZaKategorije = putanja + kliknutiCvorString;
-						List<Pitanje> listaPitanja = DodavanjePitanjaVM.pretraziPitanja(pitanjeIzTabele, putanjaZaKategorije);
-						
+						else {
+							String pitanjeTabela = (String) table_2.getModel().getValueAt(table_2.getSelectedRow(), 0);
+							String odgovorTabela = (String) table_2.getModel().getValueAt(table_2.getSelectedRow(), 1);
+							Pitanje pitanje = PretragaPitanjaVM.nadjiPitanje(pitanjeTabela, odgovorTabela);
+							
+							SpašavanjeTelefonskogPozivaVM.spasiPoziv(klijent, pitanje, null, date);
+						}
 					}
 					// ovdje ces naci starog
 					if (rdbtnNoviKorisnik.isSelected() == false) {

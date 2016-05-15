@@ -29,5 +29,23 @@ public class PretragaPitanjaVM {
 		return listaPitanja;
 	}
 
+	public static Pitanje nadjiPitanje(String pitanje, String odgovor) {
+		Pitanje p = null;
+		try {
+			Session session = (Session) HibernateUtil.getSessionFactory().openSession();
+	        Transaction t = session.beginTransaction();
+			
+			Criteria criteria = session.createCriteria(Pitanje.class)
+					.add(Restrictions.like("pitanje", pitanje).ignoreCase())
+					.add(Restrictions.like("odgovor", odgovor).ignoreCase());
+			p = (Pitanje) criteria.list().get(0);		
+			
+			session.close();
+		} catch (Exception e){
+			e.printStackTrace();
+		}
+		return p;
+	}
+
 
 }
