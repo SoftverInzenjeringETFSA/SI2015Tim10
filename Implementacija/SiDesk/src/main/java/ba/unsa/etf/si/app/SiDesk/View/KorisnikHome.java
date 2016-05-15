@@ -530,7 +530,7 @@ public class KorisnikHome {
 
 		rdbtnStariKorisnik.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent e) {
-				if (rdbtnStariKorisnik.isEnabled() && table_1.getSelectedRow() != -1) {
+				if (rdbtnStariKorisnik.isEnabled() && table_1.getSelectedRow() != -1)  {
 
 					int n = tabbedPane.indexOfTab("Scenarij");
 					tabbedPane.setEnabledAt(n, true);
