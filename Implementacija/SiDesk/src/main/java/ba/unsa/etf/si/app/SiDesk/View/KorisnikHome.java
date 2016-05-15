@@ -831,7 +831,7 @@ public class KorisnikHome {
 							String odgovorTabela = (String) table_2.getModel().getValueAt(table_2.getSelectedRow(), 1);
 							Pitanje pitanje = PretragaPitanjaVM.nadjiPitanje(pitanjeTabela, odgovorTabela);
 							
-							SpašavanjeTelefonskogPozivaVM.spasiPoziv(klijent, pitanje, null, date);
+							SpašavanjeTelefonskogPozivaVM.spasiPoziv(klijent, pitanje, operater, date);
 						}
 					}
 					// ovdje ces naci starog
@@ -850,6 +850,12 @@ public class KorisnikHome {
 							klijent = PretragaKlijenataVM.nadjiKlijenta(imeIzTabele, prezimeIzTabele, adresaIzTabele,
 									brojTelefonaIzTabele, xd, zaposlenjeIzTabele);
 							SpašavanjeTelefonskogPozivaVM.spasiPoziv(textField_5.getText(), klijent);
+						} else {
+							String pitanjeTabela = (String) table_2.getModel().getValueAt(table_2.getSelectedRow(), 0);
+							String odgovorTabela = (String) table_2.getModel().getValueAt(table_2.getSelectedRow(), 1);
+							Pitanje pitanje = PretragaPitanjaVM.nadjiPitanje(pitanjeTabela, odgovorTabela);
+							
+							SpašavanjeTelefonskogPozivaVM.spasiPoziv(klijent, pitanje, operater, date);
 						}
 					}
 

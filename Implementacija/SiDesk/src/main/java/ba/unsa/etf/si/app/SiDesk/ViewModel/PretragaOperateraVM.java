@@ -14,15 +14,21 @@ import ba.unsa.etf.si.app.SiDesk.Util.HibernateUtil;
 public class PretragaOperateraVM {
 
 	public static Operater nadjiOperatera(String username) {
-		Session s = (Session) HibernateUtil.getSessionFactory().openSession();
-		Transaction t = s.beginTransaction();
-		Criteria criteria = s.createCriteria(Korisnik.class).add(Restrictions.like("korisnickoIme", username).ignoreCase());
-		List<Korisnik> lista = criteria.list();
-		Korisnik k = lista.get(0);
-		
-		criteria = s.createCriteria(Operater.class).add(Restrictions.like("id", k.getOperater_korisnik().getId()).ignoreCase());
-		Operater o = (Operater) criteria.list().get(0);
-		s.close();
+		Operater o = null;
+		try{
+			Session s = (Session) HibernateUtil.getSessionFactory().openSession();
+			Transaction t = s.beginTransaction();
+			Criteria criteria = s.createCriteria(Korisnik.class).add(Restrictions.like("korisnickoIme", username).ignoreCase());
+			List<Korisnik> lista = criteria.list();
+			Korisnik k = lista.get(0);
+			
+			criteria = s.createCriteria(Operater.class).add(Restrictions.like("id", k.getOperater_korisnik()).ignoreCase());
+			o = (Operater) criteria.list().get(0);
+			s.close();
+			
+		} catch (Exception e){
+			e.printStackTrace();
+		}
 		return o;
 	}
 
