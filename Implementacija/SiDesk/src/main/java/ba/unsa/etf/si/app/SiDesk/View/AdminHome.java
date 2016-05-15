@@ -188,8 +188,7 @@ public class AdminHome {
 						Korisnik k = new Korisnik();
 
 						k = PretragaKorisnikaJedinstvenaVM.pretraziKorisnikaJMBG(sesija, textField_1.getText());
-						// iz meni nepoznatog razloga ne prihvaca
-						// (Date)dateChooser_datumZaposlenja.getDate()
+				
 
 						model.addElement(k);
 
@@ -309,13 +308,23 @@ public class AdminHome {
 						Session sesija = HibernateUtil.getSessionFactory().openSession();
 						List<Korisnik> k = PretragaKorisnikaNejedinstvenaVM.pretraziKorisnikaPoImenu(sesija,
 								textField_ime.getText());
+						if(k.isEmpty())
+						{
+
+							JOptionPane.showMessageDialog(null, "Ne postoji korisnik sa takvim imenom", "Info ",
+									JOptionPane.INFORMATION_MESSAGE);
+							sesija.close();
+						}
+						else
+						{
 						for (Korisnik p : k) {
 							model.addElement(p);
 
 						}
 
 						sesija.close();
-					} catch (Exception ex) {
+						}
+						} catch (Exception ex) {
 						JOptionPane.showMessageDialog(null, "Ne postoji korisnik sa takvim imenom", "Info ",
 								JOptionPane.INFORMATION_MESSAGE);
 					}
@@ -363,19 +372,22 @@ public class AdminHome {
 
 						List<Korisnik> k = PretragaKorisnikaNejedinstvenaVM.pretraziKorisnikaPoPrezimenu(sesija,
 								textField_prezime.getText());
-						// iz meni nepoznatog razloga ne prihvaca
-						// (Date)dateChooser_datumZaposlenja.getDate()
+						if(k.isEmpty())
+						{
+
+							JOptionPane.showMessageDialog(null, "Ne postoji korisnik sa takvim prezimenom", "Info ",
+									JOptionPane.INFORMATION_MESSAGE);
+							sesija.close();
+						}
+						else
+						{
 						for (Korisnik p : k) {
 							model.addElement(p);
-							// JOptionPane.showMessageDialog(null,
-							// p.getIme(),"Info",
-							// JOptionPane.INFORMATION_MESSAGE);
 
 						}
-
-						// JOptionPane.showMessageDialog(null, "Korisnik je
-						// uspješno dodan","Info",
-						// JOptionPane.INFORMATION_MESSAGE);
+						sesija.close();
+						}
+						
 					}
 
 					catch (Exception ex) {
@@ -404,9 +416,20 @@ public class AdminHome {
 
 					List<Korisnik> k = PretragaKorisnikaNejedinstvenaVM.pretraziKorisnikaPoTipu(sesija,
 							comboBox_tipKorisnika.getSelectedItem().toString());
+					if(k.isEmpty())
+					{
+
+						JOptionPane.showMessageDialog(null, "Ne postoji korisnik sa takvim tipom", "Info ",
+								JOptionPane.INFORMATION_MESSAGE);
+						sesija.close();
+					}
+					else
+					{
 					for (Korisnik p : k) {
 						model.addElement(p);
 
+					}
+					sesija.close();
 					}
 
 				}

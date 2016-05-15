@@ -4,8 +4,9 @@ import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.Date;
 import java.util.Calendar;
+import java.util.Date;
+
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.GroupLayout;
@@ -29,6 +30,9 @@ import ba.unsa.etf.si.app.SiDesk.View.AdminHome;
 import com.toedter.calendar.JDateChooser;
 
 import ba.unsa.etf.si.app.SiDesk.ViewModel.ModifikacijaKorisnikaVM;
+import java.awt.event.ContainerAdapter;
+import java.awt.event.ContainerEvent;
+import java.text.SimpleDateFormat;
 
 public class AdminUredjivanjeKorisnika {
 
@@ -44,15 +48,20 @@ public class AdminUredjivanjeKorisnika {
 	private static JTextField textField_brojLicne;
 	private JComboBox comboBox_1;
 	static JList listaKorisnika;
+	private static JDateChooser dateChooser;
 
 	public static void lista(JList l) {
+		
+		
+		
 		listaKorisnika = l;
 		Korisnik neko = new Korisnik();
 		neko = (Korisnik) l.getSelectedValue();
 		textField_ime.setText(neko.getIme());
-		;
 		textField_prezime.setText(neko.getPrezime());
-		;
+		dateChooser=new JDateChooser();
+		dateChooser.setDateFormatString("yyyy-MM-dd");
+		//dateChooser.setDate(neko.getDatumZaposlenja());
 		textField_jmbg.setText(neko.getJmbg());
 		textField_adresa.setText(neko.getAdresa());
 		textField_email.setText(neko.getEmail());
@@ -146,7 +155,7 @@ public class AdminUredjivanjeKorisnika {
 		final JComboBox comboBox_1 = new JComboBox();
 		comboBox_1.setBounds(131, 233, 186, 20);
 		comboBox_1.setModel(
-				new DefaultComboBoxModel(new String[] { "Administrator", "Menad\u017Eer", "Obi\u010Dni korisnik" }));
+				new DefaultComboBoxModel(new String[] { "Administrator", "Menadzer", "Obicni korisnik" }));
 
 		JButton btnSpasiIzmjene = new JButton("Spasi izmjene");
 		btnSpasiIzmjene.addActionListener(new ActionListener() {
@@ -163,7 +172,8 @@ public class AdminUredjivanjeKorisnika {
 				cal.set(Calendar.YEAR, g);
 				cal.set(Calendar.MONTH, m);
 				cal.set(Calendar.DAY_OF_MONTH, day);
-				java.util.Date dat = cal.getTime();
+				Date dat = cal.getTime();
+			
 
 				if (Validator.validirajIme(textField_ime.getText())
 						&& Validator.validirajPrezime(textField_prezime.getText())
