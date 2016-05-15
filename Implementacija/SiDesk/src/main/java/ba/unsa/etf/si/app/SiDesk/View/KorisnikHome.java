@@ -792,9 +792,9 @@ public class KorisnikHome {
 						klijent = DodavanjeKlijentaVM.dodajKlijenta(textField.getText(), textField_1.getText(),
 								textField_2.getText(), textField_3.getText(), starost, textField_4.getText());
 						// PretragaPitanjaVM.nadjiPitanjaSaImenom(pitanje);
-						if (chckbxIzlazakIzScenarija.isSelected() == true) {
+						/*if (chckbxIzlazakIzScenarija.isSelected() == true) {
 							SpašavanjeTelefonskogPozivaVM.spasiPoziv(textField_5.getText(), klijent);
-						}
+						}*/
 
 					}
 					// ovdje ces naci starog
@@ -812,9 +812,10 @@ public class KorisnikHome {
 
 							klijent = PretragaKlijenataVM.nadjiKlijenta(imeIzTabele, prezimeIzTabele, adresaIzTabele,
 									brojTelefonaIzTabele, xd, zaposlenjeIzTabele);
-							SpašavanjeTelefonskogPozivaVM.spasiPoziv(textField_5.getText(), klijent);
+							//SpašavanjeTelefonskogPozivaVM.spasiPoziv(textField_5.getText(), klijent);
 						}
 					}
+					SpašavanjeTelefonskogPozivaVM.spasiPoziv(textField_5.getText(), klijent);
 
 					JOptionPane.showMessageDialog(null, "Klijent je uspješno dodan", "Info",
 							JOptionPane.INFORMATION_MESSAGE);
@@ -825,7 +826,7 @@ public class KorisnikHome {
 			}
 
 		});
-		
+
 		btnSpasi.setBounds(398, 22, 180, 53);
 		panel_6.add(btnSpasi);
 

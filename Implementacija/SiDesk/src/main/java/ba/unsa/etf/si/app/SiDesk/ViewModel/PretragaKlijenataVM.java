@@ -16,9 +16,7 @@ public class PretragaKlijenataVM {
 	
 	public static Klijent nadjiKlijenta(String ime, String prezime, String adresaIzTabele, String brojTelefonaIzTabele,int xd, String zaposlenjeIzTabele) {
 		Criteria criteria = null;
-		List<Klijent> lista = null;
-		Klijent klijent1 = null;
-	
+		Klijent klijent = null;
 		try {
 			Session session = (Session) HibernateUtil.getSessionFactory().openSession();
 	        
@@ -26,20 +24,19 @@ public class PretragaKlijenataVM {
 		    criteria = session.createCriteria(Klijent.class)
 		    		.add(Restrictions.like("ime", ime).ignoreCase())
 		    		.add(Restrictions.like("prezime", prezime).ignoreCase())
-		    		.add(Restrictions.like("adresa", adresaIzTabele).ignoreCase())
+		    		.add(Restrictions.like("Adresa", adresaIzTabele).ignoreCase())
 		    		.add(Restrictions.like("brojTelefona", brojTelefonaIzTabele))
 		    		.add(Restrictions.like("starost", xd))
 		    		.add(Restrictions.like("zaposlenje", zaposlenjeIzTabele).ignoreCase());
 	        
-	        lista = criteria.list();
+	        klijent = (Klijent) criteria.list().get(0);
 
 			session.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		
-		klijent1 =lista.get(1);
-		return klijent1;
+		return klijent;
 	}
 	
 }
