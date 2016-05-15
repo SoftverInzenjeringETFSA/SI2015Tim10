@@ -12,6 +12,7 @@ import ba.unsa.etf.si.app.SiDesk.Model.Operater;
 import ba.unsa.etf.si.app.SiDesk.Util.HibernateUtil;
 import org.apache.log4j.Logger;
 public class PretragaOperateraVM {
+	final static Logger logger = Logger.getLogger(PretragaOperateraVM.class);
 
 	public static Operater nadjiOperatera(String username) {
 		Operater o = null;
@@ -27,6 +28,7 @@ public class PretragaOperateraVM {
 			s.close();
 			
 		} catch (Exception e){
+			logger.error("Došlo je do greške:", e);
 			e.printStackTrace();
 		}
 		return o;

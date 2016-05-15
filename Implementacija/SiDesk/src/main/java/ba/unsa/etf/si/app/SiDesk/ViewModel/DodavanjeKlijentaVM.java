@@ -8,8 +8,11 @@ import ba.unsa.etf.si.app.SiDesk.Model.Klijent;
 import ba.unsa.etf.si.app.SiDesk.Model.Korisnik;
 import ba.unsa.etf.si.app.SiDesk.Model.TipKorisnika;
 import ba.unsa.etf.si.app.SiDesk.Util.HibernateUtil;
+import ba.unsa.etf.si.app.SiDesk.View.AdminDodavanjeKorisnika;
+
 import org.apache.log4j.Logger;
 public class DodavanjeKlijentaVM {
+	final static Logger logger = Logger.getLogger(DodavanjeKlijentaVM.class);
 
 	public static Klijent dodajKlijenta(String ime, String prezime, String Adresa, String brojTelefona, int starost,
 			String zaposlenje) {
@@ -24,6 +27,7 @@ public class DodavanjeKlijentaVM {
 		}
 
 		catch (Exception e) {
+			logger.error("Došlo je do greške:", e);
 		}
 		return k;
 	}

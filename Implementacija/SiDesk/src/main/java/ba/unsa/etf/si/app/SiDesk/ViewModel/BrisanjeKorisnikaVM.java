@@ -11,8 +11,11 @@ import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
 
 import ba.unsa.etf.si.app.SiDesk.Model.Korisnik;
+import ba.unsa.etf.si.app.SiDesk.View.AdminDodavanjeKorisnika;
+
 import org.apache.log4j.Logger;
 public class BrisanjeKorisnikaVM {
+	final static Logger logger = Logger.getLogger(BrisanjeKorisnikaVM.class);
 
 	public static void BrisiKorisnika(Session sesija, JList lista) {
 		try {
@@ -34,6 +37,7 @@ public class BrisanjeKorisnikaVM {
 			}
 
 		} catch (Exception e) {
+			logger.error("Došlo je do greške:", e);
 			e.printStackTrace();
 
 		}

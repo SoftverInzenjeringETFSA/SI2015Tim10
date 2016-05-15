@@ -9,6 +9,7 @@ import org.hibernate.Session;
 import ba.unsa.etf.si.app.SiDesk.Model.Kategorija;
 import ba.unsa.etf.si.app.SiDesk.Model.Pitanje;
 import ba.unsa.etf.si.app.SiDesk.Util.HibernateUtil;
+import ba.unsa.etf.si.app.SiDesk.View.AdminDodavanjeKorisnika;
 
 import org.hibernate.Criteria;
 import org.hibernate.Transaction;
@@ -16,7 +17,8 @@ import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Restrictions;
 import org.apache.log4j.Logger;
 public class DodavanjePitanjaVM {
-	
+	final static Logger logger = Logger.getLogger(DodavanjePitanjaVM.class);
+
 	public static Boolean dodajPitanje(Pitanje pitanje) {
 		
 		try {
@@ -37,6 +39,7 @@ public class DodavanjePitanjaVM {
 		}
 		
 		catch (Exception e) {
+			logger.error("Došlo je do greške:", e);
 			e.printStackTrace();
 			return false;
 		}
@@ -58,6 +61,7 @@ public class DodavanjePitanjaVM {
 		
 		
 		catch (Exception e) {
+			logger.error("Došlo je do greške:", e);
 			e.printStackTrace();
 		
 		}

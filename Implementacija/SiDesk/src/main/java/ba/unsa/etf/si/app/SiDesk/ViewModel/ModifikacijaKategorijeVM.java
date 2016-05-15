@@ -15,6 +15,7 @@ import ba.unsa.etf.si.app.SiDesk.Model.Pitanje;
 import ba.unsa.etf.si.app.SiDesk.Util.HibernateUtil;
 import org.apache.log4j.Logger;
 public class ModifikacijaKategorijeVM {
+	final static Logger logger = Logger.getLogger(ModifikacijaKategorijeVM.class);
 
 	public static boolean modifikacijaKategorije(String putanja, String staroIme, String novoIme) {
 		try {
@@ -50,6 +51,7 @@ public class ModifikacijaKategorijeVM {
 
 		}
 		catch (Exception e) {
+			logger.error("Došlo je do greške:", e);
 			e.printStackTrace();
 			return false;
 		}

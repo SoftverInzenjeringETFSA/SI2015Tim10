@@ -17,6 +17,7 @@ import ba.unsa.etf.si.app.SiDesk.Model.TipKorisnika;
 import ba.unsa.etf.si.app.SiDesk.Util.HibernateUtil;
 import org.apache.log4j.Logger;
 public class PretragaKorisnikaNejedinstvenaVM {
+	final static Logger logger = Logger.getLogger(PretragaKorisnikaNejedinstvenaVM.class);
 
 	public static List<Korisnik> pretraziKorisnikaPoImenu(Session sesija, String ime) {
 
@@ -77,6 +78,7 @@ public class PretragaKorisnikaNejedinstvenaVM {
 			s.close();
 			
 		} catch (Exception e){
+			logger.error("Došlo je do greške:", e);
 			e.printStackTrace();
 		}
 		return k;

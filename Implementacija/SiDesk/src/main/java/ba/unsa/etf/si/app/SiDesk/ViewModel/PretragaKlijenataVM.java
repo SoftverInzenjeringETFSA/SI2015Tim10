@@ -13,7 +13,8 @@ import ba.unsa.etf.si.app.SiDesk.Model.Klijent;
 import ba.unsa.etf.si.app.SiDesk.Util.HibernateUtil;
 import org.apache.log4j.Logger;
 public class PretragaKlijenataVM {
-	
+	final static Logger logger = Logger.getLogger(PretragaKlijenataVM.class);
+
 	public static Klijent nadjiKlijenta(String ime, String prezime, String adresaIzTabele, String brojTelefonaIzTabele,int xd, String zaposlenjeIzTabele) {
 		Criteria criteria = null;
 		Klijent klijent = null;
@@ -33,6 +34,7 @@ public class PretragaKlijenataVM {
 
 			session.close();
 		} catch (Exception e) {
+			logger.error("Došlo je do greške:", e);
 			e.printStackTrace();
 		}
 		
