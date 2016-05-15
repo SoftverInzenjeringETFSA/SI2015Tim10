@@ -25,7 +25,7 @@ public class TrazenjeKategorijeVM {
 	        else if(ime != null)criteria = session.createCriteria(Kategorija.class).add(Restrictions.like("ime", ime).ignoreCase());
 	        else return null;
 	        lista = criteria.list();
-
+	        if(lista.size() == 0) return null;
 			t.commit();	
 			session.close();
 		} catch (Exception e) {
