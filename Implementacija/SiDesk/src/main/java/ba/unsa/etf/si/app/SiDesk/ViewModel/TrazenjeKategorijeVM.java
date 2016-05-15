@@ -12,7 +12,8 @@ import ba.unsa.etf.si.app.SiDesk.Model.Kategorija;
 import ba.unsa.etf.si.app.SiDesk.Util.HibernateUtil;
 import org.apache.log4j.Logger;
 public class TrazenjeKategorijeVM {
-	
+	final static Logger logger = Logger.getLogger(TrazenjeKategorijeVM.class);
+
 	public static Kategorija  nadjiKategoriju(String putanja, String ime) {
 		Criteria criteria = null;
 		List<Kategorija> lista=null;
@@ -29,6 +30,7 @@ public class TrazenjeKategorijeVM {
 			t.commit();	
 			session.close();
 		} catch (Exception e) {
+			logger.error("Došlo je do greške:", e);
 			e.printStackTrace();
 		}
 		
@@ -43,6 +45,7 @@ public class TrazenjeKategorijeVM {
 			criteria = session.createCriteria(Kategorija.class);
 			
 		} catch (Exception e) {
+			logger.error("Došlo je do greške:", e);
 			e.printStackTrace();
 		}
 		return (List<Kategorija>)criteria.list();
@@ -60,6 +63,7 @@ public class TrazenjeKategorijeVM {
 			
 			session.close();
 		} catch(Exception e){
+			logger.error("Došlo je do greške:", e);
 			e.printStackTrace();
 		}
 		return listaKategorija;

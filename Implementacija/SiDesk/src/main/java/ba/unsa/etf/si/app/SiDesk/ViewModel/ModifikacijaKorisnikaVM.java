@@ -17,6 +17,7 @@ import ba.unsa.etf.si.app.SiDesk.Model.TipKorisnika;
 import ba.unsa.etf.si.app.SiDesk.Util.HibernateUtil;
 import org.apache.log4j.Logger;
 public class ModifikacijaKorisnikaVM {
+	final static Logger logger = Logger.getLogger(ModifikacijaKorisnikaVM.class);
 
 	public static void modifikacijaKorisnika(Session s, JList lista, String ime, String prezime, String jmbg, String brojTelefona,
 			String email, String username, String password, String adresa, String brojLicne, Date datumZaposljenja,
@@ -68,6 +69,7 @@ public class ModifikacijaKorisnikaVM {
 			
 			
 		} catch (Exception e) {
+			logger.error("Došlo je do greške:", e);
 			e.printStackTrace();
 
 		}

@@ -18,6 +18,7 @@ import ba.unsa.etf.si.app.SiDesk.Util.HibernateUtil;
 import ba.unsa.etf.si.app.SiDesk.Model.Pitanje;
 import org.apache.log4j.Logger;
 public class SpašavanjeTelefonskogPozivaVM {
+	final static Logger logger = Logger.getLogger(SpašavanjeTelefonskogPozivaVM.class);
 
 	public static boolean spasiPoziv(String opisniTekst, Klijent klijent_id, Operater operater ) {
 		
@@ -35,6 +36,7 @@ public class SpašavanjeTelefonskogPozivaVM {
 			tr.commit();			
 		}
 		catch (Exception e) {
+			logger.error("Došlo je do greške:", e);
 			e.printStackTrace();
 			return false;
 		}
@@ -58,6 +60,7 @@ public class SpašavanjeTelefonskogPozivaVM {
 	        tr.commit();	
 	      	}
 		catch (Exception e) {
+			logger.error("Došlo je do greške:", e);
 			e.printStackTrace();
 		}
 	} 

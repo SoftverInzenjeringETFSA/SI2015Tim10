@@ -3,6 +3,7 @@ package ba.unsa.etf.si.app.SiDesk.ViewModel;
 import ba.unsa.etf.si.app.SiDesk.Model.Korisnik;
 import org.apache.log4j.Logger;
 public class PromjenaSifreKorisnikaVM {
+	final static Logger logger = Logger.getLogger(PromjenaSifreKorisnikaVM.class);
 
 	public static boolean promijeniSifruKorisnika(Korisnik korisnik, String novaSifra, String staraSifra) {
 		try {
@@ -18,6 +19,7 @@ public class PromjenaSifreKorisnikaVM {
 
 			
 		} catch (Exception e) {
+			logger.error("Došlo je do greške:", e);
 			e.printStackTrace();
 			return false;
 		}

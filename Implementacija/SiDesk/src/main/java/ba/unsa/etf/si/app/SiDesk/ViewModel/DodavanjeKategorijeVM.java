@@ -12,9 +12,12 @@ import org.hibernate.criterion.Restrictions;
 
 import ba.unsa.etf.si.app.SiDesk.Model.Kategorija;
 import ba.unsa.etf.si.app.SiDesk.Util.HibernateUtil;
+import ba.unsa.etf.si.app.SiDesk.View.AdminDodavanjeKorisnika;
+
 import org.apache.log4j.Logger;
 public class DodavanjeKategorijeVM {
-	
+	final static Logger logger = Logger.getLogger(BrisanjeKategorijeVM.class);
+
 	public static boolean dodajKategoriju(String putanja, String kategorija, Kategorija parent) {
 		try {
 		
@@ -33,6 +36,7 @@ public class DodavanjeKategorijeVM {
 
 		}
 		catch (Exception e) {
+			logger.error("Došlo je do greške:", e);
 			e.printStackTrace();
 			return false;
 		}

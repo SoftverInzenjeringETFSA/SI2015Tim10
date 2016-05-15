@@ -22,7 +22,8 @@ import org.hibernate.criterion.Restrictions;
 import org.apache.log4j.Logger;
 
 public class DodavanjeKorisnikaVM {
-	
+	final static Logger logger = Logger.getLogger(DodavanjeKorisnikaVM.class);
+
 	
 			public static  boolean DodajKorisnika(Session s,String ime, String prezime, String jmbg, 
 				String brojTelefona, String email, String username, String password, 
@@ -58,6 +59,7 @@ public class DodavanjeKorisnikaVM {
 				}
 				
 			} catch (Exception e) {
+				logger.error("Došlo je do greške:", e);
 				e.printStackTrace();
 			
 			}

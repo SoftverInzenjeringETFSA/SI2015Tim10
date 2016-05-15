@@ -35,6 +35,7 @@ import ba.unsa.etf.si.app.SiDesk.Model.TelefonskiPoziv;
 import ba.unsa.etf.si.app.SiDesk.Util.HibernateUtil;
 import org.apache.log4j.Logger;
 public final class GenerisiIzvjestajVremenskiPeriod {
+	final static Logger logger = Logger.getLogger(GenerisiIzvjestajVremenskiPeriod.class);
 
 	public static Boolean generisi(String operater, Date datum_od, Date datum_do) throws MalformedURLException, IOException, ParseException {
 
@@ -99,7 +100,7 @@ public final class GenerisiIzvjestajVremenskiPeriod {
 			catch (FileNotFoundException e)
 
 			{
-
+				logger.error("Došlo je do greške:", e);
 				e.printStackTrace();
 
 			}
@@ -107,7 +108,7 @@ public final class GenerisiIzvjestajVremenskiPeriod {
 			catch (DocumentException e)
 
 			{
-
+				logger.error("Došlo je do greške:", e);
 				e.printStackTrace();
 
 			}
@@ -117,6 +118,7 @@ public final class GenerisiIzvjestajVremenskiPeriod {
 					File myFile = new File(new_file_path);
 					Desktop.getDesktop().open(myFile);
 				} catch (IOException ex) {
+					logger.error("Došlo je do greške:", ex);
 					// no application registered for PDFs
 				}
 			}

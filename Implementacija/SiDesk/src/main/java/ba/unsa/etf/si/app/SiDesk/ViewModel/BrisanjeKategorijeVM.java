@@ -13,8 +13,11 @@ import org.hibernate.criterion.Restrictions;
 import ba.unsa.etf.si.app.SiDesk.Model.Kategorija;
 import ba.unsa.etf.si.app.SiDesk.Model.Pitanje;
 import ba.unsa.etf.si.app.SiDesk.Util.HibernateUtil;
+import ba.unsa.etf.si.app.SiDesk.View.AdminDodavanjeKorisnika;
+
 import org.apache.log4j.Logger;
 public class BrisanjeKategorijeVM {
+	final static Logger logger = Logger.getLogger(BrisanjeKategorijeVM.class);
 
 	public static boolean obrisiKategoriju(String putanja, String ime) {
 		try {
@@ -63,6 +66,7 @@ public class BrisanjeKategorijeVM {
 			t.commit();
 		} 
 		catch (Exception e) {
+			logger.error("Došlo je do greške:", e);
 			e.printStackTrace();
 			return false;
 		}

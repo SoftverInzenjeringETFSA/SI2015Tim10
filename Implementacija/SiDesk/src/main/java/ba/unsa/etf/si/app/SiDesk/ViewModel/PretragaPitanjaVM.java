@@ -13,6 +13,8 @@ import ba.unsa.etf.si.app.SiDesk.Model.Pitanje;
 import ba.unsa.etf.si.app.SiDesk.Util.HibernateUtil;
 import org.apache.log4j.Logger;
 public class PretragaPitanjaVM {
+	final static Logger logger = Logger.getLogger(PretragaPitanjaVM.class);
+
 	public static List<Pitanje> nadjiPitanjaSaPutanjom(String putanja){
 		List<Pitanje> listaPitanja = null;
 		try{
@@ -24,6 +26,7 @@ public class PretragaPitanjaVM {
 			
 			session.close();
 		} catch(Exception e){
+			logger.error("Došlo je do greške:", e);
 			e.printStackTrace();
 		}
 		return listaPitanja;
@@ -42,6 +45,7 @@ public class PretragaPitanjaVM {
 			
 			session.close();
 		} catch (Exception e){
+			logger.error("Došlo je do greške:", e);
 			e.printStackTrace();
 		}
 		return p;

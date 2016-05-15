@@ -33,6 +33,7 @@ import ba.unsa.etf.si.app.SiDesk.Model.TelefonskiPoziv;
 import ba.unsa.etf.si.app.SiDesk.Util.HibernateUtil;
 import org.apache.log4j.Logger;
 public final class GenerisiIzvjestajKategorija {
+	final static Logger logger = Logger.getLogger(GenerisiIzvjestajKategorija.class);
 
 	public static Boolean generisi(String kategorija, String operater) throws MalformedURLException, IOException {
 
@@ -104,7 +105,7 @@ public final class GenerisiIzvjestajKategorija {
 			catch (FileNotFoundException e)
 
 			{
-
+				logger.error("Došlo je do greške:", e);
 				e.printStackTrace();
 
 			}
@@ -112,7 +113,7 @@ public final class GenerisiIzvjestajKategorija {
 			catch (DocumentException e)
 
 			{
-
+				logger.error("Došlo je do greške:", e);
 				e.printStackTrace();
 
 			}
@@ -122,6 +123,7 @@ public final class GenerisiIzvjestajKategorija {
 					File myFile = new File(new_file_path);
 					Desktop.getDesktop().open(myFile);
 				} catch (IOException ex) {
+					logger.error("Došlo je do greške:", ex);
 					// no application registered for PDFs
 				}
 			}
