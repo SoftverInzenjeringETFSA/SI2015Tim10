@@ -51,7 +51,7 @@ public class MenadzerModifikovanjeKategorije {
 		frmModifikovanjeKategorije = new JFrame();
 		frmModifikovanjeKategorije.setTitle("Modifikovanje kategorije");
 		frmModifikovanjeKategorije.setBounds(100, 100, 517, 216);
-		frmModifikovanjeKategorije.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frmModifikovanjeKategorije.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frmModifikovanjeKategorije.getContentPane().setLayout(null);
 		
 		JLabel lblImeKategorije = new JLabel("Novo ime kategorije");

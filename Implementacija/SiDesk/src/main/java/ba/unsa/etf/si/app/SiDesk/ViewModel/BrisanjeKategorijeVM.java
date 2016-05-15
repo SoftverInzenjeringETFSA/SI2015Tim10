@@ -25,7 +25,10 @@ public class BrisanjeKategorijeVM {
 	        //kategoriju mora naci
 			Criteria criteria = session.createCriteria(Kategorija.class).add(Restrictions.like("ime", ime).ignoreCase());
 			List<Kategorija> lista = criteria.list();		
-			if(lista.size() == 0) return false; 
+			if(lista.size() == 0) {
+				JOptionPane.showMessageDialog(null, "Nije pronađena kategorija.","Info", JOptionPane.INFORMATION_MESSAGE);	
+				return false; 
+			}
 			Kategorija k = lista.get(0);
 		
 			//pretraga djece cvora, djecu ne mora imati

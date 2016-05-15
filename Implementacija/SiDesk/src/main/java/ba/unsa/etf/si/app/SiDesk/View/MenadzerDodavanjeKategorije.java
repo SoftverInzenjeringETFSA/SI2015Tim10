@@ -52,7 +52,7 @@ public class MenadzerDodavanjeKategorije {
 		frmDodavanjeKategorije = new JFrame();
 		frmDodavanjeKategorije.setTitle("Dodavanje kategorije");
 		frmDodavanjeKategorije.setBounds(100, 100, 517, 216);
-		frmDodavanjeKategorije.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frmDodavanjeKategorije.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frmDodavanjeKategorije.getContentPane().setLayout(null);
 		
 		JLabel lblImeKategorije = new JLabel("Ime kategorije");

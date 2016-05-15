@@ -59,7 +59,7 @@ public class MenadzerDodajPitanje {
 		frmDodajPitanje = new JFrame();
 		frmDodajPitanje.setTitle("Dodaj pitanje");
 		frmDodajPitanje.setBounds(100, 100, 675, 455);
-		frmDodajPitanje.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		//frmDodajPitanje.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmDodajPitanje.getContentPane().setLayout(null);
 		
 		JLabel lblKategorija = new JLabel("Kategorija");
