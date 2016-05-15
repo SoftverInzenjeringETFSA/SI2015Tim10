@@ -32,14 +32,19 @@ import com.mysql.jdbc.PreparedStatement;
 import com.toedter.calendar.JDateChooser;
 import com.toedter.calendar.JTextFieldDateEditor;
 
+import ba.unsa.etf.si.app.SiDesk.Validation.Validator;
 import ba.unsa.etf.si.app.SiDesk.Model.Kategorija;
+import ba.unsa.etf.si.app.SiDesk.Model.Klijent;
 import ba.unsa.etf.si.app.SiDesk.Model.Pitanje;
 import ba.unsa.etf.si.app.SiDesk.Util.HibernateUtil;
+import ba.unsa.etf.si.app.SiDesk.Validation.Validator;
 import ba.unsa.etf.si.app.SiDesk.ViewModel.DodavanjeKlijentaVM;
 import ba.unsa.etf.si.app.SiDesk.ViewModel.DodavanjeKorisnikaVM;
 import ba.unsa.etf.si.app.SiDesk.ViewModel.DodavanjePitanjaVM;
 import ba.unsa.etf.si.app.SiDesk.ViewModel.ModifikacijaKategorijeVM;
+import ba.unsa.etf.si.app.SiDesk.ViewModel.ModifikacijaKlijentaVM;
 import ba.unsa.etf.si.app.SiDesk.ViewModel.PretragaPitanjaVM;
+import ba.unsa.etf.si.app.SiDesk.ViewModel.SpašavanjeTelefonskogPozivaVM;
 import ba.unsa.etf.si.app.SiDesk.ViewModel.TrazenjeKategorijeVM;
 
 import java.awt.event.ActionListener;
@@ -126,19 +131,7 @@ public class KorisnikHome {
 	}
 	
 	
-	/*
-	public boolean provjeri_tabelu()
-	{
-	    java.util.Date date = dateChooser.getDate();
 
-		if( !rdbtnStariKorisnik.isSelected()) 
-		{
-			return false;
-		}
-		
-		else return true;
-	
-	}  */
 	
 	private void initialize() {
 		frameKorisnik = new JFrame();
@@ -432,10 +425,91 @@ public class KorisnikHome {
 		panel_3.add(dateChooser);
 		
 		JButton btnPretraga = new JButton("Pretraga");
+		btnPretraga.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+			
+				String kljucnaRijec = textField.getText();
+				//provjera je li oznacena kategorija
+				
+				Kategorija oznacenaKategorija = TrazenjeKategorijeVM.nadjiKategoriju(putanja, kliknutiCvorString);
+				String putanjaZaKategorije = null;
+				if (oznacenaKategorija == null)  putanjaZaKategorije = "";
+				else if(kliknutiCvorString != null) putanjaZaKategorije = putanja + kliknutiCvorString;
+				List<Klijent> listaKlijenta = ModifikacijaKlijentaVM.nadjiKlijenta(kljucnaRijec);
+				
+				//dodavanje u tabelu
+				String[][] tabelaPitanja = new String[listaKlijenta.size()][6];
+				for(int i = 0; i < listaKlijenta.size(); i++)
+				{
+			        int n = listaKlijenta.get(i).getStarost();
+			        String pom = Integer.toString(n);
+					tabelaPitanja[i][0] = listaKlijenta.get(i).getIme();
+					tabelaPitanja[i][1] = listaKlijenta.get(i).getPrezime();
+					tabelaPitanja[i][2] = listaKlijenta.get(i).getAdresa();
+					tabelaPitanja[i][3] = listaKlijenta.get(i).getBrojTelefona();
+					tabelaPitanja[i][4] = pom;
+					tabelaPitanja[i][5] = listaKlijenta.get(i).getZaposlenje();
+				
+					
+					
+				}
+				
+				table_1.setModel(new DefaultTableModel(
+						tabelaPitanja,
+						new String[] {
+							"ime","prezime","Adresa","brojTelefona","Starost","zaposlenje"
+						}
+					));
+			
+				
+			}
+				
+			
+		});  
 		btnPretraga.setBounds(538, 7, 89, 23);
 		panel_3.add(btnPretraga);
 		
 		JButton button = new JButton("Pretraga");
+		button.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+			
+				String kljucnaRijec = textField_1.getText();
+				//provjera je li oznacena kategorija
+				
+				
+				List<Klijent> listaKlijenta = ModifikacijaKlijentaVM.nadjiKlijenta1(kljucnaRijec);
+				
+				//dodavanje u tabelu
+				String[][] tabelaPitanja = new String[listaKlijenta.size()][6];
+				for(int i = 0; i < listaKlijenta.size(); i++)
+				{
+
+			        int n = listaKlijenta.get(i).getStarost();
+			        String pom = Integer.toString(n);
+					tabelaPitanja[i][0] = listaKlijenta.get(i).getIme();
+					tabelaPitanja[i][1] = listaKlijenta.get(i).getPrezime();
+					tabelaPitanja[i][2] = listaKlijenta.get(i).getAdresa();
+					tabelaPitanja[i][3] = listaKlijenta.get(i).getBrojTelefona();
+					tabelaPitanja[i][4] = pom;
+					tabelaPitanja[i][5] = listaKlijenta.get(i).getZaposlenje();
+					
+					
+					
+				}
+				
+				table_1.setModel(new DefaultTableModel(
+						tabelaPitanja,
+						new String[] {
+							"ime", "prezime","Adresa","brojTelefona","Starost","zaposlenje"
+						}
+					));
+			
+				
+			}
+			
+		});
 		button.setBounds(538, 32, 89, 23);
 		panel_3.add(button);
 		
@@ -464,7 +538,7 @@ public class KorisnikHome {
 	
 		table_1.setModel(new DefaultTableModel(
 			new Object[][] {
-				{"Almedin", "Velija", "aaaaa", "111", "111", "aaaa"},
+				{"Almedin", "Velija", "aaaaaT", "111", "111", null},
 				{null, null, null, null, null, null},
 				{null, null, null, null, null, null},
 				{null, null, null, null, null, null},
@@ -473,7 +547,7 @@ public class KorisnikHome {
 				{null, null, null, null, null, null},
 			},
 			new String[] {
-				"Ime", "Prezime", "Adresa", "Telefon", "Datum", "Zaposlenje"
+				"Ime", "Prezime", "Adresa", "Broj Telefona", "Starost", "Zaposlenje"
 			}
 		));
 		scrollPane_1.setViewportView(table_1);
@@ -491,6 +565,12 @@ public class KorisnikHome {
 		rdbtnNoviKorisnik.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent e) {
 				
+				textField.setText("");
+				textField_1.setText("");
+				textField_2.setText("");
+				textField_3.setText("");
+				textField_4.setText("");
+				dateChooser.setDate(null);
 				if(provjeri())
 				{
 					int n = tabbedPane.indexOfTab("Scenarij");
@@ -536,37 +616,12 @@ public class KorisnikHome {
 					
 					}
 					
-					/*         if(sr!=null)
-						}
-			            {
 					
-						int n = tabbedPane.indexOfTab("Scenarij");
-						tabbedPane.setEnabledAt(n, true);
-						int m = tabbedPane.indexOfTab("Ostali podaci");
-						tabbedPane.setEnabledAt(m, true);
-			            }
-			            else if(sr==null)
-			            {
-
-							int n = tabbedPane.indexOfTab("Scenarij");
-							tabbedPane.setEnabledAt(n, false);
-							int m = tabbedPane.indexOfTab("Ostali podaci");
-							tabbedPane.setEnabledAt(m, false);
-			            }
-			*/}
-				/*	else 
-					{
-
-						int n = tabbedPane.indexOfTab("Scenarij");
-						tabbedPane.setEnabledAt(n, false);
-						int m = tabbedPane.indexOfTab("Ostali podaci");
-						tabbedPane.setEnabledAt(m, false);
-					}*/
 					
-			
+			}	
 				
-		}
-			);
+			});
+		
 		rdbtnStariKorisnik.setBounds(167, 7, 109, 23);
 		panel_4.add(rdbtnStariKorisnik);
 		rdbtnStariKorisnik.setSelected(false);
@@ -594,6 +649,7 @@ public class KorisnikHome {
 		panel_1.add(btnNewButton);
 		
 		JPanel panel = new JPanel();
+		
 		tabbedPane.addTab("Scenarij", null, panel, null);
 		
 		int n = tabbedPane.indexOfTab("Scenarij");
@@ -687,35 +743,7 @@ public class KorisnikHome {
 		panel_8.add(lblPretragaPoRijei);
 		
 		textField_7 = new JTextField();
-	 /*	textField_7.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyPressed(KeyEvent arg0) {
-				String kljucnaRijec = textField_7.getText();
-				//provjera je li oznacena kategorija
-				
-				Kategorija oznacenaKategorija = TrazenjeKategorijeVM.nadjiKategoriju(putanja, kliknutiCvorString);
-				String putanjaZaKategorije = null;
-				if (oznacenaKategorija == null)  putanjaZaKategorije = "";
-				else if(kliknutiCvorString != null) putanjaZaKategorije = putanja + kliknutiCvorString;
-				List<Pitanje> listaPitanja = DodavanjePitanjaVM.pretraziPitanja(kljucnaRijec, putanjaZaKategorije);
-				
-				//dodavanje u tabelu
-				String[][] tabelaPitanja = new String[listaPitanja.size()][2];
-				for(int i = 0; i < listaPitanja.size(); i++)
-				{
-					tabelaPitanja[i][0] = listaPitanja.get(i).getPitanje();
-					tabelaPitanja[i][1] = listaPitanja.get(i).getOdgovor();
-				}
-				
-				table_2.setModel(new DefaultTableModel(
-						tabelaPitanja,
-						new String[] {
-							"Pitanja", "Odgovori"
-						}
-					));
-			
-				}
-		}); */
+	 
 		textField_7.setBounds(24, 25, 246, 26);
 		panel_8.add(textField_7);
 		textField_7.setColumns(10);
@@ -844,6 +872,7 @@ public class KorisnikHome {
 				textField_3.setText("");
 				textField_4.setText("");
 				dateChooser.setDate(null);
+				tabbedPane.setSelectedIndex(0);
 				JOptionPane.showMessageDialog(null, "Ponisteno","Info", JOptionPane.INFORMATION_MESSAGE);
 			}
 		});
@@ -854,18 +883,40 @@ public class KorisnikHome {
 		btnSpasi.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
+				
+				String s2 = ((JTextField)dateChooser.getDateEditor().getUiComponent()).getText();
+				if (s2.equals("")) {
+				    JOptionPane.showMessageDialog(null, "Unesite ispravan datum!", "Info", JOptionPane.ERROR_MESSAGE);
+				}
+				int year1 = Calendar.getInstance().get(Calendar.YEAR);
+                int staro1 =  dateChooser.getDate().getYear()+1900;
+                int starost1 = year1-staro1;
+                
+				if(!Validator.validirajIme(textField.getText()) || !Validator.validirajPrezime(textField_1.getText()) ||
+						!Validator.validirajStarost(starost1) || !Validator.validirajBrojTelefona(textField_3.getText()))
+						{
+					JOptionPane.showMessageDialog(null, "Unijeli ste pogresne podatke!","Info", JOptionPane.INFORMATION_MESSAGE);	
+
+						}
+				else 
 				try{
 					
-					//Validacija unesenih podataka...
 					
 					Session s1= HibernateUtil.getSessionFactory().openSession();	
-					
+				if(rdbtnNoviKorisnik.isSelected()==true) {
 					int year = Calendar.getInstance().get(Calendar.YEAR);
                    int staro =  dateChooser.getDate().getYear()+1900;
                    int starost = year-staro;
 								
-					DodavanjeKlijentaVM.dodajKlijenta(textField.getText(),textField_1.getText(),textField_2.getText(),starost,textField_3.getText());
-							
+					DodavanjeKlijentaVM.dodajKlijenta(textField.getText(),textField_1.getText(),textField_2.getText(),textField_3.getText(),starost,textField_4.getText());
+					}
+					
+			/*		if(chckbxIzlazakIzScenarija.isSelected()==true) {
+						Klijent klijent1 = new Klijent ();
+						
+						
+					//	SpašavanjeTelefonskogPozivaVM.spasiPoziv(textField_5.getText(),klijent1,operater1);
+					} */
 								JOptionPane.showMessageDialog(null, "Klijent je uspješno dodan","Info", JOptionPane.INFORMATION_MESSAGE);	
 							}
 							catch(Exception ex){

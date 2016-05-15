@@ -41,18 +41,20 @@ public class Klijent implements java.io.Serializable{
 	private String brojTelefona;
 	private int starost;
 	private String zaposlenje;
+	private String Adresa;
 
 	
 	public Klijent() {
 		
 	}
 	
-	public Klijent(String ime, String prezime, String brojTelefona, int starost, String zaposlenje) {
+	public Klijent(String ime, String prezime,String Adresa, String brojTelefona, int starost, String zaposlenje) {
 		this.ime=ime;
 		this.prezime=prezime;
 		this.brojTelefona=brojTelefona;
 		this.starost=starost;
 		this.zaposlenje=zaposlenje;
+		this.Adresa=Adresa;
 	}
 	
 	
@@ -103,6 +105,14 @@ public class Klijent implements java.io.Serializable{
 
 	public void setZaposlenje(String zaposlenje) {
 		this.zaposlenje = zaposlenje;
+	}
+	
+	public String getAdresa() {
+		return Adresa;
+	}
+
+	public void setAdresa(String Adresa) {
+		this.Adresa = Adresa;
 	}
 	
 	

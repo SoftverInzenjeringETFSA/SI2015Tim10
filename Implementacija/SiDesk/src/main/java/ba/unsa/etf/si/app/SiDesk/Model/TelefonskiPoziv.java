@@ -61,7 +61,7 @@ public class TelefonskiPoziv implements Serializable {
 	public void setOperater(Operater operater) {
 		this.operater = operater;
 	}
-
+	
 	private Date poziv;
 	private double trajanjePoziva;
 	private String opisniTekst;
@@ -70,7 +70,7 @@ public class TelefonskiPoziv implements Serializable {
 		poziv = new Date(); 
 	}
 
-
+	
 
 	public Klijent getKlijent() {
 		return klijent;
