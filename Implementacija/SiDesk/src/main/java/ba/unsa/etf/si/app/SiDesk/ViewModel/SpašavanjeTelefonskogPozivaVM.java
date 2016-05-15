@@ -3,6 +3,9 @@ package ba.unsa.etf.si.app.SiDesk.ViewModel;
 
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -44,7 +47,9 @@ public class SpašavanjeTelefonskogPozivaVM {
 	        Transaction tr = s2.beginTransaction();
 	        
 	        TelefonskiPoziv t = new TelefonskiPoziv(klijent, pitanje, operater, kal);
-      
+	        Set<Pitanje> pitanja = new HashSet<Pitanje>();
+	        pitanja.add(pitanje);
+	        t.setPitanja(pitanja);
 	        s2.save(t);
 			tr.commit();			
 			
@@ -54,29 +59,5 @@ public class SpašavanjeTelefonskogPozivaVM {
 			e.printStackTrace();
 		}
 	} 
-	
-/*	public static boolean spasiPitanje(Pitanje pitanje_id,TelefonskiPoziv poziv_id ) {
-	/*	
-		try {
-			Session s2 = (Session) HibernateUtil.getSessionFactory().openSession();
-	        Transaction tr = s2.beginTransaction();
-	        		
-			Pitanje a = new Pitanje();
-	        TelefonskiPoziv b = new TelefonskiPoziv();
-	        b.setId(poziv_id);
-	    
-	       
-	        	        
-	        s2.save(b);
-	        s2.save(a);
-			tr.commit();			
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-			return false;
-		}
-		
-		return true;
-	} */
 }
 

@@ -22,7 +22,7 @@ public class PretragaOperateraVM {
 			List<Korisnik> lista = criteria.list();
 			Korisnik k = lista.get(0);
 			
-			criteria = s.createCriteria(Operater.class).add(Restrictions.like("id", k.getOperater_korisnik()).ignoreCase());
+			criteria = s.createCriteria(Operater.class).add(Restrictions.like("id", k.getOperater_korisnik().getId()));
 			o = (Operater) criteria.list().get(0);
 			s.close();
 			

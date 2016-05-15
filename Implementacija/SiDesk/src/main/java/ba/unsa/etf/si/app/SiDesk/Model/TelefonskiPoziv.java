@@ -69,7 +69,7 @@ public class TelefonskiPoziv implements Serializable {
 	public TelefonskiPoziv(Klijent klijent, Pitanje pitanje, Operater operater, Date poziv) {
 		poziv = new Date(); 
 		this.klijent = klijent;
-		this.pitanja.add(pitanje);
+		//this.pitanja.add(pitanje);
 		this.operater = operater;
 		this.poziv = poziv;
 	}

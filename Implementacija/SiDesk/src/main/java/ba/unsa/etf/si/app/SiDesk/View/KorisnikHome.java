@@ -125,8 +125,7 @@ public class KorisnikHome {
 		java.util.Date date = dateChooser.getDate();
 
 		if (textField.getText().equals("") || textField_1.getText().equals("") || textField_2.getText().equals("")
-				|| textField_3.getText().equals("") || textField_4.getText().equals("") || date == null
-				) {
+				|| textField_3.getText().equals("") || textField_4.getText().equals("") || date == null) {
 			return false;
 		}
 
@@ -355,7 +354,7 @@ public class KorisnikHome {
 		panel_3.add(textField_4);
 
 		dateChooser = new JDateChooser();
-	
+
 		dateChooser.addPropertyChangeListener(new PropertyChangeListener() {
 			public void propertyChange(PropertyChangeEvent evt) {
 				if (provjeri()) {
@@ -472,10 +471,10 @@ public class KorisnikHome {
 		});
 
 		table_1.setModel(new DefaultTableModel(
-				new Object[][] { { null, null, null, null, null, null },
+				new Object[][] { { null, null, null, null, null, null }, { null, null, null, null, null, null },
 						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
 						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
-						{ null, null, null, null, null, null }, { null, null, null, null, null, null }, },
+						{ null, null, null, null, null, null }, },
 				new String[] { "Ime", "Prezime", "Adresa", "Broj Telefona", "Starost", "Zaposlenje" }));
 		scrollPane_1.setViewportView(table_1);
 
@@ -489,31 +488,7 @@ public class KorisnikHome {
 		rdbtnNoviKorisnik.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				if (rdbtnNoviKorisnik.isSelected()==true) {
-					int n = tabbedPane.indexOfTab("Scenarij");
-					tabbedPane.setEnabledAt(n, true);
-					int m = tabbedPane.indexOfTab("Ostali podaci");
-					tabbedPane.setEnabledAt(m, true);
-
-				} else 
-				{
-
-					int n = tabbedPane.indexOfTab("Scenarij");
-					tabbedPane.setEnabledAt(n, false);
-					int m = tabbedPane.indexOfTab("Ostali podaci");
-					tabbedPane.setEnabledAt(m, false);
-				}
-			}
-		});
-	/*	rdbtnNoviKorisnik.addChangeListener(new ChangeListener() {
-			public void stateChanged(ChangeEvent e) {
-
-				
-				 * textField.setText(""); textField_1.setText("");
-				 * textField_2.setText(""); textField_3.setText("");
-				 * textField_4.setText(""); dateChooser.setDate(null);
-				 
-				if (provjeri()) {
+				if (rdbtnNoviKorisnik.isSelected() == true) {
 					int n = tabbedPane.indexOfTab("Scenarij");
 					tabbedPane.setEnabledAt(n, true);
 					int m = tabbedPane.indexOfTab("Ostali podaci");
@@ -527,7 +502,26 @@ public class KorisnikHome {
 					tabbedPane.setEnabledAt(m, false);
 				}
 			}
-		}); */
+		});
+		/*
+		 * rdbtnNoviKorisnik.addChangeListener(new ChangeListener() { public
+		 * void stateChanged(ChangeEvent e) {
+		 * 
+		 * 
+		 * textField.setText(""); textField_1.setText("");
+		 * textField_2.setText(""); textField_3.setText("");
+		 * textField_4.setText(""); dateChooser.setDate(null);
+		 * 
+		 * if (provjeri()) { int n = tabbedPane.indexOfTab("Scenarij");
+		 * tabbedPane.setEnabledAt(n, true); int m = tabbedPane.indexOfTab(
+		 * "Ostali podaci"); tabbedPane.setEnabledAt(m, true);
+		 * 
+		 * } else {
+		 * 
+		 * int n = tabbedPane.indexOfTab("Scenarij"); tabbedPane.setEnabledAt(n,
+		 * false); int m = tabbedPane.indexOfTab("Ostali podaci");
+		 * tabbedPane.setEnabledAt(m, false); } } });
+		 */
 
 		rdbtnNoviKorisnik.setBounds(6, 7, 137, 23);
 		panel_4.add(rdbtnNoviKorisnik);
@@ -691,7 +685,7 @@ public class KorisnikHome {
 
 		JButton btnNewButton_2 = new JButton("Pretraži");
 		btnNewButton_2.addMouseListener(new MouseAdapter() {
-				@Override
+			@Override
 			public void mouseClicked(MouseEvent e) {
 				String kljucnaRijec = textField_7.getText();
 				// provjera je li oznacena kategorija
@@ -807,11 +801,10 @@ public class KorisnikHome {
 				 * 
 				 * } else
 				 */
-				
-				
+
 				try {
 					Klijent klijent = null;
-					//trazenje pitanja na osnovu teksta
+					// trazenje pitanja na osnovu teksta
 					String username = "aaaa";
 					Operater operater = PretragaOperateraVM.nadjiOperatera(username);
 					DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
@@ -825,36 +818,35 @@ public class KorisnikHome {
 						// PretragaPitanjaVM.nadjiPitanjaSaImenom(pitanje);
 						if (chckbxIzlazakIzScenarija.isSelected() == true) {
 							SpašavanjeTelefonskogPozivaVM.spasiPoziv(textField_5.getText(), klijent);
-						}
-						else {
+						} else {
 							String pitanjeTabela = (String) table_2.getModel().getValueAt(table_2.getSelectedRow(), 0);
 							String odgovorTabela = (String) table_2.getModel().getValueAt(table_2.getSelectedRow(), 1);
 							Pitanje pitanje = PretragaPitanjaVM.nadjiPitanje(pitanjeTabela, odgovorTabela);
-							
+
 							SpašavanjeTelefonskogPozivaVM.spasiPoziv(klijent, pitanje, operater, date);
 						}
 					}
 					// ovdje ces naci starog
 					if (rdbtnNoviKorisnik.isSelected() == false) {
-						if (chckbxIzlazakIzScenarija.isSelected() == true) {
-							int selectedRow = table_1.getSelectedRow();
-							selectedRow = table_1.convertRowIndexToModel(selectedRow);
-							String imeIzTabele = (String) table_1.getModel().getValueAt(selectedRow, 0);
-							String prezimeIzTabele = (String) table_1.getModel().getValueAt(selectedRow, 1);
-							String adresaIzTabele = (String) table_1.getModel().getValueAt(selectedRow, 2);
-							String brojTelefonaIzTabele = (String) table_1.getModel().getValueAt(selectedRow, 3);
-							String starostIzTabele = (String) table_1.getModel().getValueAt(selectedRow, 4);
-							String zaposlenjeIzTabele = (String) table_1.getModel().getValueAt(selectedRow, 5);
-							int xd = Integer.parseInt(starostIzTabele);
+						int selectedRow = table_1.getSelectedRow();
+						selectedRow = table_1.convertRowIndexToModel(selectedRow);
+						String imeIzTabele = (String) table_1.getModel().getValueAt(selectedRow, 0);
+						String prezimeIzTabele = (String) table_1.getModel().getValueAt(selectedRow, 1);
+						String adresaIzTabele = (String) table_1.getModel().getValueAt(selectedRow, 2);
+						String brojTelefonaIzTabele = (String) table_1.getModel().getValueAt(selectedRow, 3);
+						String starostIzTabele = (String) table_1.getModel().getValueAt(selectedRow, 4);
+						String zaposlenjeIzTabele = (String) table_1.getModel().getValueAt(selectedRow, 5);
+						int xd = Integer.parseInt(starostIzTabele);
 
-							klijent = PretragaKlijenataVM.nadjiKlijenta(imeIzTabele, prezimeIzTabele, adresaIzTabele,
-									brojTelefonaIzTabele, xd, zaposlenjeIzTabele);
+						klijent = PretragaKlijenataVM.nadjiKlijenta(imeIzTabele, prezimeIzTabele, adresaIzTabele,
+								brojTelefonaIzTabele, xd, zaposlenjeIzTabele);
+						if (chckbxIzlazakIzScenarija.isSelected() == true) {
 							SpašavanjeTelefonskogPozivaVM.spasiPoziv(textField_5.getText(), klijent);
 						} else {
 							String pitanjeTabela = (String) table_2.getModel().getValueAt(table_2.getSelectedRow(), 0);
 							String odgovorTabela = (String) table_2.getModel().getValueAt(table_2.getSelectedRow(), 1);
 							Pitanje pitanje = PretragaPitanjaVM.nadjiPitanje(pitanjeTabela, odgovorTabela);
-							
+
 							SpašavanjeTelefonskogPozivaVM.spasiPoziv(klijent, pitanje, operater, date);
 						}
 					}
@@ -868,7 +860,7 @@ public class KorisnikHome {
 			}
 
 		});
-		
+
 		btnSpasi.setBounds(398, 22, 180, 53);
 		panel_6.add(btnSpasi);
 
