@@ -121,7 +121,7 @@ public class KorisnikHome {
 
 		if (textField.getText().equals("") || textField_1.getText().equals("") || textField_2.getText().equals("")
 				|| textField_3.getText().equals("") || textField_4.getText().equals("") || date == null
-				|| !rdbtnNoviKorisnik.isSelected()) {
+				) {
 			return false;
 		}
 
@@ -350,6 +350,7 @@ public class KorisnikHome {
 		panel_3.add(textField_4);
 
 		dateChooser = new JDateChooser();
+	
 		dateChooser.addPropertyChangeListener(new PropertyChangeListener() {
 			public void propertyChange(PropertyChangeEvent evt) {
 				if (provjeri()) {
@@ -480,14 +481,33 @@ public class KorisnikHome {
 		panel_4.setLayout(null);
 
 		rdbtnNoviKorisnik = new JRadioButton("Novi korisnik");
-		rdbtnNoviKorisnik.addChangeListener(new ChangeListener() {
+		rdbtnNoviKorisnik.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if (rdbtnNoviKorisnik.isSelected()==true) {
+					int n = tabbedPane.indexOfTab("Scenarij");
+					tabbedPane.setEnabledAt(n, true);
+					int m = tabbedPane.indexOfTab("Ostali podaci");
+					tabbedPane.setEnabledAt(m, true);
+
+				} else 
+				{
+
+					int n = tabbedPane.indexOfTab("Scenarij");
+					tabbedPane.setEnabledAt(n, false);
+					int m = tabbedPane.indexOfTab("Ostali podaci");
+					tabbedPane.setEnabledAt(m, false);
+				}
+			}
+		});
+	/*	rdbtnNoviKorisnik.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent e) {
 
-				/*
+				
 				 * textField.setText(""); textField_1.setText("");
 				 * textField_2.setText(""); textField_3.setText("");
 				 * textField_4.setText(""); dateChooser.setDate(null);
-				 */
+				 
 				if (provjeri()) {
 					int n = tabbedPane.indexOfTab("Scenarij");
 					tabbedPane.setEnabledAt(n, true);
@@ -502,11 +522,11 @@ public class KorisnikHome {
 					tabbedPane.setEnabledAt(m, false);
 				}
 			}
-		});
+		}); */
 
 		rdbtnNoviKorisnik.setBounds(6, 7, 137, 23);
 		panel_4.add(rdbtnNoviKorisnik);
-		rdbtnNoviKorisnik.setSelected(false);
+		rdbtnNoviKorisnik.setSelected(true);
 		//
 
 		rdbtnStariKorisnik.addChangeListener(new ChangeListener() {
@@ -666,7 +686,7 @@ public class KorisnikHome {
 
 		JButton btnNewButton_2 = new JButton("Pretraži");
 		btnNewButton_2.addMouseListener(new MouseAdapter() {
-			@Override
+				@Override
 			public void mouseClicked(MouseEvent e) {
 				String kljucnaRijec = textField_7.getText();
 				// provjera je li oznacena kategorija
@@ -792,10 +812,20 @@ public class KorisnikHome {
 						klijent = DodavanjeKlijentaVM.dodajKlijenta(textField.getText(), textField_1.getText(),
 								textField_2.getText(), textField_3.getText(), starost, textField_4.getText());
 						// PretragaPitanjaVM.nadjiPitanjaSaImenom(pitanje);
-						/*if (chckbxIzlazakIzScenarija.isSelected() == true) {
+						if (chckbxIzlazakIzScenarija.isSelected() == true) {
 							SpašavanjeTelefonskogPozivaVM.spasiPoziv(textField_5.getText(), klijent);
-						}*/
-
+						}
+						Kategorija oznacenaKategorija = TrazenjeKategorijeVM.nadjiKategoriju(putanja, kliknutiCvorString);
+						String putanjaZaKategorije = null;
+						int selectedRow = table_1.getSelectedRow();
+						selectedRow = table_1.convertRowIndexToModel(selectedRow);
+						String pitanjeIzTabele = (String) table_2.getModel().getValueAt(selectedRow, 0);
+						if (oznacenaKategorija == null)
+							putanjaZaKategorije = "";
+						else if (kliknutiCvorString != null)
+							putanjaZaKategorije = putanja + kliknutiCvorString;
+						List<Pitanje> listaPitanja = DodavanjePitanjaVM.pretraziPitanja(pitanjeIzTabele, putanjaZaKategorije);
+						
 					}
 					// ovdje ces naci starog
 					if (rdbtnNoviKorisnik.isSelected() == false) {
@@ -812,10 +842,9 @@ public class KorisnikHome {
 
 							klijent = PretragaKlijenataVM.nadjiKlijenta(imeIzTabele, prezimeIzTabele, adresaIzTabele,
 									brojTelefonaIzTabele, xd, zaposlenjeIzTabele);
-							//SpašavanjeTelefonskogPozivaVM.spasiPoziv(textField_5.getText(), klijent);
+							SpašavanjeTelefonskogPozivaVM.spasiPoziv(textField_5.getText(), klijent);
 						}
 					}
-					SpašavanjeTelefonskogPozivaVM.spasiPoziv(textField_5.getText(), klijent);
 
 					JOptionPane.showMessageDialog(null, "Klijent je uspješno dodan", "Info",
 							JOptionPane.INFORMATION_MESSAGE);
@@ -826,7 +855,7 @@ public class KorisnikHome {
 			}
 
 		});
-
+		
 		btnSpasi.setBounds(398, 22, 180, 53);
 		panel_6.add(btnSpasi);
 
