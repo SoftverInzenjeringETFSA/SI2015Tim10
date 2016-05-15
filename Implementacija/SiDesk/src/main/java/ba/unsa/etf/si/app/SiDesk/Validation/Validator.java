@@ -60,7 +60,7 @@ public class Validator {
 		Date danasnjiDatum = new Date();
 		
 
-		  if (danasnjiDatum.compareTo(datum)>0)
+		  if (danasnjiDatum.compareTo(datum)<0)
 		 	return false;
 		
 		return true;

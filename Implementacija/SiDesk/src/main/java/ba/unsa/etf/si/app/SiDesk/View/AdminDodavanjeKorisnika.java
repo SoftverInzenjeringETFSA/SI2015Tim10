@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -217,15 +218,19 @@ public class AdminDodavanjeKorisnika {
 				if (s1.equals("")) {
 					JOptionPane.showMessageDialog(null, "Unesite ispravan datum!", "Info", JOptionPane.ERROR_MESSAGE);
 				}
-				int g = dateChooser_datumZaposlenja.getDate().getYear() + 1900;
-				int m = dateChooser_datumZaposlenja.getDate().getMonth() + 1;
+				int g = dateChooser_datumZaposlenja.getDate().getYear() +1900;
+				int m = dateChooser_datumZaposlenja.getDate().getMonth();
 				int day = dateChooser_datumZaposlenja.getDate().getDate();
-				Date d = new Date(g, m, day);
+				Calendar cal=Calendar.getInstance();
+				cal.set(Calendar.YEAR, g);
+				cal.set(Calendar.MONTH, m);
+				cal.set(Calendar.DAY_OF_MONTH, day);
+				Date d = cal.getTime();
 
 				if (Validator.validirajIme(textField_ime.getText())
 						&& Validator.validirajPrezime(textField_prezime.getText())
 						&& Validator.validairajJMBG(textField_jmbg.getText())
-						&& Validator.validirajBrojTelefona(textField_brojTelefona.getText())
+						&& Validator.validirajBrojTelefona(textField_brojTelefona.getText() )||(textField_brojTelefona.getText().equals(""))
 						&& Validator.validirajEmail(textField_email.getText())
 						&& Validator.validirajBrojLicneKarte(textField_brojLicneKarte.getText())
 						&& Validator.validirajDatumZaposlenja(d)) {

@@ -5,6 +5,7 @@ import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Date;
+import java.util.Calendar;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.GroupLayout;
@@ -154,22 +155,26 @@ public class AdminUredjivanjeKorisnika {
 				if (s1.equals("")) {
 					JOptionPane.showMessageDialog(null, "Unesite ispravan datum!", "Info", JOptionPane.ERROR_MESSAGE);
 				}
-				int g = dateChooser.getDate().getYear() + 1;
-				int m = dateChooser.getDate().getMonth() - 6;
-				int day = dateChooser.getDate().getDay() - 11;
-				Date d = new Date(g, m, day);
+				int g = dateChooser.getDate().getYear() +1900;
+				int m = dateChooser.getDate().getMonth();
+				int day = dateChooser.getDate().getDate();
+				Calendar cal=Calendar.getInstance();
+				cal.set(Calendar.YEAR, g);
+				cal.set(Calendar.MONTH, m);
+				cal.set(Calendar.DAY_OF_MONTH, day);
+				java.util.Date dat = cal.getTime();
 
 				if (Validator.validirajIme(textField_ime.getText())
 						&& Validator.validirajPrezime(textField_prezime.getText())
 						&& Validator.validairajJMBG(textField_jmbg.getText())
-						&& Validator.validirajBrojTelefona(textField_brojTelefona.getText())
+						&& (Validator.validirajBrojTelefona(textField_brojTelefona.getText() )||(textField_brojTelefona.getText().equals("")))
 						&& Validator.validirajEmail(textField_email.getText())
 						&& Validator.validirajBrojLicneKarte(textField_brojLicne.getText())
-						&& Validator.validirajDatumZaposlenja(d)) {
+						&& Validator.validirajDatumZaposlenja(dat)) {
 					ModifikacijaKorisnikaVM.modifikacijaKorisnika(listaKorisnika, textField_ime.getText(),
 							textField_prezime.getText(), textField_jmbg.getText(), textField_brojTelefona.getText(),
 							textField_email.getText(), textField_username.getText(), textField_password.getText(),
-							textField_adresa.getText(), textField_brojLicne.getText(), d,
+							textField_adresa.getText(), textField_brojLicne.getText(), dat,
 							comboBox_1.getSelectedItem().toString(), comboBox.getSelectedItem().toString());
 				} else {
 
