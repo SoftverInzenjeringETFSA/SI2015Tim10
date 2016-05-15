@@ -110,6 +110,7 @@ public class AdminUredjivanjeKorisnika {
 		panel.setBorder(new LineBorder(Color.GRAY));
 
 		final JDateChooser dateChooser = new JDateChooser();
+		dateChooser.setDateFormatString("yyyy-MM-dd");
 		dateChooser.setBounds(131, 65, 186, 20);
 
 		JLabel label = new JLabel("Ime:");
