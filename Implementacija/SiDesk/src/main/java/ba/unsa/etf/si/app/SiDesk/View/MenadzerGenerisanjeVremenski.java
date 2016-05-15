@@ -86,23 +86,23 @@ public class MenadzerGenerisanjeVremenski {
 		frmKreiranjeIzvjetaja.getContentPane().add(btnKreirajIzvjetaj);
 		
 		dateChooser = new JDateChooser();
-		dateChooser.setDateFormatString("dd-MM-YYYY");
+		dateChooser.setDateFormatString("yyyy-MM-dd hh:mm:ss.S");
 		dateChooser.setBounds(163, 90, 219, 20);
 		frmKreiranjeIzvjetaja.getContentPane().add(dateChooser);
 		
 		dateChooser_1 = new JDateChooser();
-		dateChooser_1.setDateFormatString("dd-MM-YYYY");
+		dateChooser_1.setDateFormatString("yyyy-MM-dd hh:mm:ss.S");
 		dateChooser_1.setBounds(163, 133, 219, 20);
 		frmKreiranjeIzvjetaja.getContentPane().add(dateChooser_1);
 		//generisanje izvještaja
 		btnKreirajIzvjetaj.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String command = e.getActionCommand();
-				
+		
 				if (command.equals("Kreiraj izvje\u0161taj")) {
 					try {
-						GenerisiIzvjestajVremenskiPeriod.generisi(choice.getSelectedItem(),((JTextField)dateChooser.getDateEditor().getUiComponent()).getText(),
-								((JTextField)dateChooser_1.getDateEditor().getUiComponent()).getText());
+						
+						GenerisiIzvjestajVremenskiPeriod.generisi(choice.getSelectedItem(),dateChooser.getDate(), dateChooser_1.getDate());
 					} catch (MalformedURLException e1) {
 						JOptionPane.showMessageDialog(null, "Izvještaj nije generisan");
 					} catch (IOException e1) {

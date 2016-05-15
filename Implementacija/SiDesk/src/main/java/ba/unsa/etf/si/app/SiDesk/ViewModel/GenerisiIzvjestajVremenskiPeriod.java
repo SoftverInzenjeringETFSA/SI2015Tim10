@@ -36,9 +36,9 @@ import ba.unsa.etf.si.app.SiDesk.Util.HibernateUtil;
 
 public final class GenerisiIzvjestajVremenskiPeriod {
 
-	public static Boolean generisi(String operater, String datum_od, String datum_do) throws MalformedURLException, IOException, ParseException {
+	public static Boolean generisi(String operater, Date datum_od, Date datum_do) throws MalformedURLException, IOException, ParseException {
 
-		System.out.println(datum_do);
+		
 		JFileChooser chooser = new JFileChooser();
 		chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 		int option = chooser.showSaveDialog(null);
@@ -47,31 +47,21 @@ public final class GenerisiIzvjestajVremenskiPeriod {
 			String new_file_path = chooser.getSelectedFile().getAbsolutePath().toString() + "\\Izvjestaj.pdf";
 
 			try {
+				
 
 				Session session = (Session) HibernateUtil.getSessionFactory().openSession();
 				Transaction t = session.beginTransaction();
-
-				SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-YYYY");
-				Date minDate = formatter.parse(datum_od);
-				Date maxDate = formatter.parse(datum_do);
-				formatter.applyPattern("YYYY-MM-d");
-				String manji = formatter.format(minDate);
-				String veci = formatter.format(maxDate);
-				
-				Date manji_datum = formatter.parse(manji);
-				Date veci_datum = formatter.parse(veci);
-				
 
 				Criteria criteria_operater = session.createCriteria(Operater.class);
 				criteria_operater.add(Restrictions.like("ime", operater));
 				List<Operater> lista_operateri = criteria_operater.list();
 				
 				Criteria criteria_poziv = session.createCriteria(TelefonskiPoziv.class);
-				criteria_poziv.add(Restrictions.ge("poziv", manji_datum));
-			    criteria_poziv.add(Restrictions.lt("poziv", veci_datum));
+			
+				criteria_poziv.add(Restrictions.between("poziv", datum_od, datum_do));
 				criteria_poziv.add(Restrictions.like("operater", lista_operateri.get(0)));
 				List<TelefonskiPoziv> lista_pozivi = criteria_poziv.list();
-				System.out.println(lista_pozivi.size());
+				
 				
 				Criteria criteria_pitanje = session.createCriteria(Pitanje.class);
 				List<Pitanje> lista_pitanja = criteria_pitanje.list();
@@ -84,8 +74,7 @@ public final class GenerisiIzvjestajVremenskiPeriod {
 
 				document.open();
 
-				Paragraph title = new Paragraph("Izvještaj za vremenski peroiod od: " + datum_od 
-						+ " do: " + datum_do + "\n \n" , FontFactory.getFont(FontFactory.HELVETICA, 18, Font.BOLDITALIC));
+				Paragraph title = new Paragraph("Izvještaj za odabrani vremenski period " + "\n \n" , FontFactory.getFont(FontFactory.HELVETICA, 18, Font.BOLDITALIC));
 				document.add(title);
                 
 				for (Pitanje pitanje : pitanja) {
@@ -94,8 +83,6 @@ public final class GenerisiIzvjestajVremenskiPeriod {
 					PdfPCell pdfPCell3 = new PdfPCell(new Paragraph("Pitanje: " + pitanje.getPitanje()));
 					PdfPCell pdfPCell4 = new PdfPCell(new Paragraph("Odgovor : "+ pitanje.getOdgovor()));
 				
-				//	pdfPTable.addCell(pdfPCell1);
-				//	pdfPTable.addCell(pdfPCell2);
 					pdfPTable.addCell(pdfPCell3);
 					pdfPTable.addCell(pdfPCell4);
 		
