@@ -33,6 +33,7 @@ public class MenadzerDodavanjeKategorije {
 					MenadzerDodavanjeKategorije window = new MenadzerDodavanjeKategorije();
 					window.frmDodavanjeKategorije.setVisible(true);
 				} catch (Exception e) {
+					logger.error("Došlo je do greške:", e);
 					e.printStackTrace();
 				}
 			}

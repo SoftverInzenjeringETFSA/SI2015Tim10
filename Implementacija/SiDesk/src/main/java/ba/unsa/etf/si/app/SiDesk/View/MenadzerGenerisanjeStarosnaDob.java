@@ -33,6 +33,7 @@ public class MenadzerGenerisanjeStarosnaDob {
 					MenadzerGenerisanjeStarosnaDob window = new MenadzerGenerisanjeStarosnaDob();
 					window.frmGenerisanjeIzvjetaja.setVisible(true);
 				} catch (Exception e) {
+					logger.error("Došlo je do greške:", e);
 					e.printStackTrace();
 				}
 			}
@@ -100,8 +101,10 @@ public class MenadzerGenerisanjeStarosnaDob {
 						GenerisiIzvjestajStarosnaDob.generisi(textField.getText(), textField_1.getText(),
 								choice.getSelectedItem());
 					} catch (MalformedURLException e1) {
+						logger.error("Došlo je do greške:", e1);
 						JOptionPane.showMessageDialog(null, "Izvještaj nije generisan");
 					} catch (IOException e1) {
+						logger.error("Došlo je do greške:", e1);
 						JOptionPane.showMessageDialog(null, "Izvještaj nije generisan");
 					}
 

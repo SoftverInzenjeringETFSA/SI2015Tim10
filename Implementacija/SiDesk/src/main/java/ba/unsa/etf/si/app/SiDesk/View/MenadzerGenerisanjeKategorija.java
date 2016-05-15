@@ -22,6 +22,7 @@ public class MenadzerGenerisanjeKategorija {
 					MenadzerGenerisanjeKategorija window = new MenadzerGenerisanjeKategorija();
 					window.frmGenerisanjeIzvjetaja.setVisible(true);
 				} catch (Exception e) {
+					logger.error("Došlo je do greške:", e);
 					e.printStackTrace();
 				}
 			}

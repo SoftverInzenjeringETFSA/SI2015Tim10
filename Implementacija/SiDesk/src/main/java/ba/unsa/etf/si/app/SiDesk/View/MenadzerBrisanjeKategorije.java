@@ -34,6 +34,7 @@ public class MenadzerBrisanjeKategorije {
 					MenadzerBrisanjeKategorije window = new MenadzerBrisanjeKategorije();
 					window.frmBrisanjeKategorije.setVisible(true);
 				} catch (Exception e) {
+					logger.error("Došlo je do greške:", e);
 					e.printStackTrace();
 				}
 			}

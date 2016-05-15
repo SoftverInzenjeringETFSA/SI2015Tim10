@@ -39,6 +39,7 @@ public class Login {
 					Login window = new Login();
 					window.frmSidesklogin.setVisible(true);
 				} catch (Exception e) {
+					logger.error("Došlo je do greške:", e);
 					e.printStackTrace();
 				}
 			}

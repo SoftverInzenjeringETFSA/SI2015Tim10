@@ -38,6 +38,7 @@ public class MenadzerGenerisanjeVremenski {
 					MenadzerGenerisanjeVremenski window = new MenadzerGenerisanjeVremenski();
 					window.frmKreiranjeIzvjetaja.setVisible(true);
 				} catch (Exception e) {
+					logger.error("Došlo je do greške:", e);
 					e.printStackTrace();
 				}
 			}
@@ -105,10 +106,13 @@ public class MenadzerGenerisanjeVremenski {
 						
 						GenerisiIzvjestajVremenskiPeriod.generisi(choice.getSelectedItem(),dateChooser.getDate(), dateChooser_1.getDate());
 					} catch (MalformedURLException e1) {
+						logger.error("Došlo je do greške:", e1);
 						JOptionPane.showMessageDialog(null, "Izvještaj nije generisan");
 					} catch (IOException e1) {
+						logger.error("Došlo je do greške:", e1);
 						JOptionPane.showMessageDialog(null, "Izvještaj nije generisan");
 					} catch (ParseException e1) {
+						logger.error("Došlo je do greške:", e1);
 						JOptionPane.showMessageDialog(null, "Izvještaj nije generisan");
 
 					}

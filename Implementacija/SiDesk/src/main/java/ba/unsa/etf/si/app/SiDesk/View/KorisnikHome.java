@@ -105,6 +105,7 @@ public class KorisnikHome {
 					KorisnikHome window = new KorisnikHome(username1);
 					window.frameKorisnik.setVisible(true);
 				} catch (Exception e) {
+					logger.error("Došlo je do greške:", e);
 					e.printStackTrace();
 				}
 			}
@@ -855,6 +856,7 @@ public class KorisnikHome {
 					JOptionPane.showMessageDialog(null, "Klijent je uspješno dodan", "Info",
 							JOptionPane.INFORMATION_MESSAGE);
 				} catch (Exception ex) {
+					logger.error("Došlo je do greške:", ex);
 					JOptionPane.showMessageDialog(null, "Greška u dodavanju", "Info " + "Error" + ex.getMessage(),
 							JOptionPane.INFORMATION_MESSAGE);
 				}

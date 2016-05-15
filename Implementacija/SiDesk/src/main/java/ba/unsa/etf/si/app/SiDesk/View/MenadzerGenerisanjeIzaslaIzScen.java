@@ -33,6 +33,7 @@ public class MenadzerGenerisanjeIzaslaIzScen {
 					MenadzerGenerisanjeIzaslaIzScen window = new MenadzerGenerisanjeIzaslaIzScen();
 					window.frmGenerisanjeIzvjetaja.setVisible(true);
 				} catch (Exception e) {
+					logger.error("Došlo je do greške:", e);
 					e.printStackTrace();
 				}
 			}
@@ -82,10 +83,13 @@ public class MenadzerGenerisanjeIzaslaIzScen {
 					try {
 						GenerisiIzvjestajIzlazakIzScenarija.generisi(choice.getSelectedItem());
 					} catch (MalformedURLException e1) {
+						logger.error("Došlo je do greške:", e1);
 						JOptionPane.showMessageDialog(null, "Izvještaj nije generisan");
 					} catch (IOException e1) {
+						logger.error("Došlo je do greške:", e1);
 						JOptionPane.showMessageDialog(null, "Izvještaj nije generisan");
 					} catch (ParseException e1) {
+						logger.error("Došlo je do greške:", e1);
 						JOptionPane.showMessageDialog(null, "Izvještaj nije generisan");
 
 					}
