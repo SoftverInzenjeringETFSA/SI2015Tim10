@@ -41,7 +41,7 @@ public class TelefonskiPoziv implements Serializable {
 	private Klijent klijent;
 	
 	@ManyToMany(mappedBy="telefonski_pozivi")
-	private Set<Pitanje> pitanja = new HashSet<Pitanje>();
+	private Set<Pitanje> pitanja;
 	public Set<Pitanje> getPitanja() {
 		return pitanja;
 	}
@@ -68,8 +68,10 @@ public class TelefonskiPoziv implements Serializable {
 	
 	public TelefonskiPoziv(Klijent klijent, Pitanje pitanje, Operater operater, Date poziv) {
 		poziv = new Date(); 
+		this.pitanja = new HashSet<Pitanje>();
 		this.klijent = klijent;
-		//this.pitanja.add(pitanje);
+		this.pitanja.add(pitanje);
+		//System.out.println(pitanja.in);
 		this.operater = operater;
 		this.poziv = poziv;
 	}
