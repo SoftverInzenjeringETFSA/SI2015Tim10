@@ -20,8 +20,10 @@ public class BrisanjeKorisnikaVM {
 				Transaction t = sesija.beginTransaction();
 				Korisnik k = new Korisnik();
 				k = (Korisnik) lista.getSelectedValue();
-
-				sesija.delete(k);
+				Korisnik k1 = PretragaKorisnikaJedinstvenaVM.pretraziKorisnikaJMBG(sesija, k.getJmbg());
+				k1.setOperater_korisnik(null);
+				k1.setTipkorisnika(null);
+				sesija.delete(k1);
 				DefaultListModel model = (DefaultListModel) lista.getModel();
 
 				model.remove(selectedIndex);
