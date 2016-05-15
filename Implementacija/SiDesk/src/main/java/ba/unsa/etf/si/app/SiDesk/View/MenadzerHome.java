@@ -251,8 +251,8 @@ public class MenadzerHome {
 		final JTable tabela_pitanja = new JTable();
 		tabela_pitanja.setModel(new DefaultTableModel(
 			new Object[][] {
-				{"Kako se instalira MS Office", "Instalira se .."},
-				{"Kako se pokrece MS Office", "Pokrece se.."},
+				{null, null},
+				{null, null},
 			},
 			new String[] {
 				"Pitanja", "Odgovori"

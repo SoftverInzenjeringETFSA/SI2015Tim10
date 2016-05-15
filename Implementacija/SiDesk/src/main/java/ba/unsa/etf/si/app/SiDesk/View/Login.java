@@ -89,12 +89,15 @@ public class Login {
 				else if(k.getTipkorisnika().getId() == 2){
 					MenadzerHome window = new MenadzerHome();
 					window.frmMenadzerHome.setVisible(true);
+					frmSidesklogin.setVisible(false);
 				} else if (k.getTipkorisnika().getId() == 3){
 					KorisnikHome window = new KorisnikHome(k.getKorisnickoIme());
 					window.frameKorisnik.setVisible(true);
+					frmSidesklogin.setVisible(false);
 				} else if(k.getTipkorisnika().getId() == 1){
 					AdminHome window = new AdminHome();
 					window.frmManager.setVisible(true);
+					frmSidesklogin.setVisible(false);
 				}
 			}
 		});
