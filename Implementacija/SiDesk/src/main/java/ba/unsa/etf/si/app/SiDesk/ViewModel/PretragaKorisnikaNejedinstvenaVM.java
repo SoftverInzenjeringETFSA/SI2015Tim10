@@ -12,7 +12,9 @@ import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
 
 import ba.unsa.etf.si.app.SiDesk.Model.Korisnik;
+import ba.unsa.etf.si.app.SiDesk.Model.Operater;
 import ba.unsa.etf.si.app.SiDesk.Model.TipKorisnika;
+import ba.unsa.etf.si.app.SiDesk.Util.HibernateUtil;
 
 public class PretragaKorisnikaNejedinstvenaVM {
 
@@ -59,6 +61,25 @@ public class PretragaKorisnikaNejedinstvenaVM {
 			return Collections.emptyList();
 		return lista;
 
+	}
+	
+	public static Korisnik nadjiKorisnikaUsername(String username, String password){
+		Korisnik k = null;
+		try{
+			Session s = (Session) HibernateUtil.getSessionFactory().openSession();
+			Transaction t = s.beginTransaction();
+			Criteria criteria = s.createCriteria(Korisnik.class)
+					.add(Restrictions.like("korisnickoIme", username).ignoreCase())
+					.add(Restrictions.like("sifra", password).ignoreCase());
+			List<Korisnik> lista = criteria.list();
+			if(lista.size() == 0) return null;
+			k = lista.get(0);
+			s.close();
+			
+		} catch (Exception e){
+			e.printStackTrace();
+		}
+		return k;
 	}
 
 }

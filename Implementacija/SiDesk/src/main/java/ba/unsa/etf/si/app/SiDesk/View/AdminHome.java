@@ -42,7 +42,7 @@ import ba.unsa.etf.si.app.SiDesk.ViewModel.PretragaKorisnikaNejedinstvenaVM;
 
 public class AdminHome {
 
-	private JFrame frmManager;
+	protected JFrame frmManager;
 	private JTextField textField_ime;
 	private JTextField textField_prezime;
 	private JTextField textField_1;

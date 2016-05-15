@@ -74,7 +74,7 @@ import java.awt.event.MouseEvent;
 
 public class KorisnikHome {
 
-	private JFrame frameKorisnik;
+	protected JFrame frameKorisnik;
 
 	private JTextField textField;
 	private JTextField textField_1;

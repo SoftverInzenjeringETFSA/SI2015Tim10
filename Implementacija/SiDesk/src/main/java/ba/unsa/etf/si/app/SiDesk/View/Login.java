@@ -7,14 +7,22 @@ import javax.swing.GroupLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+
+import ba.unsa.etf.si.app.SiDesk.Model.Korisnik;
+import ba.unsa.etf.si.app.SiDesk.ViewModel.PretragaKorisnikaJedinstvenaVM;
+import ba.unsa.etf.si.app.SiDesk.ViewModel.PretragaKorisnikaNejedinstvenaVM;
+
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
-
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import ba.unsa.etf.si.app.SiDesk.View.KorisnikHome;
 public class Login {
 
-	protected JFrame frmSidesklogin;
+	public JFrame frmSidesklogin;
 	private JTextField textField_Username;
 	private JTextField textField_Password;
 
@@ -67,7 +75,29 @@ public class Login {
 		textField_Password.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		textField_Password.setColumns(10);
 		
+		
+		
+		
 		JButton btnNewButton_login = new JButton("Login");
+		btnNewButton_login.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				String username = textField_Username.getText();
+				String password = textField_Password.getText();
+				Korisnik k = PretragaKorisnikaNejedinstvenaVM.nadjiKorisnikaUsername(username, password);
+				if(k == null) JOptionPane.showMessageDialog(null, "Pogrešan username ili password", "Info",
+						JOptionPane.INFORMATION_MESSAGE);
+				else if(k.getTipkorisnika().getId() == 2){
+					MenadzerHome window = new MenadzerHome();
+					window.frmMenadzerHome.setVisible(true);
+				} else if (k.getTipkorisnika().getId() == 3){
+					KorisnikHome window = new KorisnikHome(k.getKorisnickoIme());
+					window.frameKorisnik.setVisible(true);
+				} else if(k.getTipkorisnika().getId() == 1){
+					AdminHome window = new AdminHome();
+					window.frmManager.setVisible(true);
+				}
+			}
+		});
 		GroupLayout groupLayout = new GroupLayout(frmSidesklogin.getContentPane());
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)

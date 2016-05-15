@@ -42,7 +42,7 @@ import ba.unsa.etf.si.app.SiDesk.ViewModel.ModifikacijaKategorijeVM;
 import ba.unsa.etf.si.app.SiDesk.ViewModel.TrazenjeKategorijeVM;
 
 public class MenadzerHome {
-	private JFrame frmMenadzerHome;
+	protected JFrame frmMenadzerHome;
 	protected JMenuItem mntmDodajKategoriju;
 	protected JMenuItem mntmdodajPitanje;
 	protected JMenuItem mntmobrisiKategoriju;

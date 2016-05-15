@@ -7,7 +7,8 @@ import org.hibernate.*;
 import ba.unsa.etf.si.app.SiDesk.Model.Kategorija;
 import ba.unsa.etf.si.app.SiDesk.Model.Operater;
 import ba.unsa.etf.si.app.SiDesk.Util.HibernateUtil;
-
+import ba.unsa.etf.si.app.SiDesk.View.Login;
+import ba.unsa.etf.si.app.SiDesk.View.*;
 /**
  * Hello world!
  *
@@ -24,7 +25,9 @@ public class App
         Transaction t = session.beginTransaction();
         
     //	session.save(new Operater());
-		t.commit();
+		//t.commit();
+        Login window = new Login();
+		window.frmSidesklogin.setVisible(true);
 		
     	} catch (Exception e) {
     		System.out.println(e);
