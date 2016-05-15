@@ -68,7 +68,7 @@ public class Korisnik implements java.io.Serializable{
 	public Korisnik(String  ime, String prezime, String brojTelefona, 
 			        String jmbg, String brojLicneKarte, String adresa,
 			        String email, Date datumZaposlenja, TipKorisnika tk,
-			        String korisnickoIme, Operater o) {
+			        String korisnickoIme, Operater o, String pw) {
 		
 		
 		this.ime=ime;
@@ -81,7 +81,7 @@ public class Korisnik implements java.io.Serializable{
 		this.datumZaposlenja=datumZaposlenja;
 		this.setTipkorisnika(tk);        
 		this.korisnickoIme=korisnickoIme;
-		this.sifra=generisiLozinku();// jedinstven ili ne, baza
+		this.sifra=pw;// jedinstven ili ne, baza
 		this.operater_korisnik=o;
 		
 	}
@@ -194,19 +194,6 @@ public class Korisnik implements java.io.Serializable{
 		this.prijave = prijave;
 	}
 
-	private String generisiLozinku() {
-		Random random = new SecureRandom();
-		char[] result = new char[15];
-		char[] characterSet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789".toCharArray();
-		
-		for (int i = 0; i < result.length; i++) {
-			// picks a random index out of character set > random character
-			int randomCharIndex = random.nextInt(characterSet.length);
-			result[i] = characterSet[randomCharIndex];
-		}
-		
-		return new String(result);
-	}
 	public String toString() {
 		return this.getIme()+" "+this.getPrezime();
 	}

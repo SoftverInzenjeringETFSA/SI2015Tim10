@@ -24,8 +24,6 @@ public class ModifikacijaKorisnikaVM {
 		try {
 			Korisnik neko = new Korisnik();
 			neko = (Korisnik) lista.getSelectedValue();
-			//&& PretragaKorisnikaJedinstvenaVM.pretraziKorisnikaJMBG(s, jmbg).getJmbg()!=neko.getJmbg() && PretragaKorisnikaJedinstvenaVM.pretraziKorisnikaJMBG(s, jmbg).getIme()!=neko.getIme()
-
 
 				Korisnik novi = new Korisnik();
 				Transaction t = s.beginTransaction();

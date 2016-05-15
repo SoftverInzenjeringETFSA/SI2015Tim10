@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Random;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import javax.swing.DefaultComboBoxModel;
@@ -31,6 +32,7 @@ import ba.unsa.etf.si.app.SiDesk.ViewModel.DodavanjeKorisnikaVM;
 import ba.unsa.etf.si.app.SiDesk.Validation.Validator;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.security.SecureRandom;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
@@ -83,7 +85,6 @@ public class AdminDodavanjeKorisnika {
 		textField_email.setText("");
 		textField_username.setText("");
 		textField_password.setText("");
-		dateChooser_datumZaposlenja.setCalendar(null);
 
 
 	}
@@ -94,7 +95,7 @@ public class AdminDodavanjeKorisnika {
 	private void initialize() {
 		frmDodavanjeNovogKorisnika = new JFrame();
 		frmDodavanjeNovogKorisnika.setTitle("Dodavanje Novog Korisnika");
-		frmDodavanjeNovogKorisnika.setBounds(100, 100, 401, 505);
+		frmDodavanjeNovogKorisnika.setBounds(100, 100, 439, 505);
 		frmDodavanjeNovogKorisnika.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		JButton btnOdjava = new JButton("Zatvori");
@@ -109,19 +110,29 @@ public class AdminDodavanjeKorisnika {
 
 		JLabel lblNoviKorisnik = new JLabel("Novi korisnik:");
 		GroupLayout groupLayout = new GroupLayout(frmDodavanjeNovogKorisnika.getContentPane());
-		groupLayout.setHorizontalGroup(groupLayout.createParallelGroup(Alignment.LEADING).addGroup(groupLayout
-				.createSequentialGroup().addGap(25)
-				.addGroup(groupLayout.createParallelGroup(Alignment.LEADING).addComponent(lblNoviKorisnik)
-						.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
-								.addComponent(panel_dodavanjeKorisnika, GroupLayout.PREFERRED_SIZE, 334,
-										GroupLayout.PREFERRED_SIZE)
-								.addComponent(btnOdjava, GroupLayout.PREFERRED_SIZE, 108, GroupLayout.PREFERRED_SIZE)))
-				.addContainerGap(26, Short.MAX_VALUE)));
-		groupLayout.setVerticalGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
-				.addGroup(groupLayout.createSequentialGroup().addContainerGap()
-						.addComponent(lblNoviKorisnik).addGap(1).addComponent(panel_dodavanjeKorisnika,
-								GroupLayout.PREFERRED_SIZE, 389, GroupLayout.PREFERRED_SIZE)
-						.addGap(18).addComponent(btnOdjava).addContainerGap()));
+		groupLayout.setHorizontalGroup(
+			groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addGap(25)
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addComponent(lblNoviKorisnik)
+						.addGroup(groupLayout.createSequentialGroup()
+							.addGap(226)
+							.addComponent(btnOdjava, GroupLayout.PREFERRED_SIZE, 108, GroupLayout.PREFERRED_SIZE))
+						.addComponent(panel_dodavanjeKorisnika, GroupLayout.PREFERRED_SIZE, 379, GroupLayout.PREFERRED_SIZE))
+					.addContainerGap(19, Short.MAX_VALUE))
+		);
+		groupLayout.setVerticalGroup(
+			groupLayout.createParallelGroup(Alignment.TRAILING)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(lblNoviKorisnik)
+					.addGap(1)
+					.addComponent(panel_dodavanjeKorisnika, GroupLayout.PREFERRED_SIZE, 389, GroupLayout.PREFERRED_SIZE)
+					.addGap(18)
+					.addComponent(btnOdjava)
+					.addContainerGap())
+		);
 
 		JLabel lblIme = new JLabel("Ime:");
 		lblIme.setBounds(11, 15, 102, 14);
@@ -204,7 +215,7 @@ public class AdminDodavanjeKorisnika {
 
 		JButton btnReset = new JButton("Poni\u0161ti");
 
-		btnReset.setBounds(190, 355, 127, 23);
+		btnReset.setBounds(286, 355, 83, 23);
 		btnReset.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				PonistiPolja();
@@ -213,7 +224,7 @@ public class AdminDodavanjeKorisnika {
 		});
 
 		JButton btnDodajKorisnika = new JButton("Dodaj korisnika");
-		btnDodajKorisnika.setBounds(53, 355, 127, 23);
+		btnDodajKorisnika.setBounds(11, 355, 124, 23);
 		btnDodajKorisnika.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				String s1 = ((JTextField) dateChooser_datumZaposlenja.getDateEditor().getUiComponent()).getText();
@@ -235,7 +246,7 @@ public class AdminDodavanjeKorisnika {
 						&& Validator.validirajBrojTelefona(textField_brojTelefona.getText() )||(textField_brojTelefona.getText().equals(""))
 						&& Validator.validirajEmail(textField_email.getText())
 						&& Validator.validirajBrojLicneKarte(textField_brojLicneKarte.getText())
-						&& Validator.validirajDatumZaposlenja(d)) {
+						&& Validator.validirajDatumZaposlenja(d) && !textField_password.getText().isEmpty()) {
 					try {
 
 						Session s = HibernateUtil.getSessionFactory().openSession();
@@ -245,14 +256,16 @@ public class AdminDodavanjeKorisnika {
 						boolean t=DodavanjeKorisnikaVM.DodajKorisnika(s, textField_ime.getText(), textField_prezime.getText(),
 								textField_jmbg.getText(), textField_brojTelefona.getText(), textField_email.getText(),
 								textField_username.getText(), textField_password.getText(), textField_adresa.getText(),
-								textField_brojLicneKarte.getText(), d, tipKorisnika, imeOperatera);
+								textField_brojLicneKarte.getText(), d, tipKorisnika, imeOperatera, textField_password.getText());
 						if(t)
 							{
+							dateChooser_datumZaposlenja.setCalendar(null);
+
 							PonistiPolja();
 							}
 					
 					} catch (Exception ex) {
-						JOptionPane.showMessageDialog(null, "Greška u dodavanju da",
+						JOptionPane.showMessageDialog(null, "Greška u dodavanju!",
 								"Info " + "Error" + ex.getMessage(), JOptionPane.ERROR_MESSAGE);
 					}
 
@@ -324,6 +337,26 @@ public class AdminDodavanjeKorisnika {
 
 		comboBox_tipOperatera.setBounds(131, 268, 186, 20);
 		panel_dodavanjeKorisnika.add(comboBox_tipOperatera);
+		
+		JButton btnGeneriiLozinku = new JButton("Generiši lozinku");
+		btnGeneriiLozinku.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Random random = new SecureRandom();
+				char[] result = new char[15];
+				char[] characterSet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789".toCharArray();
+				
+				for (int i = 0; i < result.length; i++) {
+					// picks a random index out of character set > random character
+					int randomCharIndex = random.nextInt(characterSet.length);
+					result[i] = characterSet[randomCharIndex];
+				}
+				
+				textField_password.setText(new String(result));
+			
+			}
+		});
+		btnGeneriiLozinku.setBounds(145, 355, 131, 23);
+		panel_dodavanjeKorisnika.add(btnGeneriiLozinku);
 		frmDodavanjeNovogKorisnika.getContentPane().setLayout(groupLayout);
 	}
 }
