@@ -19,6 +19,7 @@ public class PretragaKorisnikaJedinstvenaVM {
 		Criteria criteria = s.createCriteria(Korisnik.class).add(Restrictions.like("jmbg", jmbg).ignoreCase());
 
 		List<Korisnik> lista = criteria.list();
+			
 
 		Korisnik k = lista.get(0);
 		t.commit();
@@ -27,5 +28,31 @@ public class PretragaKorisnikaJedinstvenaVM {
 		// TODO Auto-generated method stub
 
 	}
+	public static boolean provjeriDaLiPostoji(Session s, String jmbg) {
+
+		Transaction t = s.beginTransaction();
+		Criteria criteria = s.createCriteria(Korisnik.class).add(Restrictions.like("jmbg", jmbg).ignoreCase());
+
+		List<Korisnik> lista = criteria.list();
+		if(lista.isEmpty())return false;
+		return true;
+
+
+		// TODO Auto-generated method stub
+
+	}
+	public static boolean pretraziKorisnikaPoImenu(Session s, String ime) {
+
+		Transaction t = s.beginTransaction();
+		Criteria criteria = s.createCriteria(Korisnik.class).add(Restrictions.like("ime", ime).ignoreCase());
+
+		List<Korisnik> lista = criteria.list();
+if(lista.isEmpty())return false;
+return true;
+
+		// TODO Auto-generated method stub
+
+	}
+	
 
 }

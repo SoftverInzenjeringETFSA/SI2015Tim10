@@ -93,8 +93,11 @@ public class AdminHome {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					AdminUredjivanjeKorisnika window = new AdminUredjivanjeKorisnika();
+					
 
 					if (list_korisnici.getSelectedIndex() != -1) {
+						
+						
 						AdminUredjivanjeKorisnika.lista(list_korisnici);
 						window.frmUredjivanjekorisnika.setVisible(true);
 					} else {

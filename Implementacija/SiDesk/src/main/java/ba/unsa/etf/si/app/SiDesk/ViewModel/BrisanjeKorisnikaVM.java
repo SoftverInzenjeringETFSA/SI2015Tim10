@@ -8,6 +8,7 @@ import javax.swing.JOptionPane;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.criterion.Restrictions;
 
 import ba.unsa.etf.si.app.SiDesk.Model.Korisnik;
 
@@ -20,10 +21,12 @@ public class BrisanjeKorisnikaVM {
 				Transaction t = sesija.beginTransaction();
 				Korisnik k = new Korisnik();
 				k = (Korisnik) lista.getSelectedValue();
-				Korisnik k1 = PretragaKorisnikaJedinstvenaVM.pretraziKorisnikaJMBG(sesija, k.getJmbg());
-				k1.setOperater_korisnik(null);
-				k1.setTipkorisnika(null);
-				sesija.delete(k1);
+				k= (Korisnik)sesija.createCriteria(Korisnik.class).add(Restrictions.eq("jmbg", k.getJmbg())).uniqueResult();
+				//Korisnik k1 = PretragaKorisnikaJedinstvenaVM.pretraziKorisnikaJMBG(sesija, k.getJmbg());
+				//k1.setOperater_korisnik(null);
+			//k1.setTipkorisnika(null);
+				//k=k1;
+				sesija.delete(k);
 				DefaultListModel model = (DefaultListModel) lista.getModel();
 
 				model.remove(selectedIndex);

@@ -13,7 +13,7 @@ import ba.unsa.etf.si.app.SiDesk.Model.Korisnik;
 import ba.unsa.etf.si.app.SiDesk.Model.Operater;
 import ba.unsa.etf.si.app.SiDesk.Model.TipKorisnika;
 import ba.unsa.etf.si.app.SiDesk.Util.HibernateUtil;
-
+import ba.unsa.etf.si.app.SiDesk.View.AdminDodavanjeKorisnika;
 
 import org.hibernate.Criteria;
 import org.hibernate.Session;
@@ -24,17 +24,18 @@ import org.hibernate.criterion.Restrictions;
 public class DodavanjeKorisnikaVM {
 	
 	
-			public static  void DodajKorisnika(Session s,String ime, String prezime, String jmbg, 
+			public static  boolean DodajKorisnika(Session s,String ime, String prezime, String jmbg, 
 				String brojTelefona, String email, String username, String password, 
 				String adresa,String brojLicne,Date datumZaposljenja, String tipkorisnika, String imeOperatera) {
 	
 			try{
-				//naci tip korisnika preko imena
 				TipKorisnika tip = new TipKorisnika();
 				tip = (TipKorisnika) s.createCriteria(TipKorisnika.class).add(Restrictions.eq("tipKorisnika", tipkorisnika)).uniqueResult();
 				Operater o=(Operater) s.createCriteria(Operater.class).add(Restrictions.eq("ime", imeOperatera)).uniqueResult();
 				
 				
+				if(s.createCriteria(Korisnik.class).add(Restrictions.eq("jmbg", jmbg)).uniqueResult()==null && s.createCriteria(Korisnik.class).add(Restrictions.eq("ime", ime)).uniqueResult()==null  )
+				{
 				  
 				
 		        Transaction t = s.beginTransaction();
@@ -42,13 +43,25 @@ public class DodavanjeKorisnikaVM {
 		        		tip, username,o);
 		        s.save(k);
 		        t.commit();
-				System.out.println("Uspjesno dodan korisnik");
 				s.close();
+				
+				JOptionPane.showMessageDialog(null, "Korisnik je uspješno dodan", "Info",
+						JOptionPane.INFORMATION_MESSAGE);
+				return true;
+
+				}
+				else
+				{
+					JOptionPane.showMessageDialog(null, "Postoji takav korisnik", "Info",
+							JOptionPane.INFORMATION_MESSAGE);
+				return false;
+				}
 				
 			} catch (Exception e) {
 				e.printStackTrace();
 			
 			}
+			return true;
 			
 		}
 	

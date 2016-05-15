@@ -18,22 +18,26 @@ import ba.unsa.etf.si.app.SiDesk.Util.HibernateUtil;
 
 public class ModifikacijaKorisnikaVM {
 
-	public static void modifikacijaKorisnika(JList lista, String ime, String prezime, String jmbg, String brojTelefona,
+	public static void modifikacijaKorisnika(Session s, JList lista, String ime, String prezime, String jmbg, String brojTelefona,
 			String email, String username, String password, String adresa, String brojLicne, Date datumZaposljenja,
 			String tipkorisnika, String imeOperatera) {
 		try {
-			Session s = HibernateUtil.getSessionFactory().openSession();
-			Transaction t = s.beginTransaction();
 			Korisnik neko = new Korisnik();
 			neko = (Korisnik) lista.getSelectedValue();
-			Korisnik novi = new Korisnik();
-			novi = (Korisnik) s.createCriteria(Korisnik.class).add(Restrictions.eq("jmbg", jmbg)).uniqueResult();
+			//&& PretragaKorisnikaJedinstvenaVM.pretraziKorisnikaJMBG(s, jmbg).getJmbg()!=neko.getJmbg() && PretragaKorisnikaJedinstvenaVM.pretraziKorisnikaJMBG(s, jmbg).getIme()!=neko.getIme()
+
+
+				Korisnik novi = new Korisnik();
+				Transaction t = s.beginTransaction();
+
+				
+			novi = (Korisnik) s.createCriteria(Korisnik.class).add(Restrictions.eq("jmbg", neko.getJmbg())).uniqueResult();
 			TipKorisnika tip = (TipKorisnika) s.createCriteria(TipKorisnika.class)
 					.add(Restrictions.eq("tipKorisnika", tipkorisnika)).uniqueResult();
 			Operater o = (Operater) s.createCriteria(Operater.class).add(Restrictions.eq("ime", imeOperatera))
 					.uniqueResult();
 			
-
+		
 			novi.setIme(ime);
 			novi.setPrezime(prezime);
 			novi.setJmbg(jmbg);
@@ -46,8 +50,9 @@ public class ModifikacijaKorisnikaVM {
 			novi.setDatumZaposlenja(datumZaposljenja);
 			novi.setOperater_korisnik(o);
 			novi.setTipkorisnika(tip);
+			neko=novi;
 
-			s.update(novi);
+			s.update(neko);
 			t.commit();
 			System.out.println();
 			s.close();
@@ -55,10 +60,15 @@ public class ModifikacijaKorisnikaVM {
 			DefaultListModel model = (DefaultListModel) lista.getModel();
 
 			model.remove(selectedIndex);
-			model.addElement(novi);
+			model.addElement(neko);
 
 			JOptionPane.showMessageDialog(null, "Uspjesno modifikovan korisnik", "Info ",
 					JOptionPane.INFORMATION_MESSAGE);
+
+
+		
+			
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 

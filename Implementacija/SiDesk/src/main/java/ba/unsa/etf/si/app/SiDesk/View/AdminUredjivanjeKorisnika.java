@@ -23,7 +23,10 @@ import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.border.LineBorder;
 
+import org.hibernate.Session;
+
 import ba.unsa.etf.si.app.SiDesk.Model.Korisnik;
+import ba.unsa.etf.si.app.SiDesk.Util.HibernateUtil;
 import ba.unsa.etf.si.app.SiDesk.Validation.Validator;
 import ba.unsa.etf.si.app.SiDesk.View.AdminHome;
 
@@ -51,9 +54,7 @@ public class AdminUredjivanjeKorisnika {
 	private static JDateChooser dateChooser;
 
 	public static void lista(JList l) {
-		
-		
-		
+				
 		listaKorisnika = l;
 		Korisnik neko = new Korisnik();
 		neko = (Korisnik) l.getSelectedValue();
@@ -105,7 +106,7 @@ public class AdminUredjivanjeKorisnika {
 		frmUredjivanjekorisnika.setTitle("Ure\u0111ivanjeKorisnika");
 		frmUredjivanjekorisnika.setBounds(100, 100, 388, 497);
 		frmUredjivanjekorisnika.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
+		
 		JButton button_1 = new JButton("Zatvori");
 		button_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -117,9 +118,11 @@ public class AdminUredjivanjeKorisnika {
 
 		JPanel panel = new JPanel();
 		panel.setBorder(new LineBorder(Color.GRAY));
-
 		final JDateChooser dateChooser = new JDateChooser();
+		
+	
 		dateChooser.setDateFormatString("yyyy-MM-dd");
+		//Date dat = cal.getTime();
 		dateChooser.setBounds(131, 65, 186, 20);
 
 		JLabel label = new JLabel("Ime:");
@@ -173,7 +176,8 @@ public class AdminUredjivanjeKorisnika {
 				cal.set(Calendar.MONTH, m);
 				cal.set(Calendar.DAY_OF_MONTH, day);
 				Date dat = cal.getTime();
-			
+				Session s = HibernateUtil.getSessionFactory().openSession();
+				
 
 				if (Validator.validirajIme(textField_ime.getText())
 						&& Validator.validirajPrezime(textField_prezime.getText())
@@ -182,7 +186,7 @@ public class AdminUredjivanjeKorisnika {
 						&& Validator.validirajEmail(textField_email.getText())
 						&& Validator.validirajBrojLicneKarte(textField_brojLicne.getText())
 						&& Validator.validirajDatumZaposlenja(dat)) {
-					ModifikacijaKorisnikaVM.modifikacijaKorisnika(listaKorisnika, textField_ime.getText(),
+					ModifikacijaKorisnikaVM.modifikacijaKorisnika(s,listaKorisnika, textField_ime.getText(),
 							textField_prezime.getText(), textField_jmbg.getText(), textField_brojTelefona.getText(),
 							textField_email.getText(), textField_username.getText(), textField_password.getText(),
 							textField_adresa.getText(), textField_brojLicne.getText(), dat,
