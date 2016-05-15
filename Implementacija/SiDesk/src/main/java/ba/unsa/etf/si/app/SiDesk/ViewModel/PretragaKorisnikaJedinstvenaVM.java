@@ -13,20 +13,19 @@ import ba.unsa.etf.si.app.SiDesk.Model.Korisnik;
 
 public class PretragaKorisnikaJedinstvenaVM {
 
-	
 	public static Korisnik pretraziKorisnikaJMBG(Session s, String jmbg) {
-		
+
 		Transaction t = s.beginTransaction();
 		Criteria criteria = s.createCriteria(Korisnik.class).add(Restrictions.like("jmbg", jmbg).ignoreCase());
-		
+
 		List<Korisnik> lista = criteria.list();
-		
+
 		Korisnik k = lista.get(0);
 		t.commit();
 		return k;
-		
+
 		// TODO Auto-generated method stub
-		
+
 	}
 
 }

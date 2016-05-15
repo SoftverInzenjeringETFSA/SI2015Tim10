@@ -4,6 +4,8 @@ import java.util.Date;
 //import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.swing.JOptionPane;
+
 // posebno implementirati validacije za jedinstvenost
 public class Validator {
 	
@@ -15,6 +17,7 @@ public class Validator {
 //	private static final String NUMERIC_PATTERN = "^[0-9]*$";
 	
 	public static Boolean validairajJMBG(String jmbg) {
+		
 		if (jmbg.length() != brojZnakovaJmbg)
 			return false;
 		return true;
@@ -56,10 +59,11 @@ public class Validator {
 		
 		Date danasnjiDatum = new Date();
 		
-		if (datum.before(danasnjiDatum) || datum.equals(danasnjiDatum))
-			return true;
+
+		  if (danasnjiDatum.compareTo(datum)>0)
+		 	return false;
 		
-		return false;
+		return true;
 	}
 	
 	

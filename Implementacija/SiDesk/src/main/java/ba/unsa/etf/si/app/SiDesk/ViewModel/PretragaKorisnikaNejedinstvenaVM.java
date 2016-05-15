@@ -15,54 +15,50 @@ import ba.unsa.etf.si.app.SiDesk.Model.Korisnik;
 import ba.unsa.etf.si.app.SiDesk.Model.TipKorisnika;
 
 public class PretragaKorisnikaNejedinstvenaVM {
-	
 
+	public static List<Korisnik> pretraziKorisnikaPoImenu(Session sesija, String ime) {
 
-public static List<Korisnik> pretraziKorisnikaPoImenu(Session sesija, String ime) {
-	
-	Transaction t = sesija.beginTransaction();
-	
-	Criteria criteria = sesija.createCriteria(Korisnik.class).add(Restrictions.like("ime", ime).ignoreCase());
-		
-	List<Korisnik> lista = criteria.list();
-	t.commit();
-	if(lista.isEmpty())return Collections.emptyList();
-	return lista;
-	
+		Transaction t = sesija.beginTransaction();
 
-	 
-}
-public static List<Korisnik> pretraziKorisnikaPoPrezimenu(Session sesija, String prezime) {
-	
-	Transaction t = sesija.beginTransaction();
-	
-	
-		Criteria criteria = sesija.createCriteria(Korisnik.class).add(Restrictions.like("prezime", prezime).ignoreCase());		
+		Criteria criteria = sesija.createCriteria(Korisnik.class).add(Restrictions.like("ime", ime).ignoreCase());
+
 		List<Korisnik> lista = criteria.list();
-		//t.commit();
-		if(lista.isEmpty())return Collections.emptyList();
+		t.commit();
+		if (lista.isEmpty())
+			return Collections.emptyList();
 		return lista;
-		
-	 
-}
 
-public static List<Korisnik> pretraziKorisnikaPoTipu(Session sesija, String tip) {
-	
-	Transaction t = sesija.beginTransaction();
-	
+	}
 
-	TipKorisnika tipk = (TipKorisnika) sesija.createCriteria(TipKorisnika.class).add(Restrictions.eq("tipKorisnika", tip)).uniqueResult();
-	
-	Criteria criteria1 = sesija.createCriteria(Korisnik.class).add(Restrictions.eq("tipkorisnika", tipk));		
-	List<Korisnik> lista = criteria1.list();
+	public static List<Korisnik> pretraziKorisnikaPoPrezimenu(Session sesija, String prezime) {
 
-	
-	//t.commit();
-	if(lista.isEmpty())return Collections.emptyList();
-	return lista;
+		Transaction t = sesija.beginTransaction();
 
-}
+		Criteria criteria = sesija.createCriteria(Korisnik.class)
+				.add(Restrictions.like("prezime", prezime).ignoreCase());
+		List<Korisnik> lista = criteria.list();
+		// t.commit();
+		if (lista.isEmpty())
+			return Collections.emptyList();
+		return lista;
 
-	
+	}
+
+	public static List<Korisnik> pretraziKorisnikaPoTipu(Session sesija, String tip) {
+
+		Transaction t = sesija.beginTransaction();
+
+		TipKorisnika tipk = (TipKorisnika) sesija.createCriteria(TipKorisnika.class)
+				.add(Restrictions.eq("tipKorisnika", tip)).uniqueResult();
+
+		Criteria criteria1 = sesija.createCriteria(Korisnik.class).add(Restrictions.eq("tipkorisnika", tipk));
+		List<Korisnik> lista = criteria1.list();
+
+		// t.commit();
+		if (lista.isEmpty())
+			return Collections.emptyList();
+		return lista;
+
+	}
 
 }

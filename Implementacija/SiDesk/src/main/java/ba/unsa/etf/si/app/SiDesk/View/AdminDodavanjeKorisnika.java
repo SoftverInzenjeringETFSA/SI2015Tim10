@@ -48,10 +48,6 @@ public class AdminDodavanjeKorisnika {
 	private JDateChooser dateChooser_datumZaposlenja;
 	private JComboBox comboBox_tipOperatera;
 	private JComboBox comboBox_tipKorisnika;
-	
-	
-
-	
 
 	/**
 	 * Launch the application.
@@ -75,8 +71,8 @@ public class AdminDodavanjeKorisnika {
 	public AdminDodavanjeKorisnika() {
 		initialize();
 	}
-	public void PonistiPolja()
-	{
+
+	public void PonistiPolja() {
 		textField_ime.setText("");
 		textField_prezime.setText("");
 		textField_jmbg.setText("");
@@ -86,9 +82,7 @@ public class AdminDodavanjeKorisnika {
 		textField_email.setText("");
 		textField_username.setText("");
 		textField_password.setText("");
-		
-		
-	
+
 	}
 
 	/**
@@ -99,207 +93,183 @@ public class AdminDodavanjeKorisnika {
 		frmDodavanjeNovogKorisnika.setTitle("Dodavanje Novog Korisnika");
 		frmDodavanjeNovogKorisnika.setBounds(100, 100, 401, 505);
 		frmDodavanjeNovogKorisnika.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		
-		
+
 		JButton btnOdjava = new JButton("Zatvori");
 		btnOdjava.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				frmDodavanjeNovogKorisnika.dispose();
 			}
 		});
-		
+
 		JPanel panel_dodavanjeKorisnika = new JPanel();
 		panel_dodavanjeKorisnika.setBorder(new LineBorder(Color.GRAY));
-		
+
 		JLabel lblNoviKorisnik = new JLabel("Novi korisnik:");
 		GroupLayout groupLayout = new GroupLayout(frmDodavanjeNovogKorisnika.getContentPane());
-		groupLayout.setHorizontalGroup(
-			groupLayout.createParallelGroup(Alignment.LEADING)
-				.addGroup(groupLayout.createSequentialGroup()
-					.addGap(25)
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addComponent(lblNoviKorisnik)
+		groupLayout.setHorizontalGroup(groupLayout.createParallelGroup(Alignment.LEADING).addGroup(groupLayout
+				.createSequentialGroup().addGap(25)
+				.addGroup(groupLayout.createParallelGroup(Alignment.LEADING).addComponent(lblNoviKorisnik)
 						.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
-							.addComponent(panel_dodavanjeKorisnika, GroupLayout.PREFERRED_SIZE, 334, GroupLayout.PREFERRED_SIZE)
-							.addComponent(btnOdjava, GroupLayout.PREFERRED_SIZE, 108, GroupLayout.PREFERRED_SIZE)))
-					.addContainerGap(26, Short.MAX_VALUE))
-		);
-		groupLayout.setVerticalGroup(
-			groupLayout.createParallelGroup(Alignment.TRAILING)
-				.addGroup(groupLayout.createSequentialGroup()
-					.addContainerGap()
-					.addComponent(lblNoviKorisnik)
-					.addGap(1)
-					.addComponent(panel_dodavanjeKorisnika, GroupLayout.PREFERRED_SIZE, 389, GroupLayout.PREFERRED_SIZE)
-					.addGap(18)
-					.addComponent(btnOdjava)
-					.addContainerGap())
-		);
-		
+								.addComponent(panel_dodavanjeKorisnika, GroupLayout.PREFERRED_SIZE, 334,
+										GroupLayout.PREFERRED_SIZE)
+								.addComponent(btnOdjava, GroupLayout.PREFERRED_SIZE, 108, GroupLayout.PREFERRED_SIZE)))
+				.addContainerGap(26, Short.MAX_VALUE)));
+		groupLayout.setVerticalGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+				.addGroup(groupLayout.createSequentialGroup().addContainerGap()
+						.addComponent(lblNoviKorisnik).addGap(1).addComponent(panel_dodavanjeKorisnika,
+								GroupLayout.PREFERRED_SIZE, 389, GroupLayout.PREFERRED_SIZE)
+						.addGap(18).addComponent(btnOdjava).addContainerGap()));
+
 		JLabel lblIme = new JLabel("Ime:");
 		lblIme.setBounds(11, 15, 102, 14);
 		lblIme.setHorizontalAlignment(SwingConstants.RIGHT);
-		
+
 		textField_ime = new JTextField();
 		textField_ime.setBounds(131, 12, 186, 20);
 		textField_ime.setToolTipText("");
 		textField_ime.setColumns(10);
-		
+
 		JLabel lblPrezime = new JLabel("Prezime:");
 		lblPrezime.setBounds(11, 40, 102, 14);
 		lblPrezime.setHorizontalAlignment(SwingConstants.RIGHT);
-		
+
 		textField_prezime = new JTextField();
 		textField_prezime.setBounds(131, 37, 186, 20);
 		textField_prezime.setToolTipText("");
 		textField_prezime.setColumns(10);
-		
+
 		textField_jmbg = new JTextField();
 		textField_jmbg.setBounds(131, 95, 186, 20);
 		textField_jmbg.setToolTipText("");
 		textField_jmbg.setColumns(10);
-		
+
 		JLabel lblJmbg = new JLabel("JMBG:");
 		lblJmbg.setBounds(11, 98, 102, 14);
 		lblJmbg.setHorizontalAlignment(SwingConstants.RIGHT);
-		
+
 		JLabel lblBrojTelefona = new JLabel("Broj telefona:");
 		lblBrojTelefona.setBounds(11, 187, 102, 14);
 		lblBrojTelefona.setHorizontalAlignment(SwingConstants.RIGHT);
-		
+
 		textField_brojTelefona = new JTextField();
 		textField_brojTelefona.setBounds(131, 184, 186, 20);
 		textField_brojTelefona.setToolTipText("");
 		textField_brojTelefona.setColumns(10);
-		
+
 		textField_email = new JTextField();
 		textField_email.setBounds(131, 210, 186, 20);
 		textField_email.setToolTipText("");
 		textField_email.setColumns(10);
 
 		final JDateChooser dateChooser_datumZaposlenja = new JDateChooser();
-		dateChooser_datumZaposlenja.setDateFormatString("YYYY-MM-d");
+		dateChooser_datumZaposlenja.setDateFormatString("yyyy-MM-dd");
 		dateChooser_datumZaposlenja.setBounds(131, 68, 186, 20);
-		
+
 		JLabel lblEmail = new JLabel("eMail:");
 		lblEmail.setBounds(11, 213, 102, 14);
 		lblEmail.setHorizontalAlignment(SwingConstants.RIGHT);
-		
+
 		final JComboBox comboBox_tipKorisnika = new JComboBox();
 		comboBox_tipKorisnika.setBounds(131, 239, 186, 20);
-		comboBox_tipKorisnika.setModel(new DefaultComboBoxModel(new String[] {"Administrator", "Menadzer", "Obicni korisnik"}));
+		comboBox_tipKorisnika
+				.setModel(new DefaultComboBoxModel(new String[] { "Administrator", "Menadzer", "Obicni korisnik" }));
 		final JComboBox comboBox_tipOperatera = new JComboBox();
-		comboBox_tipOperatera.setModel(new DefaultComboBoxModel(new String[] {"Foca", "Ustikolina", "Petrovac", "Gacko"}));
-        
+		comboBox_tipOperatera
+				.setModel(new DefaultComboBoxModel(new String[] { "Foca", "Ustikolina", "Petrovac", "Gacko" }));
+
 		JLabel lblTipKorisnika = new JLabel("Tip korisnika:");
 		lblTipKorisnika.setBounds(11, 242, 102, 14);
 		lblTipKorisnika.setHorizontalAlignment(SwingConstants.RIGHT);
-		
+
 		textField_username = new JTextField();
 		textField_username.setBounds(131, 293, 186, 20);
 		textField_username.setToolTipText("");
 		textField_username.setColumns(10);
-		
+
 		JLabel lblUsername = new JLabel("Username:");
 		lblUsername.setBounds(11, 296, 102, 14);
 		lblUsername.setHorizontalAlignment(SwingConstants.RIGHT);
-		
+
 		textField_password = new JTextField();
 		textField_password.setBounds(131, 324, 186, 20);
 		textField_password.setToolTipText("");
 		textField_password.setColumns(10);
-		
+
 		JLabel lblPassword = new JLabel("Password:");
 		lblPassword.setBounds(11, 327, 102, 14);
 		lblPassword.setHorizontalAlignment(SwingConstants.RIGHT);
-		
+
 		JButton btnReset = new JButton("Poni\u0161ti");
-	
+
 		btnReset.setBounds(190, 355, 127, 23);
 		btnReset.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				PonistiPolja();
-				
+
 			}
 		});
-		
+
 		JButton btnDodajKorisnika = new JButton("Dodaj korisnika");
 		btnDodajKorisnika.setBounds(53, 355, 127, 23);
 		btnDodajKorisnika.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				String s1 = ((JTextField)dateChooser_datumZaposlenja.getDateEditor().getUiComponent()).getText();
+				String s1 = ((JTextField) dateChooser_datumZaposlenja.getDateEditor().getUiComponent()).getText();
 				if (s1.equals("")) {
-				    JOptionPane.showMessageDialog(null, "Unesite ispravan datum!", "Info", JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(null, "Unesite ispravan datum!", "Info", JOptionPane.ERROR_MESSAGE);
 				}
-				int g =dateChooser_datumZaposlenja.getDate().getYear()+1;
-				int m=dateChooser_datumZaposlenja.getDate().getMonth()-6;
-				int day=dateChooser_datumZaposlenja.getDate().getDay()-11;
-				Date d=new Date(g,m,day);
-					
+				int g = dateChooser_datumZaposlenja.getDate().getYear() + 1900;
+				int m = dateChooser_datumZaposlenja.getDate().getMonth() + 1;
+				int day = dateChooser_datumZaposlenja.getDate().getDate();
+				Date d = new Date(g, m, day);
 
-		if(!Validator.validirajIme(textField_ime.getText()) || !Validator.validirajPrezime(textField_prezime.getText()) ||
-				!Validator.validairajJMBG(textField_jmbg.getText()) || !Validator.validirajBrojTelefona(textField_brojTelefona.getText()) ||
-				!Validator.validirajEmail(textField_email.getText()) || !Validator.validirajBrojLicneKarte(textField_brojLicneKarte.getText())
-					||	!Validator.validirajDatumZaposlenja(d))
-				{
-			JOptionPane.showMessageDialog(null, "Unijeli ste pogresne podatke!","Info", JOptionPane.INFORMATION_MESSAGE);	
+				if (Validator.validirajIme(textField_ime.getText())
+						&& Validator.validirajPrezime(textField_prezime.getText())
+						&& Validator.validairajJMBG(textField_jmbg.getText())
+						&& Validator.validirajBrojTelefona(textField_brojTelefona.getText())
+						&& Validator.validirajEmail(textField_email.getText())
+						&& Validator.validirajBrojLicneKarte(textField_brojLicneKarte.getText())
+						&& Validator.validirajDatumZaposlenja(d)) {
+					try {
+
+						Session s = HibernateUtil.getSessionFactory().openSession();
+						String tipKorisnika = comboBox_tipKorisnika.getSelectedItem().toString();
+						String imeOperatera = comboBox_tipOperatera.getSelectedItem().toString();
+
+						DodavanjeKorisnikaVM.DodajKorisnika(s, textField_ime.getText(), textField_prezime.getText(),
+								textField_jmbg.getText(), textField_brojTelefona.getText(), textField_email.getText(),
+								textField_username.getText(), textField_password.getText(), textField_adresa.getText(),
+								textField_brojLicneKarte.getText(), d, tipKorisnika, imeOperatera);
+
+						PonistiPolja();
+						JOptionPane.showMessageDialog(null, "Korisnik je uspješno dodan", "Info",
+								JOptionPane.INFORMATION_MESSAGE);
+					} catch (Exception ex) {
+						JOptionPane.showMessageDialog(null, "Greška u dodavanju da",
+								"Info " + "Error" + ex.getMessage(), JOptionPane.ERROR_MESSAGE);
+					}
+
+				} else {
+					JOptionPane.showMessageDialog(null, "Unijeli ste pogresne podatke!", "Info",
+							JOptionPane.INFORMATION_MESSAGE);
 
 				}
-		else
-		{
-				
-	try{
-					
-		//Validacija unesenih podataka...
-		
-		
-		
-		
-		Session s= HibernateUtil.getSessionFactory().openSession();			
-					
-					String tipKorisnika = comboBox_tipKorisnika.getSelectedItem().toString();
-					
-					String imeOperatera=comboBox_tipOperatera.getSelectedItem().toString();
-					
-					
-					
-					
 
-								
-	DodavanjeKorisnikaVM.DodajKorisnika
-	(s,textField_ime.getText(), textField_prezime.getText(), textField_jmbg.getText(),
-								textField_brojTelefona.getText(), textField_email.getText(),
-								textField_username.getText(),  textField_password.getText(),
-								textField_adresa.getText(), 
-								 textField_brojLicneKarte.getText(),
-								d,tipKorisnika, imeOperatera
-								);
-	
-		
-		PonistiPolja();
-				JOptionPane.showMessageDialog(null, "Korisnik je uspješno dodan","Info", JOptionPane.INFORMATION_MESSAGE);	
-				}
-				catch(Exception ex){
-					JOptionPane.showMessageDialog(null, "Greška u dodavanju da", "Info " + "Error"+ex.getMessage(), JOptionPane.ERROR_MESSAGE);		
-				}
 			}
-			
-		}
 		});
-		
+
 		JLabel lblAdresa = new JLabel("Adresa:");
 		lblAdresa.setBounds(11, 129, 102, 14);
 		lblAdresa.setHorizontalAlignment(SwingConstants.RIGHT);
-		
+
 		textField_adresa = new JTextField();
 		textField_adresa.setBounds(131, 126, 186, 20);
 		textField_adresa.setToolTipText("");
 		textField_adresa.setColumns(10);
-		
+
 		JLabel lblBrLineKarte = new JLabel("Br. li\u010Dne karte:");
 		lblBrLineKarte.setBounds(11, 158, 102, 14);
 		lblBrLineKarte.setHorizontalAlignment(SwingConstants.RIGHT);
-		
+
 		textField_brojLicneKarte = new JTextField();
 		textField_brojLicneKarte.setBounds(131, 155, 186, 20);
 		textField_brojLicneKarte.setToolTipText("");
@@ -327,25 +297,23 @@ public class AdminDodavanjeKorisnika {
 		panel_dodavanjeKorisnika.add(textField_brojTelefona);
 		panel_dodavanjeKorisnika.add(lblBrLineKarte);
 		panel_dodavanjeKorisnika.add(textField_brojLicneKarte);
-		
+
 		JLabel lblDatumZaposljenja = new JLabel("Datum zaposlenja");
 		lblDatumZaposljenja.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblDatumZaposljenja.setBounds(11, 73, 102, 14);
 		panel_dodavanjeKorisnika.add(lblDatumZaposljenja);
-		
+
 		panel_dodavanjeKorisnika.add(dateChooser_datumZaposlenja);
-		
+
 		JDateChooser dateChooser_1 = new JDateChooser();
 		dateChooser_1.setBounds(131, 68, 186, 20);
 		panel_dodavanjeKorisnika.add(dateChooser_1);
-		
+
 		JLabel lblTipOperatera = new JLabel("Tip operatera:");
 		lblTipOperatera.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblTipOperatera.setBounds(11, 271, 102, 14);
 		panel_dodavanjeKorisnika.add(lblTipOperatera);
-		
 
-		
 		comboBox_tipOperatera.setBounds(131, 268, 186, 20);
 		panel_dodavanjeKorisnika.add(comboBox_tipOperatera);
 		frmDodavanjeNovogKorisnika.getContentPane().setLayout(groupLayout);
