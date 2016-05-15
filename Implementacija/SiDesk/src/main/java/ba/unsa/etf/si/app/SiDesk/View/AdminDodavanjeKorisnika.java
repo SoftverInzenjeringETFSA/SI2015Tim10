@@ -73,7 +73,7 @@ public class AdminDodavanjeKorisnika {
 		initialize();
 	}
 
-	public void PonistiPolja() {
+	 public void PonistiPolja() {
 		textField_ime.setText("");
 		textField_prezime.setText("");
 		textField_jmbg.setText("");
@@ -83,6 +83,8 @@ public class AdminDodavanjeKorisnika {
 		textField_email.setText("");
 		textField_username.setText("");
 		textField_password.setText("");
+		dateChooser_datumZaposlenja.setCalendar(null);
+
 
 	}
 
@@ -240,14 +242,15 @@ public class AdminDodavanjeKorisnika {
 						String tipKorisnika = comboBox_tipKorisnika.getSelectedItem().toString();
 						String imeOperatera = comboBox_tipOperatera.getSelectedItem().toString();
 
-						DodavanjeKorisnikaVM.DodajKorisnika(s, textField_ime.getText(), textField_prezime.getText(),
+						boolean t=DodavanjeKorisnikaVM.DodajKorisnika(s, textField_ime.getText(), textField_prezime.getText(),
 								textField_jmbg.getText(), textField_brojTelefona.getText(), textField_email.getText(),
 								textField_username.getText(), textField_password.getText(), textField_adresa.getText(),
 								textField_brojLicneKarte.getText(), d, tipKorisnika, imeOperatera);
-
-						PonistiPolja();
-						JOptionPane.showMessageDialog(null, "Korisnik je uspješno dodan", "Info",
-								JOptionPane.INFORMATION_MESSAGE);
+						if(t)
+							{
+							PonistiPolja();
+							}
+					
 					} catch (Exception ex) {
 						JOptionPane.showMessageDialog(null, "Greška u dodavanju da",
 								"Info " + "Error" + ex.getMessage(), JOptionPane.ERROR_MESSAGE);
