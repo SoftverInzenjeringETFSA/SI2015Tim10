@@ -1,0 +1,1 @@
+SELECT * FROM tim10.pitanje_poziv;
