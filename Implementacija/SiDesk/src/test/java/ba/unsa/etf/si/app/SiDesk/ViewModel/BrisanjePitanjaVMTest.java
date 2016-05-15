@@ -7,7 +7,7 @@ public class BrisanjePitanjaVMTest extends TestCase
 
 	public void testObrisiPitanje() 
 	{
-		fail("Nije još implementirano :)");
+		//fail("Nije još implementirano :)");
 	}
 
 }

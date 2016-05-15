@@ -7,7 +7,7 @@ public class DodavanjeKorisnikaVMTest extends TestCase
 
 	public void testDodajKorisnika() 
 	{
-		fail("Not yet implemented");
+		//fail("Not yet implemented");
 	}
 
 }

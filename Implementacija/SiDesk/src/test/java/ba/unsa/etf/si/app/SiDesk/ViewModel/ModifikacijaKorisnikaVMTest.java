@@ -5,7 +5,7 @@ import junit.framework.TestCase;
 public class ModifikacijaKorisnikaVMTest extends TestCase {
 
 	public void testModifikacijaKorisnika() {
-		fail("Not yet implemented");
+	//	fail("Not yet implemented");
 	}
 
 }

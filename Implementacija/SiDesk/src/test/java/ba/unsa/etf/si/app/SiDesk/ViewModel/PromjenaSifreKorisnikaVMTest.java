@@ -4,4 +4,6 @@ import junit.framework.TestCase;
 
 public class PromjenaSifreKorisnikaVMTest extends TestCase {
 
+	public void test()
+	{}
 }

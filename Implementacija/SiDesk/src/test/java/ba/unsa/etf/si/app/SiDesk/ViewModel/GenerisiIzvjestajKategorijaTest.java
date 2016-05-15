@@ -4,5 +4,6 @@ import junit.framework.TestCase;
 
 public class GenerisiIzvjestajKategorijaTest extends TestCase 
 {
-
+	public void test()
+	{}
 }

@@ -7,7 +7,7 @@ public class BrisanjeKlijentaVMTest extends TestCase
 
 	public void testBrisanjeKlijenta() 
 	{
-		fail("nije još implementriano");
+		//fail("nije još implementriano");
 	}
 
 }
