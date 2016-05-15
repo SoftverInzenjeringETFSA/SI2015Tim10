@@ -50,9 +50,9 @@ public class Validator {
 	
 	public static Boolean validirajEmail(String email) {
 		if(email.contains("@"))
-		return true;
+			return true;
 		
-		return false;
+		else return false;
 	}
 	
 	public static Boolean validirajDatumZaposlenja(Date datum) {
