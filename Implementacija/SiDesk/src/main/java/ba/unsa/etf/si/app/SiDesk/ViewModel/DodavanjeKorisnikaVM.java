@@ -26,7 +26,7 @@ public class DodavanjeKorisnikaVM {
 	
 			public static  boolean DodajKorisnika(Session s,String ime, String prezime, String jmbg, 
 				String brojTelefona, String email, String username, String password, 
-				String adresa,String brojLicne,Date datumZaposljenja, String tipkorisnika, String imeOperatera) {
+				String adresa,String brojLicne,Date datumZaposljenja, String tipkorisnika, String imeOperatera, String pw) {
 	
 			try{
 				TipKorisnika tip = new TipKorisnika();
@@ -40,7 +40,7 @@ public class DodavanjeKorisnikaVM {
 				
 		        Transaction t = s.beginTransaction();
 		        Korisnik k= new Korisnik (ime, prezime, brojTelefona, jmbg, brojLicne, adresa, email, datumZaposljenja,
-		        		tip, username,o);
+		        		tip, username,o, pw);
 		        s.save(k);
 		        t.commit();
 				s.close();
