@@ -73,6 +73,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import org.apache.log4j.Logger;
 public class KorisnikHome {
+	final static Logger logger = Logger.getLogger(KorisnikHome.class);
 
 	protected JFrame frameKorisnik;
 
@@ -805,7 +806,7 @@ public class KorisnikHome {
 				try {
 					Klijent klijent = null;
 					// trazenje pitanja na osnovu teksta
-					String username = "aaaa";
+	
 					Operater operater = PretragaOperateraVM.nadjiOperatera(username);
 					DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 					Date date = new Date();

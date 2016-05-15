@@ -58,6 +58,7 @@ public class AdminHome {
 					AdminHome window = new AdminHome();
 					window.frmManager.setVisible(true);
 				} catch (Exception e) {
+					logger.error("Došlo je do greške:", e);
 					e.printStackTrace();
 				}
 			}
@@ -108,6 +109,7 @@ public class AdminHome {
 					}
 
 				} catch (Exception e1) {
+					logger.error("Došlo je do greške:", e1);
 					e1.printStackTrace();
 
 				}
@@ -132,6 +134,7 @@ public class AdminHome {
 
 					}
 				} catch (Exception ex) {
+					logger.error("Došlo je do greške:", ex);
 					JOptionPane.showMessageDialog(null, "Greska pri brisanju korisnika", "Info ",
 							JOptionPane.INFORMATION_MESSAGE);
 				}
@@ -145,6 +148,7 @@ public class AdminHome {
 					AdminDodavanjeKorisnika window = new AdminDodavanjeKorisnika();
 					window.frmDodavanjeNovogKorisnika.setVisible(true);
 				} catch (Exception e) {
+					logger.error("Došlo je do greške:", e);
 					e.printStackTrace();
 				}
 			}
@@ -159,6 +163,7 @@ public class AdminHome {
 					Login window = new Login();
 					window.frmSidesklogin.setVisible(true);
 				} catch (Exception e) {
+					logger.error("Došlo je do greške:", e);
 					e.printStackTrace();
 				}
 
@@ -197,6 +202,7 @@ public class AdminHome {
 						model.addElement(k);
 
 					} catch (Exception ex) {
+						logger.error("Došlo je do greške:", ex);
 						JOptionPane.showMessageDialog(null, "Nepostoji korisnik sa takvim JMBG", "Info ",
 								JOptionPane.INFORMATION_MESSAGE);
 					}
@@ -329,6 +335,7 @@ public class AdminHome {
 						sesija.close();
 						}
 						} catch (Exception ex) {
+							logger.error("Došlo je do greške:", ex);
 						JOptionPane.showMessageDialog(null, "Ne postoji korisnik sa takvim imenom", "Info ",
 								JOptionPane.INFORMATION_MESSAGE);
 					}
@@ -395,6 +402,7 @@ public class AdminHome {
 					}
 
 					catch (Exception ex) {
+						logger.error("Došlo je do greške:", ex);
 						JOptionPane.showMessageDialog(null, "Nepostoji korisnik sa takvim prezimenom",
 								"Info " + "Error" + ex.getMessage(), JOptionPane.INFORMATION_MESSAGE);
 					}
@@ -439,6 +447,7 @@ public class AdminHome {
 				}
 
 				catch (Exception ex) {
+					logger.error("Došlo je do greške:", ex);
 					JOptionPane.showMessageDialog(null, "Greska pri pretrazi korisnika po tipu", "Info ",
 							JOptionPane.INFORMATION_MESSAGE);
 				}
