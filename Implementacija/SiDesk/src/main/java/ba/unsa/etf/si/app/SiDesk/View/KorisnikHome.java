@@ -818,7 +818,7 @@ public class KorisnikHome {
 								textField_2.getText(), textField_3.getText(), starost, textField_4.getText());
 						// PretragaPitanjaVM.nadjiPitanjaSaImenom(pitanje);
 						if (chckbxIzlazakIzScenarija.isSelected() == true) {
-							SpašavanjeTelefonskogPozivaVM.spasiPoziv(textField_5.getText(), klijent);
+							SpašavanjeTelefonskogPozivaVM.spasiPoziv(textField_5.getText(), klijent, operater);
 						} else {
 							String pitanjeTabela = (String) table_2.getModel().getValueAt(table_2.getSelectedRow(), 0);
 							String odgovorTabela = (String) table_2.getModel().getValueAt(table_2.getSelectedRow(), 1);
@@ -842,7 +842,7 @@ public class KorisnikHome {
 						klijent = PretragaKlijenataVM.nadjiKlijenta(imeIzTabele, prezimeIzTabele, adresaIzTabele,
 								brojTelefonaIzTabele, xd, zaposlenjeIzTabele);
 						if (chckbxIzlazakIzScenarija.isSelected() == true) {
-							SpašavanjeTelefonskogPozivaVM.spasiPoziv(textField_5.getText(), klijent);
+							SpašavanjeTelefonskogPozivaVM.spasiPoziv(textField_5.getText(), klijent, operater);
 						} else {
 							String pitanjeTabela = (String) table_2.getModel().getValueAt(table_2.getSelectedRow(), 0);
 							String odgovorTabela = (String) table_2.getModel().getValueAt(table_2.getSelectedRow(), 1);

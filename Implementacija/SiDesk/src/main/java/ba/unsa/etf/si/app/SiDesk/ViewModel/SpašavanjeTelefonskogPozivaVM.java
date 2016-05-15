@@ -19,7 +19,7 @@ import ba.unsa.etf.si.app.SiDesk.Model.Pitanje;
 import org.apache.log4j.Logger;
 public class SpašavanjeTelefonskogPozivaVM {
 
-	public static boolean spasiPoziv(String opisniTekst,Klijent klijent_id ) {
+	public static boolean spasiPoziv(String opisniTekst, Klijent klijent_id, Operater operater ) {
 		
 		try {
 			Session s2 = (Session) HibernateUtil.getSessionFactory().openSession();
@@ -29,7 +29,7 @@ public class SpašavanjeTelefonskogPozivaVM {
 	        TelefonskiPoziv b = new TelefonskiPoziv();
 	        b.setOpisniTekst(opisniTekst);
 	        b.setKlijent(klijent_id);
-	     //   b.setOperater(operater_id);
+	        b.setOperater(operater);
       
 	        s2.save(b);
 			tr.commit();			
