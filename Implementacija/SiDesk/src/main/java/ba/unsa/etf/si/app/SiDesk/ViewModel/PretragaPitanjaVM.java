@@ -28,4 +28,6 @@ public class PretragaPitanjaVM {
 		}
 		return listaPitanja;
 	}
+
+
 }

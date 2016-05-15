@@ -182,10 +182,6 @@ public class MenadzerHome {
 		        	System.out.println("Dodavanje putanja " + putanja);
 		        	addNewCategory(putanja, "Nova kategorija");     	// provjeriti
 		        }
-		        else if(event.getActionCommand() == "Dodaj pitanje"){
-		        	//dodavanje pitanja
-		        	System.out.println("pitanje");
-		        }
 		        else if(event.getActionCommand() == "Obriši kategoriju")
 		        {
 		        	DefaultMutableTreeNode model = (DefaultMutableTreeNode)tree.getSelectionPath().getLastPathComponent();
@@ -224,9 +220,6 @@ public class MenadzerHome {
 		mntmDodajKategoriju.addActionListener(menuListener);
 		popupMenu.add(mntmDodajKategoriju);
 		
-		mntmdodajPitanje = new JMenuItem("Dodaj pitanje");
-		mntmdodajPitanje.addActionListener(menuListener);
-		popupMenu.add(mntmdodajPitanje);
 		
 		mntmobrisiKategoriju = new JMenuItem("Obriši kategoriju");
 		mntmobrisiKategoriju.addActionListener(menuListener);
