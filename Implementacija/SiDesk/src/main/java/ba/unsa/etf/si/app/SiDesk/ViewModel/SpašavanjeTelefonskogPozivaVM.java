@@ -51,11 +51,12 @@ public class SpašavanjeTelefonskogPozivaVM {
 	        Set<Pitanje> pitanja = new HashSet<Pitanje>();
 	        pitanja.add(pitanje);
 	        t.setPitanja(pitanja);
+	        pitanje.getTelefonski_pozivi().add(t);
+	        
 	        s2.save(t);
-			tr.commit();			
-			
-			s2.close();
-		}
+	        s2.save(pitanje);
+	        tr.commit();	
+	      	}
 		catch (Exception e) {
 			e.printStackTrace();
 		}

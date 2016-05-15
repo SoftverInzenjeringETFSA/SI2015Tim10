@@ -7,6 +7,7 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -42,7 +43,7 @@ public class Pitanje implements Serializable {
 	private Kategorija kategorija_pitanja;
 
 	
-	@ManyToMany(cascade = {CascadeType.ALL})
+	@ManyToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
 	@JoinTable(name = "pitanje_poziv", joinColumns = { @JoinColumn(name = "pitanje_id") }, inverseJoinColumns = { @JoinColumn(name = "poziv_id") })
 	private Set<TelefonskiPoziv> telefonski_pozivi= new HashSet<TelefonskiPoziv>();
 	
