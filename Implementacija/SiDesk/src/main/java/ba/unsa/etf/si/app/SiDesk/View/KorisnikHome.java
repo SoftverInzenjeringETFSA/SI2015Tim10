@@ -485,7 +485,7 @@ public class KorisnikHome {
 		panel_4.setLayout(null);
 
 		rdbtnNoviKorisnik = new JRadioButton("Novi korisnik");
-		rdbtnNoviKorisnik.addMouseListener(new MouseAdapter() {
+		/*rdbtnNoviKorisnik.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if (rdbtnNoviKorisnik.isSelected() == true) {
@@ -502,7 +502,7 @@ public class KorisnikHome {
 					tabbedPane.setEnabledAt(m, false);
 				}
 			}
-		});
+		});*/
 		/*
 		 * rdbtnNoviKorisnik.addChangeListener(new ChangeListener() { public
 		 * void stateChanged(ChangeEvent e) {
@@ -530,7 +530,7 @@ public class KorisnikHome {
 
 		rdbtnStariKorisnik.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent e) {
-				if (rdbtnStariKorisnik.isEnabled() && table_1.getSelectedRow() == 0) {
+				if (rdbtnStariKorisnik.isEnabled() && table_1.getSelectedRow() != -1) {
 
 					int n = tabbedPane.indexOfTab("Scenarij");
 					tabbedPane.setEnabledAt(n, true);
