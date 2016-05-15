@@ -2,6 +2,8 @@ package ba.unsa.etf.si.app.SiDesk.ViewModel;
 
 import java.util.List;
 
+import javax.swing.JOptionPane;
+
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -43,6 +45,9 @@ public class ModifikacijaKategorijeVM {
 			}
 			t.commit();
 	        session.close();
+	        
+			JOptionPane.showMessageDialog(null, "Kategorija je uspješno modifikovana.","Info", JOptionPane.INFORMATION_MESSAGE);	
+
 		}
 		catch (Exception e) {
 			e.printStackTrace();

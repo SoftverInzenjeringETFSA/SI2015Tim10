@@ -27,7 +27,10 @@ public class DodavanjeKategorijeVM {
 	        k.setParentId(parent);
 	        	        
 	        sesija.save(k);
-			tr.commit();			
+			tr.commit();		
+			
+			JOptionPane.showMessageDialog(null, "Kategorija je uspješno dodana.","Info", JOptionPane.INFORMATION_MESSAGE);	
+
 		}
 		catch (Exception e) {
 			e.printStackTrace();

@@ -2,6 +2,7 @@ package ba.unsa.etf.si.app.SiDesk.ViewModel;
 
 import java.util.List;
 
+import javax.swing.JOptionPane;
 
 import org.hibernate.Criteria;
 import org.hibernate.Session;
@@ -55,7 +56,7 @@ public class BrisanjeKategorijeVM {
 			k.setParentId(null);
 			session.delete(k);
 			
-			System.out.println("Uspjesno obrisano");
+			JOptionPane.showMessageDialog(null, "Kategorija je uspješno obrisana.","Info", JOptionPane.INFORMATION_MESSAGE);	
 			t.commit();
 		} 
 		catch (Exception e) {

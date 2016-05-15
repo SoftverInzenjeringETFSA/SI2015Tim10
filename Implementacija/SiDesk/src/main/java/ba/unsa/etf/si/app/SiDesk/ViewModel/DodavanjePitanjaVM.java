@@ -32,7 +32,7 @@ public class DodavanjePitanjaVM {
 	        sesija.save(p);
 			tr.commit();
 			
-			JOptionPane.showMessageDialog(null, "Pitanje je uspješno dodana.","Info", JOptionPane.INFORMATION_MESSAGE);	
+			JOptionPane.showMessageDialog(null, "Pitanje je uspješno dodano.","Info", JOptionPane.INFORMATION_MESSAGE);	
 
 		}
 		
