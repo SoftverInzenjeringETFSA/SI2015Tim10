@@ -27,7 +27,7 @@ public class PretragaPitanjaVM {
 			session.close();
 		} catch(Exception e){
 			logger.error("Došlo je do greške:", e);
-			e.printStackTrace();
+		
 		}
 		return listaPitanja;
 	}
@@ -46,7 +46,7 @@ public class PretragaPitanjaVM {
 			session.close();
 		} catch (Exception e){
 			logger.error("Došlo je do greške:", e);
-			e.printStackTrace();
+	
 		}
 		return p;
 	}

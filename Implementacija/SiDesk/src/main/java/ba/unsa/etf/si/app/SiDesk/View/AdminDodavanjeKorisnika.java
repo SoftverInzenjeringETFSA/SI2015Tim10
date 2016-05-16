@@ -64,7 +64,7 @@ public class AdminDodavanjeKorisnika {
 					window.frmDodavanjeNovogKorisnika.setVisible(true);
 				} catch (Exception e) {
 					logger.error("Došlo je do greške:", e);
-					e.printStackTrace();
+					
 				}
 			}
 		});

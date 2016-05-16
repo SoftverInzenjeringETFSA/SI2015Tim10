@@ -106,7 +106,7 @@ public final class GenerisiIzvjestajKategorija {
 
 			{
 				logger.error("Došlo je do greške:", e);
-				e.printStackTrace();
+				
 
 			}
 
@@ -114,7 +114,7 @@ public final class GenerisiIzvjestajKategorija {
 
 			{
 				logger.error("Došlo je do greške:", e);
-				e.printStackTrace();
+				
 
 			}
 

@@ -35,7 +35,7 @@ public class PretragaKlijenataVM {
 			session.close();
 		} catch (Exception e) {
 			logger.error("Došlo je do greške:", e);
-			e.printStackTrace();
+			
 		}
 		
 		return klijent;

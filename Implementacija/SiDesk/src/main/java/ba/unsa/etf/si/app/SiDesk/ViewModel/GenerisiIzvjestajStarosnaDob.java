@@ -102,7 +102,7 @@ public final class GenerisiIzvjestajStarosnaDob {
 
 			{
 				logger.error("Došlo je do greške:", e);
-				e.printStackTrace();
+				
 
 			}
 
@@ -110,7 +110,7 @@ public final class GenerisiIzvjestajStarosnaDob {
 
 			{
 				logger.error("Došlo je do greške:", e);
-				e.printStackTrace();
+				
 
 			}
 

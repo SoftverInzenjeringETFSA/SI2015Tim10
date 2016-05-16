@@ -90,15 +90,14 @@ public final class GenerisiIzvjestajIzlazakIzScenarija {
 
 			{
 				logger.error("Došlo je do greške:", e);
-				e.printStackTrace();
-
+				
 			}
 
 			catch (DocumentException e)
 
 			{
 				logger.error("Došlo je do greške:", e);
-				e.printStackTrace();
+				
 
 			}
 

@@ -29,7 +29,7 @@ public class PretragaOperateraVM {
 			
 		} catch (Exception e){
 			logger.error("Došlo je do greške:", e);
-			e.printStackTrace();
+		
 		}
 		return o;
 	}

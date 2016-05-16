@@ -31,7 +31,7 @@ public class TrazenjeKategorijeVM {
 			session.close();
 		} catch (Exception e) {
 			logger.error("Došlo je do greške:", e);
-			e.printStackTrace();
+	
 		}
 		
 		return lista.get(0);
@@ -46,7 +46,7 @@ public class TrazenjeKategorijeVM {
 			
 		} catch (Exception e) {
 			logger.error("Došlo je do greške:", e);
-			e.printStackTrace();
+	
 		}
 		return (List<Kategorija>)criteria.list();
 	}
@@ -64,7 +64,7 @@ public class TrazenjeKategorijeVM {
 			session.close();
 		} catch(Exception e){
 			logger.error("Došlo je do greške:", e);
-			e.printStackTrace();
+		
 		}
 		return listaKategorija;
 	}

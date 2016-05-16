@@ -106,7 +106,7 @@ public class KorisnikHome {
 					window.frameKorisnik.setVisible(true);
 				} catch (Exception e) {
 					logger.error("Došlo je do greške:", e);
-					e.printStackTrace();
+					
 				}
 			}
 		});
@@ -568,7 +568,7 @@ public class KorisnikHome {
 					Login window = new Login();
 					window.frmSidesklogin.setVisible(true);
 				} catch (Exception e) {
-					e.printStackTrace();
+					
 				}
 			}
 		});

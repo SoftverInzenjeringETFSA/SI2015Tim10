@@ -65,9 +65,9 @@ public class BrisanjeKategorijeVM {
 			JOptionPane.showMessageDialog(null, "Kategorija je uspješno obrisana.","Info", JOptionPane.INFORMATION_MESSAGE);	
 			t.commit();
 		} 
-		catch (Exception e) {
+		 catch (Exception e) {
 			logger.error("Došlo je do greške:", e);
-			e.printStackTrace();
+			
 			return false;
 		}
 		

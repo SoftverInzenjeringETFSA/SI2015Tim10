@@ -67,7 +67,7 @@ public class MenadzerHome {
 						
 				} catch (Exception e) {
 					logger.error("Došlo je do greške:", e);
-					e.printStackTrace();
+					
 				}
 			}
 		});
@@ -311,7 +311,7 @@ public class MenadzerHome {
 				}catch(Exception e1)
 				{
 					logger.error("Došlo je do greške:", e1);
-					e1.printStackTrace();
+				
 				}
 			}
 		});

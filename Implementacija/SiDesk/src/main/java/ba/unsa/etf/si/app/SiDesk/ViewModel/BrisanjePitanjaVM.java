@@ -16,7 +16,7 @@ public class BrisanjePitanjaVM {
 			
 		} catch (Exception e) {
 			logger.error("Došlo je do greške:", e);
-			e.printStackTrace();
+			
 			return false;
 		}
 		
