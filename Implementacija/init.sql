@@ -2,7 +2,7 @@
 --
 -- Host: localhost    Database: tim10
 -- ------------------------------------------------------
--- Server version	5.7.12-log
+-- Server version	5.7.10-log
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -107,7 +107,7 @@ CREATE TABLE `korisnik` (
 
 LOCK TABLES `korisnik` WRITE;
 /*!40000 ALTER TABLE `korisnik` DISABLE KEYS */;
-INSERT INTO `korisnik` VALUES (1,'Nerkeza Smailagića','06btn8359','061-112-332','2014-05-05 22:41:59','dino@gmail.com','Dino','2493881557721','DinoAdmin','Dedovic','65FKMNSTU4GYGA0',NULL,NULL),(2,'Nedima Filipovića','75trk3713','061-351-354','2012-05-23 22:43:10','emir@gmail.com','Emir','2300756588835','EmirAdmin','Hurem','10PV79DOY7Y84QB',NULL,NULL),(3,'Trg Heroja','84knb3859','066-512-321','2014-09-08 22:44:31','amela@gmail.com','Amela','3454773728812','AmelaMenadzer','Agresivna','EZKOAMFKWBGUMKS',NULL,NULL),(4,'Envera Sehovića','11asd5848','063-231-876','2016-01-03 22:46:23','denis@gmail.com','Denis','5792391558833','DenisMenadzer','Korjenic','EOQAI9NKWGL8TLL',NULL,NULL),(5,'Zmaj od Bosne','57utj3795','061-223-551','2010-07-27 22:47:40','almedin@gmai.com','Almedin','1354467882277','AlmedinKorisnik','Velija','F0JXJJVU7DBRM6L',NULL,NULL),(6,'Paromlinska','11rkb8472','061-231-515','2010-02-10 22:49:26','enver@gmail.com','Enver','7658995167754','EnverKorisnik','Peza','KZ7HV1AB2FVEZUF',NULL,NULL);
+INSERT INTO `korisnik` VALUES (1,'Nerkeza Smailagića','06btn8359','061-112-332','2014-05-05 22:41:59','dino@gmail.com','Dino','2493881557721','DinoAdmin','Dedovic','65FKMNSTU4GYGA0',1,1),(2,'Nedima Filipovića','75trk3713','061-351-354','2012-05-23 22:43:10','emir@gmail.com','Emir','2300756588835','EmirAdmin','Hurem','10PV79DOY7Y84QB',2,1),(3,'Trg Heroja','84knb3859','066-512-321','2014-09-08 22:44:31','amela@gmail.com','Amela','3454773728812','AmelaMenadzer','aa','EZKOAMFKWBGUMKS',3,2),(4,'Envera Sehovića','11asd5848','063-231-876','2016-01-03 22:46:23','denis@gmail.com','Denis','5792391558833','DenisMenadzer','Korjenic','EOQAI9NKWGL8TLL',1,2),(5,'Zmaj od Bosne','57utj3795','061-223-551','2010-07-27 22:47:40','almedin@gmai.com','Almedin','1354467882277','AlmedinKorisnik','Velija','F0JXJJVU7DBRM6L',1,3),(6,'Paromlinska','11rkb8472','061-231-515','2010-02-10 22:49:26','enver@gmail.com','Enver','7658995167754','EnverKorisnik','Peza','KZ7HV1AB2FVEZUF',1,3);
 /*!40000 ALTER TABLE `korisnik` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -149,7 +149,7 @@ CREATE TABLE `operater` (
   `adresa` varchar(255) DEFAULT NULL,
   `ime` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -158,6 +158,7 @@ CREATE TABLE `operater` (
 
 LOCK TABLES `operater` WRITE;
 /*!40000 ALTER TABLE `operater` DISABLE KEYS */;
+INSERT INTO `operater` VALUES (1,NULL,'Foca'),(2,NULL,'Ustikolina'),(3,NULL,'Petrovac'),(4,NULL,'Gacko');
 /*!40000 ALTER TABLE `operater` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -308,4 +309,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-05-16  0:03:05
+-- Dump completed on 2016-05-17 12:51:02
