@@ -98,7 +98,7 @@ public class AdminDodavanjeKorisnika {
 		frmDodavanjeNovogKorisnika = new JFrame();
 		frmDodavanjeNovogKorisnika.setTitle("Dodavanje Novog Korisnika");
 		frmDodavanjeNovogKorisnika.setBounds(100, 100, 439, 505);
-		frmDodavanjeNovogKorisnika.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frmDodavanjeNovogKorisnika.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
 		JButton btnOdjava = new JButton("Zatvori");
 		btnOdjava.addActionListener(new ActionListener() {

@@ -107,7 +107,7 @@ public class AdminUredjivanjeKorisnika {
 		frmUredjivanjekorisnika = new JFrame();
 		frmUredjivanjekorisnika.setTitle("Ure\u0111ivanjeKorisnika");
 		frmUredjivanjekorisnika.setBounds(100, 100, 388, 497);
-		frmUredjivanjekorisnika.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frmUredjivanjekorisnika.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		
 		JButton button_1 = new JButton("Zatvori");
 		button_1.addActionListener(new ActionListener() {

@@ -80,7 +80,7 @@ public class AdminHome {
 		frmManager = new JFrame();
 		frmManager.setTitle("Administrator");
 		frmManager.setBounds(100, 100, 388, 490);
-		frmManager.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frmManager.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		ImageIcon ikona = new ImageIcon("src/main/resources/toolbar_find.png");
 
 		JLabel lblRezultatiPretrage = new JLabel("Korisnici:");
