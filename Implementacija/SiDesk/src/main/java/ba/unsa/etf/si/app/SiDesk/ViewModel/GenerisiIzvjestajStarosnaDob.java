@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 
 import org.hibernate.Criteria;
 import org.hibernate.Session;
@@ -39,7 +40,8 @@ public final class GenerisiIzvjestajStarosnaDob {
 		chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 		int option = chooser.showSaveDialog(null);
 		if (option == JFileChooser.APPROVE_OPTION) {
-
+			
+		
 			String new_file_path = chooser.getSelectedFile().getAbsolutePath().toString() + "\\Izvjestaj.pdf";
 
 			try {
@@ -62,8 +64,13 @@ public final class GenerisiIzvjestajStarosnaDob {
 				criteria_operater.add(Restrictions.like("ime", operater));
 				List<Operater> lista_operateri = criteria_operater.list();
 
-				List<Klijent> klijenti = vratiKlijente(lista_klijenti, lista_operateri, lista_pozivi);
-
+				List<Klijent> klijenti = new ArrayList<Klijent>();
+				
+				if(lista_klijenti.size()!=0 && lista_operateri.size()!=0 && lista_pozivi.size()!=0)
+			    klijenti = vratiKlijente(lista_klijenti, lista_operateri, lista_pozivi);
+ 
+				
+				
 				Document document = new Document();
 
 				PdfWriter pdfWriter = PdfWriter.getInstance(document, new FileOutputStream(new_file_path));
@@ -73,6 +80,17 @@ public final class GenerisiIzvjestajStarosnaDob {
 				Paragraph title = new Paragraph("Klijenti starosne dobi " + from + "-" + to + " operatera sa lokacije "
 						+ operater + " :" + " \n \n ", FontFactory.getFont(FontFactory.HELVETICA, 18, Font.BOLDITALIC));
 				document.add(title);
+				
+				if(klijenti.size()==0) 
+				{
+					PdfPTable pdfPTable = new PdfPTable(1);
+					PdfPCell pdfPCell1 = new PdfPCell(new Paragraph("Klijenti nisu pronađeni!"));
+					
+					document.add(pdfPTable);
+				}
+					
+				else
+				{
 
 				for (Klijent klijent : klijenti) {
 
@@ -88,13 +106,19 @@ public final class GenerisiIzvjestajStarosnaDob {
 					pdfPTable.addCell(pdfPCell3);
 					pdfPTable.addCell(pdfPCell4);
 					pdfPTable.addCell(pdfPCell5);
-
+					
 					document.add(pdfPTable);
+				}
+ 
+					
 
 				}
 
 				document.close();
 				pdfWriter.close();
+				
+			 JOptionPane.showMessageDialog(null, "Izvještaj je uspješno generisan");
+
 
 			}
 

@@ -108,8 +108,7 @@ public class MenadzerGenerisanjeStarosnaDob {
 						JOptionPane.showMessageDialog(null, "Izvještaj nije generisan");
 					}
 
-					JOptionPane.showMessageDialog(null, "Izvještaj je uspješno generisan");
-
+					
 				} else
 					textField.setText("Nice");
 			}
