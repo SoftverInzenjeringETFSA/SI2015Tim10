@@ -35,7 +35,7 @@ public class DodavanjeKorisnikaVM {
 				Operater o=(Operater) s.createCriteria(Operater.class).add(Restrictions.eq("ime", imeOperatera)).uniqueResult();
 				
 				
-				if(s.createCriteria(Korisnik.class).add(Restrictions.eq("jmbg", jmbg)).uniqueResult()==null && s.createCriteria(Korisnik.class).add(Restrictions.eq("ime", ime)).uniqueResult()==null  )
+				if(s.createCriteria(Korisnik.class).add(Restrictions.eq("korisnickoIme", username)).uniqueResult()==null && s.createCriteria(Korisnik.class).add(Restrictions.eq("jmbg", jmbg)).uniqueResult()==null && s.createCriteria(Korisnik.class).add(Restrictions.eq("ime", ime)).uniqueResult()==null  )
 				{
 				  
 				

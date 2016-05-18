@@ -26,6 +26,8 @@ import javax.swing.border.LineBorder;
 import org.hibernate.Session;
 
 import ba.unsa.etf.si.app.SiDesk.Model.Korisnik;
+import ba.unsa.etf.si.app.SiDesk.Model.Operater;
+import ba.unsa.etf.si.app.SiDesk.Model.TipKorisnika;
 import ba.unsa.etf.si.app.SiDesk.Util.HibernateUtil;
 import ba.unsa.etf.si.app.SiDesk.Validation.Validator;
 import ba.unsa.etf.si.app.SiDesk.View.AdminHome;
@@ -179,6 +181,10 @@ public class AdminUredjivanjeKorisnika {
 				cal.set(Calendar.DAY_OF_MONTH, day);
 				Date dat = cal.getTime();
 				Session s = HibernateUtil.getSessionFactory().openSession();
+				Korisnik k=(Korisnik)listaKorisnika.getSelectedValue();
+
+				Korisnik k2=new Korisnik(k.getIme(),k.getPrezime(),k.getBrojTelefona(),k.getJmbg(),k.getBrojLicneKarte(),
+						k.getAdresa(),k.getEmail(),k.getDatumZaposlenja(),k.getTipkorisnika(),k.getKorisnickoIme(),k.getOperater_korisnik(),k.getSifra());
 				
 
 				if (Validator.validirajIme(textField_ime.getText())
@@ -188,7 +194,7 @@ public class AdminUredjivanjeKorisnika {
 						&& Validator.validirajEmail(textField_email.getText())
 						&& Validator.validirajBrojLicneKarte(textField_brojLicne.getText())
 						&& Validator.validirajDatumZaposlenja(dat)) {
-					ModifikacijaKorisnikaVM.modifikacijaKorisnika(s,listaKorisnika, textField_ime.getText(),
+				boolean r=	ModifikacijaKorisnikaVM.modifikacijaKorisnika(s,k2,listaKorisnika, textField_ime.getText(),
 							textField_prezime.getText(), textField_jmbg.getText(), textField_brojTelefona.getText(),
 							textField_email.getText(), textField_username.getText(), textField_password.getText(),
 							textField_adresa.getText(), textField_brojLicne.getText(), dat,
