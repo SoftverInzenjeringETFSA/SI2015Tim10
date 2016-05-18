@@ -94,7 +94,6 @@ public class MenadzerGenerisanjeIzaslaIzScen {
 
 					}
 
-					JOptionPane.showMessageDialog(null, "Izvještaj je uspješno generisan");
 
 				} 
 					

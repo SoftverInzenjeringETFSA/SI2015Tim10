@@ -41,6 +41,7 @@ public final class GenerisiIzvjestajStarosnaDob {
 		int option = chooser.showSaveDialog(null);
 		if (option == JFileChooser.APPROVE_OPTION) {
 			
+			if(operater.equals("Foča")) operater="Foca";
 		
 			String new_file_path = chooser.getSelectedFile().getAbsolutePath().toString() + "\\Izvjestaj.pdf";
 
@@ -66,7 +67,6 @@ public final class GenerisiIzvjestajStarosnaDob {
 
 				List<Klijent> klijenti = new ArrayList<Klijent>();
 				
-				if(lista_klijenti.size()!=0 && lista_operateri.size()!=0 && lista_pozivi.size()!=0)
 			    klijenti = vratiKlijente(lista_klijenti, lista_operateri, lista_pozivi);
  
 				
@@ -84,7 +84,9 @@ public final class GenerisiIzvjestajStarosnaDob {
 				if(klijenti.size()==0) 
 				{
 					PdfPTable pdfPTable = new PdfPTable(1);
-					PdfPCell pdfPCell1 = new PdfPCell(new Paragraph("Klijenti nisu pronađeni!"));
+					PdfPCell pdfPCell1 = new PdfPCell(new Paragraph("Klijenti nisu pronadjeni!"));
+					
+					pdfPTable.addCell(pdfPCell1);
 					
 					document.add(pdfPTable);
 				}

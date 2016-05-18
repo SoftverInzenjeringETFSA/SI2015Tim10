@@ -10,6 +10,7 @@ import java.text.ParseException;
 import java.util.List;
 
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 
 import org.hibernate.Criteria;
 import org.hibernate.Session;
@@ -83,6 +84,8 @@ public final class GenerisiIzvjestajIzlazakIzScenarija {
 
 				document.close();
 				pdfWriter.close();
+				JOptionPane.showMessageDialog(null, "Izvještaj je uspješno generisan");
+
 
 			}
 

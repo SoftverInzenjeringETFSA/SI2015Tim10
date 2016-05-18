@@ -117,7 +117,6 @@ public class MenadzerGenerisanjeVremenski {
 
 					}
 
-					JOptionPane.showMessageDialog(null, "Izvještaj je uspješno generisan");
 
 				} 
 					
