@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Set;
 
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 
 import org.hibernate.Criteria;
 import org.hibernate.Session;
@@ -79,6 +80,16 @@ public final class GenerisiIzvjestajKategorija {
 				Paragraph title = new Paragraph("Izvještaj za izabranu kategoriju: "+ kat.get(0).getIme()+ "\n \n" , FontFactory.getFont(FontFactory.HELVETICA, 18, Font.BOLDITALIC));
 				document.add(title);
                 
+				if (pitanja.size()==0) {
+					PdfPTable pdfPTable = new PdfPTable(1);
+					PdfPCell pdfPCell1 = new PdfPCell(new Paragraph("Klijenti nisu pronadjeni!"));
+					
+					pdfPTable.addCell(pdfPCell1);
+					
+					document.add(pdfPTable);
+				}
+				
+				else {
 				for (Pitanje pitanje : pitanja) {
 
 					PdfPTable pdfPTable = new PdfPTable(4);
@@ -95,10 +106,13 @@ public final class GenerisiIzvjestajKategorija {
 
 					document.add(pdfPTable);
 
-			   }
+			    }
+				}
 
 				document.close();
 				pdfWriter.close();
+				JOptionPane.showMessageDialog(null, "Izvještaj je uspješno generisan");
+
 
 			}
 

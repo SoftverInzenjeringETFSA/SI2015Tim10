@@ -2,15 +2,30 @@ package ba.unsa.etf.si.app.SiDesk.View;
 
 import java.awt.Choice;
 import java.awt.EventQueue;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.text.ParseException;
+import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import org.apache.log4j.Logger;
+
+import ba.unsa.etf.si.app.SiDesk.Model.Kategorija;
+import ba.unsa.etf.si.app.SiDesk.ViewModel.GenerisiIzvjestajIzlazakIzScenarija;
+import ba.unsa.etf.si.app.SiDesk.ViewModel.GenerisiIzvjestajKategorija;
+import ba.unsa.etf.si.app.SiDesk.ViewModel.UcitajKategorije;
 public class MenadzerGenerisanjeKategorija {
 	final static Logger logger = Logger.getLogger(MenadzerGenerisanjeKategorija.class);
 
 	protected JFrame frmGenerisanjeIzvjetaja;
+	private Choice choice_1;
+	private Choice choice_2;
 
 	/**
 	 * Launch the application.
@@ -57,19 +72,51 @@ public class MenadzerGenerisanjeKategorija {
 		
 		//JCalendar j = new JCalendar();
 		
-		Choice choice_1 = new Choice();
+		choice_1 = new Choice();
 		choice_1.setBounds(165, 103, 230, 20);
-		choice_1.addItem("Software");
+		List<Kategorija> kategorije = UcitajKategorije.ucitajKategorije();
+		for (Kategorija kategorija : kategorije) {
+			
+			choice_1.add(kategorija.getIme());
+			
+		}
 		frmGenerisanjeIzvjetaja.getContentPane().add(choice_1);
 		
-		Choice choice_2 = new Choice();
+		choice_2 = new Choice();
 		choice_2.setBounds(165, 48, 230, 22);
+		choice_2.add("Foča");
+		choice_2.add("Ustikolina");
+		choice_2.add("Pretrovac");
+		choice_2.add("Gacko");
 		frmGenerisanjeIzvjetaja.getContentPane().add(choice_2);
-		choice_2.addItem("Sarajevo");
+		
 		
 		JLabel lblOperater = new JLabel("Operater");
 		lblOperater.setBounds(21, 56, 138, 14);
 		frmGenerisanjeIzvjetaja.getContentPane().add(lblOperater);
+		
+		
+		//generisanje izvještaja
+		btnKreirajIzvjetaj.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String command = e.getActionCommand();
+				
+				if (command.equals("Kreiraj izvje\u0161taj")) {
+					try {
+						GenerisiIzvjestajKategorija.generisi(choice_1.getSelectedItem(), choice_2.getSelectedItem());
+					} catch (MalformedURLException e1) {
+						logger.error("Došlo je do greške:", e1);
+						JOptionPane.showMessageDialog(null, "Izvještaj nije generisan");
+					} catch (IOException e1) {
+						logger.error("Došlo je do greške:", e1);
+						JOptionPane.showMessageDialog(null, "Izvještaj nije generisan");
+					} 
+
+
+				} 
+					
+			}
+		});
 	}
 
 }
