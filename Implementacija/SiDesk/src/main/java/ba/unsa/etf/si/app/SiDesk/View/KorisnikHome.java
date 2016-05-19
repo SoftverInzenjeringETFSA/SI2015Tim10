@@ -568,7 +568,7 @@ public class KorisnikHome {
 					Login window = new Login();
 					window.frmSidesklogin.setVisible(true);
 				} catch (Exception e) {
-					
+					logger.error("Došlo je do greške:", e);
 				}
 			}
 		});
