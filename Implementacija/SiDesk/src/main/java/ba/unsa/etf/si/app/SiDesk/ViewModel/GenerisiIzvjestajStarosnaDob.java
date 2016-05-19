@@ -42,6 +42,9 @@ public final class GenerisiIzvjestajStarosnaDob {
 		if (option == JFileChooser.APPROVE_OPTION) {
 			
 			if(operater.equals("Foča")) operater="Foca";
+			if(from.equals("")) from="0";
+			if(to.equals("")) to="0";
+			
 		
 			String new_file_path = chooser.getSelectedFile().getAbsolutePath().toString() + "\\Izvjestaj.pdf";
 
@@ -58,15 +61,17 @@ public final class GenerisiIzvjestajStarosnaDob {
 				criteria_klijent.add(Restrictions.lt("starost", lessThan));
 				List<Klijent> lista_klijenti = criteria_klijent.list();
 
-				Criteria criteria_poziv = session.createCriteria(TelefonskiPoziv.class);
-				List<TelefonskiPoziv> lista_pozivi = criteria_poziv.list();
-
 				Criteria criteria_operater = session.createCriteria(Operater.class);
 				criteria_operater.add(Restrictions.like("ime", operater));
 				List<Operater> lista_operateri = criteria_operater.list();
 
-				List<Klijent> klijenti = new ArrayList<Klijent>();
+				Criteria criteria_poziv = session.createCriteria(TelefonskiPoziv.class);
+				criteria_poziv.add(Restrictions.like("operater", lista_operateri.get(0)));
+				List<TelefonskiPoziv> lista_pozivi = criteria_poziv.list();
+
+				List<Klijent> klijenti = new ArrayList();
 				
+				if(lista_klijenti.size()!=0 && lista_operateri.size()!=0 && lista_pozivi.size()!=0)
 			    klijenti = vratiKlijente(lista_klijenti, lista_operateri, lista_pozivi);
  
 				
@@ -84,7 +89,7 @@ public final class GenerisiIzvjestajStarosnaDob {
 				if(klijenti.size()==0) 
 				{
 					PdfPTable pdfPTable = new PdfPTable(1);
-					PdfPCell pdfPCell1 = new PdfPCell(new Paragraph("Klijenti nisu pronadjeni!"));
+					PdfPCell pdfPCell1 = new PdfPCell(new Paragraph("\n Klijenti nisu pronadjeni! \n\n"));
 					
 					pdfPTable.addCell(pdfPCell1);
 					

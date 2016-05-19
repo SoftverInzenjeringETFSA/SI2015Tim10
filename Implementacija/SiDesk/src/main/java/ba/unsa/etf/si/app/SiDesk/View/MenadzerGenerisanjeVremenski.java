@@ -71,7 +71,7 @@ public class MenadzerGenerisanjeVremenski {
 		choice.setBounds(163, 36, 219, 22);
 		choice.add("Foča");
 		choice.add("Ustikolina");
-		choice.add("Pretrovac");
+		choice.add("Petrovac");
 		choice.add("Gacko");
 		frmKreiranjeIzvjetaja.getContentPane().add(choice);
 		

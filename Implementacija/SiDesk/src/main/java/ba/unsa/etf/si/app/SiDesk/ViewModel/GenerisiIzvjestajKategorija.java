@@ -38,6 +38,8 @@ public final class GenerisiIzvjestajKategorija {
 
 	public static Boolean generisi(String kategorija, String operater) throws MalformedURLException, IOException {
 
+		if(operater.equals("Foča")) operater="Foca";
+		
 		JFileChooser chooser = new JFileChooser();
 		chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 		int option = chooser.showSaveDialog(null);
@@ -77,7 +79,8 @@ public final class GenerisiIzvjestajKategorija {
 
 				document.open();
 
-				Paragraph title = new Paragraph("Izvještaj za izabranu kategoriju: "+ kat.get(0).getIme()+ "\n \n" , FontFactory.getFont(FontFactory.HELVETICA, 18, Font.BOLDITALIC));
+				Paragraph title = new Paragraph("Izvještaj za: \n\n Kategorija: "+ kat.get(0).getIme()+ "\n" +
+				"Operater: "+ operater+"\n\n\n", FontFactory.getFont(FontFactory.HELVETICA, 18, Font.BOLDITALIC));
 				document.add(title);
                 
 				if (pitanja.size()==0) {
@@ -93,10 +96,10 @@ public final class GenerisiIzvjestajKategorija {
 				for (Pitanje pitanje : pitanja) {
 
 					PdfPTable pdfPTable = new PdfPTable(4);
-					PdfPCell pdfPCell1 = new PdfPCell(new Paragraph("Kategorija: " + pitanje.getKategorija_pitanja().getIme()));
-					PdfPCell pdfPCell2 = new PdfPCell(new Paragraph("Putanja: " + pitanje.getPutanja()));
-					PdfPCell pdfPCell3 = new PdfPCell(new Paragraph("Pitanje: " + pitanje.getPitanje()));
-					PdfPCell pdfPCell4 = new PdfPCell(new Paragraph("Odgovor : "+ pitanje.getOdgovor()));
+					PdfPCell pdfPCell1 = new PdfPCell(new Paragraph("\nKategorija: \n \n" + pitanje.getKategorija_pitanja().getIme() + " \n"));
+					PdfPCell pdfPCell2 = new PdfPCell(new Paragraph("\nPutanja: \n \n" + pitanje.getPutanja()+ " \n"));
+					PdfPCell pdfPCell3 = new PdfPCell(new Paragraph("\nPitanje: \n \n" + pitanje.getPitanje()+ " \n"));
+					PdfPCell pdfPCell4 = new PdfPCell(new Paragraph("\nOdgovor : \n \n"+ pitanje.getOdgovor()+ " \n"));
 				
 					pdfPTable.addCell(pdfPCell1);
 					pdfPTable.addCell(pdfPCell2);

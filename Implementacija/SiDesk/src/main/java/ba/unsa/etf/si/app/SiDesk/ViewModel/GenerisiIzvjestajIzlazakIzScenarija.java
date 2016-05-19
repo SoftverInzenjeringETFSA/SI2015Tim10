@@ -36,7 +36,7 @@ public final class GenerisiIzvjestajIzlazakIzScenarija {
 
 	public static Boolean generisi(String operater) throws MalformedURLException, IOException, ParseException {
 
-
+		if(operater.equals("Foča")) operater="Foca";
 		JFileChooser chooser = new JFileChooser();
 		chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 		int option = chooser.showSaveDialog(null);
@@ -66,14 +66,17 @@ public final class GenerisiIzvjestajIzlazakIzScenarija {
 
 				document.open();
 
-				Paragraph title = new Paragraph("Opisi scenarija: "+"\n \n" , FontFactory.getFont(FontFactory.HELVETICA, 18, Font.BOLDITALIC));
+				Paragraph title = new Paragraph("Opisi scenarija "+"\n" 
+				+ "Operater: " + operater + "\n\n", FontFactory.getFont(FontFactory.HELVETICA, 18, Font.BOLDITALIC));
 				document.add(title);
-                
+				
+				boolean postoji = false;
 				for (TelefonskiPoziv poziv : lista_pozivi) {
 					if(poziv.getOpisniTekst()!=null){
+					postoji = true;
 					PdfPTable pdfPTable = new PdfPTable(1);
 					
-					PdfPCell pdfPCell1 = new PdfPCell(new Paragraph("Opis: " + poziv.getOpisniTekst()));
+					PdfPCell pdfPCell1 = new PdfPCell(new Paragraph("\nOpis: " + poziv.getOpisniTekst()+"\n\n"));
 			
 					pdfPTable.addCell(pdfPCell1);
 
@@ -81,6 +84,17 @@ public final class GenerisiIzvjestajIzlazakIzScenarija {
 					}
 
 			   }
+				
+				if (!postoji) {
+					
+					PdfPTable pdfPTable = new PdfPTable(1);
+					
+					PdfPCell pdfPCell1 = new PdfPCell(new Paragraph("\n Za odabranog operatera nije zabilježen niti jedan izlazak iz scenarija! \n \n"));
+					
+					pdfPTable.addCell(pdfPCell1);
+					
+					document.add(pdfPTable);
+				}
 
 				document.close();
 				pdfWriter.close();

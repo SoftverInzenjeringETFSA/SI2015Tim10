@@ -66,7 +66,7 @@ public class MenadzerGenerisanjeIzaslaIzScen {
 		choice.setBounds(149, 57, 189, 22);
 		choice.add("Foča");
 		choice.add("Ustikolina");
-		choice.add("Pretrovac");
+		choice.add("Petrovac");
 		choice.add("Gacko");
 		frmGenerisanjeIzvjetaja.getContentPane().add(choice);
 		

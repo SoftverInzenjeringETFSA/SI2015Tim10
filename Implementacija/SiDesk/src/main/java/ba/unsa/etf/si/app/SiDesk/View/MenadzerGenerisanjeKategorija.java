@@ -86,7 +86,7 @@ public class MenadzerGenerisanjeKategorija {
 		choice_2.setBounds(165, 48, 230, 22);
 		choice_2.add("Foča");
 		choice_2.add("Ustikolina");
-		choice_2.add("Pretrovac");
+		choice_2.add("Petrovac");
 		choice_2.add("Gacko");
 		frmGenerisanjeIzvjetaja.getContentPane().add(choice_2);
 		

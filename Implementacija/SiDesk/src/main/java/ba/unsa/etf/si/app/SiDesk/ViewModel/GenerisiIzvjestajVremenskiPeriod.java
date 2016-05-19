@@ -68,7 +68,9 @@ public final class GenerisiIzvjestajVremenskiPeriod {
 				Criteria criteria_pitanje = session.createCriteria(Pitanje.class);
 				List<Pitanje> lista_pitanja = criteria_pitanje.list();
 				
-				List<Pitanje> pitanja = vratiPitanja(lista_pitanja, lista_pozivi);
+				List<Pitanje> pitanja = new ArrayList();
+				if(lista_pozivi.size()!=0 && lista_pitanja.size()!=0)
+				pitanja = vratiPitanja(lista_pitanja, lista_pozivi);
 
 				Document document = new Document();
 
@@ -79,6 +81,18 @@ public final class GenerisiIzvjestajVremenskiPeriod {
 				Paragraph title = new Paragraph("Izvještaj za odabrani vremenski period " + "\n \n" , FontFactory.getFont(FontFactory.HELVETICA, 18, Font.BOLDITALIC));
 				document.add(title);
                 
+				
+				if(pitanja.size()==0)
+				{
+					PdfPTable pdfPTable = new PdfPTable(1);
+					PdfPCell pdfPCell1 = new PdfPCell(new Paragraph("\n Za odabranog operatera, za odabrani vremenski period nije zabilježen niti jedan telefonski poziv. \n \n"));
+					
+					pdfPTable.addCell(pdfPCell1);
+					
+					document.add(pdfPTable);
+				}
+				
+				else {
 				for (Pitanje pitanje : pitanja) {
 
 					PdfPTable pdfPTable = new PdfPTable(2);
@@ -91,7 +105,8 @@ public final class GenerisiIzvjestajVremenskiPeriod {
 
 					document.add(pdfPTable);
 
-			   }
+			    }
+				}
 
 				document.close();
 				pdfWriter.close();

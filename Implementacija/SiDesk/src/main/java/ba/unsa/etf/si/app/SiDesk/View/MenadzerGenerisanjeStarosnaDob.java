@@ -66,7 +66,7 @@ public class MenadzerGenerisanjeStarosnaDob {
 		choice.setBounds(177, 52, 175, 22);
 		choice.add("Foča");
 		choice.add("Ustikolina");
-		choice.add("Pretrovac");
+		choice.add("Petrovac");
 		choice.add("Gacko");
 		frmGenerisanjeIzvjetaja.getContentPane().add(choice);
 
