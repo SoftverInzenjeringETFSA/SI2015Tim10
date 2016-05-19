@@ -82,7 +82,7 @@ public final class GenerisiIzvjestajKategorija {
                 
 				if (pitanja.size()==0) {
 					PdfPTable pdfPTable = new PdfPTable(1);
-					PdfPCell pdfPCell1 = new PdfPCell(new Paragraph("Klijenti nisu pronadjeni!"));
+					PdfPCell pdfPCell1 = new PdfPCell(new Paragraph("\n Odabrane kategorije nisu obradjene u telefonskim pozivima za odabranog operatera! \n \n"));
 					
 					pdfPTable.addCell(pdfPCell1);
 					
