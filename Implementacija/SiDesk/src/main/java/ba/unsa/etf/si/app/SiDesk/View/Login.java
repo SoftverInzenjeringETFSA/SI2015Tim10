@@ -99,7 +99,7 @@ public class Login {
 					window.frameKorisnik.setVisible(true);
 					frmSidesklogin.setVisible(false);
 				} else if(k.getTipkorisnika().getId() == 1){
-					AdminHome window = new AdminHome();
+					AdminHome window = new AdminHome(username);
 					window.frmManager.setVisible(true);
 					frmSidesklogin.setVisible(false);
 				}

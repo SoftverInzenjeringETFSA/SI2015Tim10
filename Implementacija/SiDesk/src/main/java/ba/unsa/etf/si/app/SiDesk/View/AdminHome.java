@@ -46,6 +46,7 @@ public class AdminHome {
 	private JTextField textField_ime;
 	private JTextField textField_prezime;
 	private JTextField textField_1;
+	private static String username_prijavljenog;
 	final static Logger logger = Logger.getLogger(AdminHome.class);
 
 	/**
@@ -55,7 +56,7 @@ public class AdminHome {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					AdminHome window = new AdminHome();
+					AdminHome window = new AdminHome(username_prijavljenog);
 					window.frmManager.setVisible(true);
 				} catch (Exception e) {
 					logger.error("Došlo je do greške:", e);
@@ -68,7 +69,9 @@ public class AdminHome {
 	/**
 	 * Create the application.
 	 */
-	public AdminHome() {
+	
+	public AdminHome(String un) {
+		setUsername_prijavljenog(un);
 		initialize();
 	}
 
@@ -121,13 +124,25 @@ public class AdminHome {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
 					if (list_korisnici.getSelectedIndex() != -1) {
+						Korisnik k = new Korisnik();
+						k = (Korisnik) list_korisnici.getSelectedValue();
+
+						if(!k.getKorisnickoIme().matches(username_prijavljenog))
+						{
 
 						Session sesija = HibernateUtil.getSessionFactory().openSession();
 						BrisanjeKorisnikaVM.BrisiKorisnika(sesija, list_korisnici);
 
 						JOptionPane.showMessageDialog(null, "Korisnik je uspješno obrisan", "Info",
 								JOptionPane.INFORMATION_MESSAGE);
-
+						}
+						else
+						{
+							JOptionPane.showMessageDialog(null, "Greska pri brisanju, brisanje samog sebe nije dozvoljeno!",
+									"Info", JOptionPane.INFORMATION_MESSAGE);
+							
+						
+						}
 					} else {
 						JOptionPane.showMessageDialog(null, "Greska pri brisanju, nije odabran nijedan korisnik!",
 								"Info", JOptionPane.INFORMATION_MESSAGE);
@@ -457,6 +472,14 @@ public class AdminHome {
 		button_1.setBounds(223, 77, 30, 20);
 		panel.add(button_1);
 		frmManager.getContentPane().setLayout(groupLayout);
+	}
+
+	private String getUsername_prijavljenog() {
+		return username_prijavljenog;
+	}
+
+	private void setUsername_prijavljenog(String username_prijavljenog) {
+		this.username_prijavljenog = username_prijavljenog;
 	}
 
 }
