@@ -91,7 +91,7 @@ public class MenadzerHome {
 		frmMenadzerHome.setTitle("Home");
 		
 		frmMenadzerHome.setBounds(100, 100, 689, 556);
-		frmMenadzerHome.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frmMenadzerHome.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frmMenadzerHome.getContentPane().setLayout(null);
 	
 		tree = new JTree();

@@ -55,7 +55,7 @@ public class MenadzerBrisanjeKategorije {
 		frmBrisanjeKategorije = new JFrame();
 		frmBrisanjeKategorije.setTitle("Brisanje kategorije");
 		frmBrisanjeKategorije.setBounds(100, 100, 517, 216);
-		frmBrisanjeKategorije.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frmBrisanjeKategorije.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frmBrisanjeKategorije.getContentPane().setLayout(null);
 
 		JLabel lblImeKategorije = new JLabel("Ime kategorije");
