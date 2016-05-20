@@ -9,6 +9,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
@@ -25,7 +26,7 @@ public class Login {
 
 	public JFrame frmSidesklogin;
 	private JTextField textField_Username;
-	private JTextField textField_Password;
+	private JPasswordField  textField_Password;
 	final static Logger logger = Logger.getLogger(Login.class);
 
 
@@ -74,7 +75,7 @@ public class Login {
 		textField_Username.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		textField_Username.setColumns(10);
 		
-		textField_Password = new JTextField();
+		textField_Password = new JPasswordField();
 		textField_Password.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		textField_Password.setColumns(10);
 		
