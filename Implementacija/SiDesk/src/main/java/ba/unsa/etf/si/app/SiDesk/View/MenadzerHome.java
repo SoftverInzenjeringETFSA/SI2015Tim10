@@ -47,6 +47,8 @@ import org.apache.log4j.Logger;
 import org.hibernate.Session;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
+import javax.swing.event.TreeExpansionListener;
+import javax.swing.event.TreeExpansionEvent;
 
 public class MenadzerHome {
 	final static Logger logger = Logger.getLogger(MenadzerHome.class);
@@ -101,18 +103,6 @@ public class MenadzerHome {
 	
 	private void initialize() {
 		frmMenadzerHome = new JFrame();
-		frmMenadzerHome.getContentPane().addFocusListener(new FocusAdapter() {
-			@Override
-			public void focusGained(FocusEvent e) {
-				osvjeziDrvo();
-			}
-		});
-		frmMenadzerHome.addFocusListener(new FocusAdapter() {
-			@Override
-			public void focusGained(FocusEvent arg0) {
-				osvjeziDrvo();
-			}
-		});
 		
 		frmMenadzerHome.setTitle("Home");
 		
@@ -121,12 +111,6 @@ public class MenadzerHome {
 		frmMenadzerHome.getContentPane().setLayout(null);
 	
 		tree = new JTree();
-		tree.addFocusListener(new FocusAdapter() {
-			@Override
-			public void focusGained(FocusEvent e) {
-				osvjeziDrvo();
-			}
-		});
 		
 		tree.setBounds(10, 90, 198, 395);
 		tree.setModel(new DefaultTreeModel(
@@ -355,6 +339,15 @@ public class MenadzerHome {
 		});
 		btnOdjava.setBounds(558, 30, 85, 23);
 		frmMenadzerHome.getContentPane().add(btnOdjava);
+		
+		JButton btnOsvjeziKategorije = new JButton("Osvjezi kategorije");
+		btnOsvjeziKategorije.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				osvjeziDrvo();
+			}
+		});
+		btnOsvjeziKategorije.setBounds(89, 65, 119, 23);
+		frmMenadzerHome.getContentPane().add(btnOsvjeziKategorije);
 	
 		
 		

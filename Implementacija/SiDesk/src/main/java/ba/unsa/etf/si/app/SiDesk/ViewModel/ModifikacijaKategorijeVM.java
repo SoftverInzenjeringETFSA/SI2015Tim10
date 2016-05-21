@@ -46,7 +46,6 @@ public class ModifikacijaKategorijeVM {
 				session.update(listaPitanja.get(i));
 			}
 			t.commit();
-	        session.close();
 	        
 			JOptionPane.showMessageDialog(null, "Kategorija je uspješno modifikovana.","Info", JOptionPane.INFORMATION_MESSAGE);	
 
