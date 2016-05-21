@@ -1,11 +1,13 @@
 package ba.unsa.etf.si.app.SiDesk.ViewModel;
 
-import java.util.List;
+import java.util.Collections;
+import java.util.*;
 
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.MatchMode;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 
 import ba.unsa.etf.si.app.SiDesk.Model.Kategorija;
@@ -38,19 +40,20 @@ public class TrazenjeKategorijeVM {
 	}
 	
 	public static List<Kategorija> nadjiKategorije(Session session) {
+		List<Kategorija> lista = null;
 		if(!session.isOpen()){
 			session = (Session) HibernateUtil.getSessionFactory().openSession();
 		}
 		Criteria criteria = null;
 		try {
 	        Transaction t = session.beginTransaction();
-			criteria = session.createCriteria(Kategorija.class);
-			
+			criteria = session.createCriteria(Kategorija.class).addOrder(Order.asc("id"));
+			lista = (List<Kategorija>)criteria.list();
 		} catch (Exception e) {
 			logger.error("Došlo je do greške:", e);
-	
 		}
-		return (List<Kategorija>)criteria.list();
+		
+		return lista;
 	}
 	
 	//putanja = putanja + ime kategorije

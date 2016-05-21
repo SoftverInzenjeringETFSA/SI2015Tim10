@@ -139,10 +139,12 @@ public class MenadzerHome {
 					DefaultMutableTreeNode[] drvo = new DefaultMutableTreeNode[lista.size()];
 					for(int i = 0; i < lista.size(); i++){
 						drvo[i] = new DefaultMutableTreeNode(lista.get(i).getIme());
+						//System.out.println("i: " + i + " cvor " + lista.get(i).getIme());
 						flag = false;
 						for(int j = 0; j < lista.size(); j++){
+							System.out.println("j: " + i + " cvor " + lista.get(j).getIme() + " parent " + lista.get(j).getParentId());
 							if(lista.get(i).getParentId() == null) continue;
-							if(lista.get(i).getParentId()==lista.get(j)){
+							if(lista.get(i).getParentId() == lista.get(j)){
 								drvo[j].add(drvo[i]);
 								flag = true;
 							}
@@ -483,7 +485,7 @@ public class MenadzerHome {
 	  }
 	
 	protected void osvjeziDrvo(){
-		tree.setModel(new DefaultTreeModel(
+		/*tree.setModel(new DefaultTreeModel(
 				new DefaultMutableTreeNode("Kategorije") {
 					{
 						boolean flag = false;
@@ -505,7 +507,7 @@ public class MenadzerHome {
 						}
 					}
 				}
-			));
+			));*/
 	}
 	
 	private void addPopup(final JTree tree, final JPopupMenu popup) {		
