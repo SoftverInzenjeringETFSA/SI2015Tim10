@@ -121,7 +121,8 @@ public class MenadzerDodajPitanje {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				int selRow = tree.getRowForLocation(e.getX(), e.getY());
-				
+				editorPane.setEditable(false);
+				editorPane_1.setEditable(false);
 				if(selRow>-1)
 				{
 					//detektuje da li je pritisnuto na item
@@ -129,8 +130,35 @@ public class MenadzerDodajPitanje {
 					TreePath selPath = tree.getPathForLocation(e.getX(), e.getY());
 					tree.setSelectionPath(selPath); 
 					tree.setSelectionRow(selRow);
-					editorPane.setEditable(true);
-					editorPane_1.setEditable(true);
+					//treba provjeriti je li kategorija
+					DefaultMutableTreeNode model = (DefaultMutableTreeNode)tree.getSelectionPath().getLastPathComponent();
+		        	String putanja = new String();
+		        	//trazenje putanje
+		        	TreeNode[] ss = model.getPath();
+		        	for(int i = 1; i < ss.length; i++)//zanemari root
+		        	{
+	        			putanja += ss[i].toString() + "/";
+		        	}
+		        	String imeParentKategorija = null;
+					String putanjaParentKategorija = null;
+					if(putanja.length() > 0)
+					{
+						imeParentKategorija = putanja.substring(0,putanja.length()-1);
+						imeParentKategorija = imeParentKategorija.substring(imeParentKategorija.lastIndexOf("/") + 1);
+					
+						if(putanja.length() - imeParentKategorija.length()-1 > 0)
+						{
+							putanjaParentKategorija = putanja.substring(0, putanja.length() - imeParentKategorija.length()-1);
+						} 
+					}			
+					System.out.println(imeParentKategorija);
+					
+					if(putanja == "") putanja = null;
+					Kategorija parent = TrazenjeKategorijeVM.nadjiKategoriju(putanjaParentKategorija, imeParentKategorija, s);
+					if(parent != null){
+						editorPane.setEditable(true);
+						editorPane_1.setEditable(true);
+					}
 				}
 			}
 		});
