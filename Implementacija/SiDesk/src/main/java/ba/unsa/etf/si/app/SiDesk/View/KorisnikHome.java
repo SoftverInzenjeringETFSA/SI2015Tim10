@@ -89,7 +89,7 @@ public class KorisnikHome {
 	private JTable table_1;
 	protected String putanja;
 	protected String kliknutiCvorString;
-	protected String username = new String();
+	protected String username;
 	private static Session s;
 	private static Login ref;
 
@@ -104,8 +104,7 @@ public class KorisnikHome {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					String username1 = "aaaa";
-					KorisnikHome window = new KorisnikHome(username1,s, ref);
+					KorisnikHome window = new KorisnikHome(username,s, ref);
 					window.frameKorisnik.setVisible(true);
 				} catch (Exception e) {
 					logger.error("Došlo je do greške:", e);
@@ -789,7 +788,7 @@ public class KorisnikHome {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 
-				
+				if(rdbtnNoviKorisnik.isSelected()){
 				  String s2 = ((JTextField)
 				  dateChooser.getDateEditor().getUiComponent()).getText(); if
 				 (s2.equals("")) { JOptionPane.showMessageDialog(null,
@@ -808,8 +807,8 @@ public class KorisnikHome {
 				  "Unijeli ste pogresne podatke!", "Info",
 				  JOptionPane.INFORMATION_MESSAGE);
 				  
-				  } else
-				 
+				  } 
+				}
 
 				try {
 					Klijent klijent = null;

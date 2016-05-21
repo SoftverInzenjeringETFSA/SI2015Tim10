@@ -47,8 +47,8 @@ public class SpašavanjeTelefonskogPozivaVM {
 
 	public static void spasiPoziv(Klijent klijent, Pitanje pitanje, Operater operater, Date kal, Session s) {
 		try {
-			Session s2 = (Session) HibernateUtil.getSessionFactory().openSession();
-	        Transaction tr = s2.beginTransaction();
+			//Session s2 = (Session) HibernateUtil.getSessionFactory().openSession();
+	        Transaction tr = s.beginTransaction();
 	        
 	        TelefonskiPoziv t = new TelefonskiPoziv(klijent, pitanje, operater, kal);
 	        Set<Pitanje> pitanja = new HashSet<Pitanje>();
@@ -56,10 +56,10 @@ public class SpašavanjeTelefonskogPozivaVM {
 	        t.setPitanja(pitanja);
 	        pitanje.getTelefonski_pozivi().add(t);
 	        
-	        s2.save(t);
-	        s2.save(pitanje);
+	        s.save(t);
+	        s.save(pitanje);
 	        tr.commit();	
-	      	}
+      	}
 		catch (Exception e) {
 			logger.error("Došlo je do greške:", e);
 
