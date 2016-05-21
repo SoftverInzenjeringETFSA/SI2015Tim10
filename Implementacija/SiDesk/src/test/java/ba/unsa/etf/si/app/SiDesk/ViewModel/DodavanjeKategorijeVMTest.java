@@ -29,7 +29,7 @@ public class DodavanjeKategorijeVMTest extends TestCase
 		dodana = DodavanjeKategorijeVM.dodajKategoriju("Software/Ms Office/", "Word", parent, session);
 		assertTrue(dodana);
 		
-		session.close();
+
 	}
 
 }

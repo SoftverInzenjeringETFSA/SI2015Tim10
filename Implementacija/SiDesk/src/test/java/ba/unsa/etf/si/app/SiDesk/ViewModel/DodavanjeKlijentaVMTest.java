@@ -23,7 +23,7 @@ public class DodavanjeKlijentaVMTest extends TestCase
 		assertEquals(25, k.getStarost());
 		assertEquals("pekar", k.getZaposlenje());
 		
-		session.close();
+	
 	}
 
 }

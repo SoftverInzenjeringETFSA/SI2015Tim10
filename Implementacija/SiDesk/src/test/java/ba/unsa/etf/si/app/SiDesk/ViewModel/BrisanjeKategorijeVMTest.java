@@ -24,7 +24,6 @@ public class BrisanjeKategorijeVMTest extends TestCase
 		obrisana = BrisanjeKategorijeVM.obrisiKategoriju("", "Hardware", session);
 		assertFalse(obrisana);
 		
-		session.close();
 		
 	}
 

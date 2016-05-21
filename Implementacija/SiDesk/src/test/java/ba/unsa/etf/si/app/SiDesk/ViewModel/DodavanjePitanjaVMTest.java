@@ -17,6 +17,7 @@ public class DodavanjePitanjaVMTest extends TestCase
     	Session session = (Session) HibernateUtil.getSessionFactory().openSession();
 
 		// testiranje uspješnog dodavanja
+    	
 		DodavanjeKategorijeVM.dodajKategoriju("", "Software", null, session);
 		Kategorija parent = TrazenjeKategorijeVM.nadjiKategoriju("", "Software", session);
 		DodavanjeKategorijeVM.dodajKategoriju("Software/", "MS Office", parent, session);
@@ -26,7 +27,7 @@ public class DodavanjePitanjaVMTest extends TestCase
 		boolean dodano = DodavanjePitanjaVM.dodajPitanje(p, session);
 		assertTrue(dodano);
 		
-		session.close();
+	
 	}
 	
 	public void testPretraziPitanja()
