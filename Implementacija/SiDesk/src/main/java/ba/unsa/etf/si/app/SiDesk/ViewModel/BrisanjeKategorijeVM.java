@@ -69,7 +69,7 @@ public class BrisanjeKategorijeVM {
 			t.commit();
 		} 
 		 catch (Exception e) {
-			logger.error("Do�lo je do gre�ke:", e);
+			logger.error("Doslo je do greske:", e);
 			
 			return false;
 		}

@@ -23,9 +23,7 @@ public class PretragaPitanjaVM {
 	        Transaction t = session.beginTransaction();
 			
 			Criteria criteria = session.createCriteria(Pitanje.class).add(Restrictions.like("putanja", putanja, MatchMode.ANYWHERE).ignoreCase());
-			listaPitanja = criteria.list();		
-			
-			session.close();
+			listaPitanja = criteria.list();		 	
 		} catch(Exception e){
 			logger.error("Došlo je do greške:", e);
 		
@@ -43,7 +41,6 @@ public class PretragaPitanjaVM {
 					.add(Restrictions.like("odgovor", odgovor).ignoreCase());
 			p = (Pitanje) criteria.list().get(0);		
 			
-			session.close();
 		} catch (Exception e){
 			logger.error("Došlo je do greške:", e);
 	

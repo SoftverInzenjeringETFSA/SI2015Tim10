@@ -38,6 +38,9 @@ public class TrazenjeKategorijeVM {
 	}
 	
 	public static List<Kategorija> nadjiKategorije(Session session) {
+		if(!session.isOpen()){
+			session = (Session) HibernateUtil.getSessionFactory().openSession();
+		}
 		Criteria criteria = null;
 		try {
 	        Transaction t = session.beginTransaction();
