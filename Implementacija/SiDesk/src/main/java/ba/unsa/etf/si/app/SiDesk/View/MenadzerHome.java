@@ -485,7 +485,7 @@ public class MenadzerHome {
 	  }
 	
 	protected void osvjeziDrvo(){
-		/*tree.setModel(new DefaultTreeModel(
+		tree.setModel(new DefaultTreeModel(
 				new DefaultMutableTreeNode("Kategorije") {
 					{
 						boolean flag = false;
@@ -507,7 +507,7 @@ public class MenadzerHome {
 						}
 					}
 				}
-			));*/
+			));
 	}
 	
 	private void addPopup(final JTree tree, final JPopupMenu popup) {		
