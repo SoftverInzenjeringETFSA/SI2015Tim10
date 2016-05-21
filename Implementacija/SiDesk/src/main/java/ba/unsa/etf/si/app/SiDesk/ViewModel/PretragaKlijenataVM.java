@@ -15,10 +15,6 @@ import org.apache.log4j.Logger;
 public class PretragaKlijenataVM {
 	final static Logger logger = Logger.getLogger(PretragaKlijenataVM.class);
 
-
-    
-
-	
 	public static Klijent nadjiKlijenta(String ime, String prezime, String adresaIzTabele, String brojTelefonaIzTabele,int xd, String zaposlenjeIzTabele, Session session) {
 		Criteria criteria = null;
 		Klijent klijent = null;
@@ -34,8 +30,6 @@ public class PretragaKlijenataVM {
 		    		.add(Restrictions.like("zaposlenje", zaposlenjeIzTabele).ignoreCase());
 	        
 	        klijent = (Klijent) criteria.list().get(0);
-
-			session.close();
 		} catch (Exception e) {
 			logger.error("Došlo je do greške:", e);
 			

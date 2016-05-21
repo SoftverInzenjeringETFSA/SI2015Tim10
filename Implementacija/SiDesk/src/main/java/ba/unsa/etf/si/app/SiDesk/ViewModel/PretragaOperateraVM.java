@@ -25,7 +25,7 @@ public class PretragaOperateraVM {
 			
 			criteria = s.createCriteria(Operater.class).add(Restrictions.like("id", k.getOperater_korisnik().getId()));
 			o = (Operater) criteria.list().get(0);
-			s.close();
+			
 			
 		} catch (Exception e){
 			logger.error("Došlo je do greške:", e);

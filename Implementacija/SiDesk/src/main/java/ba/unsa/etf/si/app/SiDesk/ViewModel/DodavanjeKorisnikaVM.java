@@ -44,7 +44,6 @@ public class DodavanjeKorisnikaVM {
 		        		tip, username,o, pw);
 		        s.save(k);
 		        t.commit();
-				s.close();
 				
 				JOptionPane.showMessageDialog(null, "Korisnik je uspješno dodan", "Info",
 						JOptionPane.INFORMATION_MESSAGE);
