@@ -4,6 +4,7 @@ import java.util.Date;
 //import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.print.DocFlavor.STRING;
 import javax.swing.JOptionPane;
 
 // posebno implementirati validacije za jedinstvenost
@@ -22,7 +23,11 @@ public class Validator {
 	public static Boolean validairajJMBG(String jmbg) {
 		
 		if (jmbg.length() != brojZnakovaJmbg)
+		{
+			JOptionPane.showMessageDialog(null, "Ne ispravan jmbg!", "Info", JOptionPane.ERROR_MESSAGE);
+			
 			return false;
+		}
 		return true;
 	}
 	
@@ -31,10 +36,15 @@ public class Validator {
 		Pattern patern1 = Pattern.compile(Telefon_PATTERN1);
 		Pattern patern2 = Pattern.compile(Telefon_PATTERN2);
 
-		if (patern1.matcher(brojTelefona).matches() || patern2.matcher(brojTelefona).matches())
+		if (patern1.matcher(brojTelefona).matches() || patern2.matcher(brojTelefona).matches() || brojTelefona.equals(""))
 			return true;
-
+		else
+		{
+			JOptionPane.showMessageDialog(null, "Ne ispravan broj telefona!", "Info", JOptionPane.ERROR_MESSAGE);
+			
+			
 		return false;
+		}
 	}
 	
 	public static Boolean validirajStarost(int starost) {
@@ -45,10 +55,20 @@ public class Validator {
 	}
 	
 	public static Boolean validirajBrojLicneKarte(String brojLicneKarte) {
+		if(brojLicneKarte.equals(""))
+		{
+			JOptionPane.showMessageDialog(null, "Unesite broj licne karte!", "Info", JOptionPane.ERROR_MESSAGE);
+		return false;	
+			
+		}
 		if (brojLicneKarte.length() >= minBrojZnakovaLicnaKarta)
 			return true;
-
+		else
+		{
+			JOptionPane.showMessageDialog(null, "Ne ispravan broj licne karte!", "Info", JOptionPane.ERROR_MESSAGE);
+			
 		return false;
+		}
 	}
 	
 	public static Boolean validirajEmail(String email) {
@@ -58,7 +78,13 @@ public class Validator {
 			if(pattern.matcher(email).matches() )
 			return true;
 		
-		else return false;
+		else 
+			{
+			JOptionPane.showMessageDialog(null, "Ne ispravan email!", "Info", JOptionPane.ERROR_MESSAGE);
+			
+			return false;
+			
+			}
 	}
 	
 	public static Boolean validirajDatumZaposlenja(Date datum) {
@@ -78,6 +104,11 @@ public class Validator {
 
 	public static Boolean validirajSifru(String sifra) {
 		
+		if(sifra.equals(""))
+		{
+			JOptionPane.showMessageDialog(null, "Unesite  lozinku!", "Info", JOptionPane.ERROR_MESSAGE);
+			return false;
+		}
 		boolean ima = false;
 		char[] niz = sifra.toCharArray();
 		for (int i = 0; i < sifra.length(); i++) {
@@ -92,15 +123,36 @@ public class Validator {
 		return false;
 	}
 	
+	public static Boolean KorisnickoIme(String korisnicko)
+	{
+		if(korisnicko.equals(""))
+		{
+			JOptionPane.showMessageDialog(null, "Unesite korisnicko ime!", "Info", JOptionPane.ERROR_MESSAGE);
+		return false;	
+			
+		}
 	
+		return true;
+	}
 	public static Boolean validirajIme(String ime) {
 		Pattern patern = Pattern.compile(ALPHANUMERIC_PATTERN);
-		
+		if(ime.equals(""))
+		{
+			JOptionPane.showMessageDialog(null, "Unesite ime!", "Info", JOptionPane.ERROR_MESSAGE);
+		return false;	
+			
+		}
 		if(patern.matcher(ime).matches()) return true;
 		return false;
 	}
 	
 	public static Boolean validirajPrezime(String prezime) {
+		if(prezime.equals(""))
+		{
+			JOptionPane.showMessageDialog(null, "Unesite prezime!", "Info", JOptionPane.ERROR_MESSAGE);
+		return false;	
+			
+		}
 		Pattern patern = Pattern.compile(ALPHANUMERIC_PATTERN);
 		
 		if(patern.matcher(prezime).matches()) return true;

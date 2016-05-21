@@ -237,6 +237,7 @@ public class AdminDodavanjeKorisnika {
 				if (s1.equals("")) {
 					JOptionPane.showMessageDialog(null, "Unesite ispravan datum!", "Info", JOptionPane.ERROR_MESSAGE);
 				}
+		
 				int g = dateChooser_datumZaposlenja.getDate().getYear() +1900;
 				int m = dateChooser_datumZaposlenja.getDate().getMonth();
 				int day = dateChooser_datumZaposlenja.getDate().getDate();
@@ -247,12 +248,15 @@ public class AdminDodavanjeKorisnika {
 				Date d = cal.getTime();
 
 				if (Validator.validirajIme(textField_ime.getText())
-						&& Validator.validirajPrezime(textField_prezime.getText())
+						&& Validator.validirajPrezime(textField_prezime.getText()) &&
+						Validator.validirajDatumZaposlenja(d) 
 						&& Validator.validairajJMBG(textField_jmbg.getText())
-						&& Validator.validirajBrojTelefona(textField_brojTelefona.getText() )||(textField_brojTelefona.getText().equals(""))
+						&&  Validator.validirajBrojLicneKarte(textField_brojLicneKarte.getText())&& 
+						(Validator.validirajBrojTelefona(textField_brojTelefona.getText() )
+						||(textField_brojTelefona.getText().equals("")))
 						&& Validator.validirajEmail(textField_email.getText())
-						&& Validator.validirajBrojLicneKarte(textField_brojLicneKarte.getText())
-						&& Validator.validirajDatumZaposlenja(d) && !textField_password.getText().isEmpty()) {
+						&& Validator.KorisnickoIme(textField_username.getText()) 
+						&& Validator.validirajSifru(textField_password.getText()) ) {
 					try {
 
 						String tipKorisnika = comboBox_tipKorisnika.getSelectedItem().toString();
@@ -275,11 +279,7 @@ public class AdminDodavanjeKorisnika {
 								"Info " + "Error" + ex.getMessage(), JOptionPane.ERROR_MESSAGE);
 					}
 
-				} else {
-					JOptionPane.showMessageDialog(null, "Unijeli ste pogresne podatke!", "Info",
-							JOptionPane.INFORMATION_MESSAGE);
-
-				}
+				} 
 
 			}
 		});
