@@ -131,7 +131,7 @@ public class MenadzerBrisanjeKategorije {
 						choice_brisanjeKategorije.addItem(putanjaChoice);
 
 					}
-
+					MenadzerHome.osvjeziDrvo();
 					lblPoruka.setVisible(false);
 				}
 

@@ -117,11 +117,8 @@ public class MenadzerModifikovanjeKategorije {
 				}	
 							
 				ModifikacijaKategorijeVM.modifikacijaKategorije(putanja, staroIme, novoImeKategorije, s);
-				
-			}
-
-				
-			
+				MenadzerHome.osvjeziDrvo();
+			}			
 		});
 		
 		btnDodajKategoriju.setBounds(301, 122, 169, 23);

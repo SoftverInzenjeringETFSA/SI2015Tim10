@@ -57,7 +57,7 @@ public class MenadzerHome {
 	protected JMenuItem mntmDodajKategoriju;
 	protected JMenuItem mntmdodajPitanje;
 	protected JMenuItem mntmobrisiKategoriju;
-	public JTree tree;
+	public static JTree tree;
 	protected String putanja;
 	protected String kliknutiCvorString;
 	private JTextField textField_pretragaPitanja;
@@ -484,7 +484,7 @@ public class MenadzerHome {
 	    BrisanjeKategorijeVM.obrisiKategoriju(putanja, ime, s);
 	  }
 	
-	protected void osvjeziDrvo(){
+	protected static void osvjeziDrvo(){
 		tree.setModel(new DefaultTreeModel(
 				new DefaultMutableTreeNode("Kategorije") {
 					{

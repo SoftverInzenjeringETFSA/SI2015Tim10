@@ -110,12 +110,12 @@ public class MenadzerDodavanjeKategorije {
 			    imeParentKategorija = imeParentKategorija.substring(imeParentKategorija.lastIndexOf("/") + 1);
 				String putanjaParentKategorija = putanja.substring(0, putanja.length()-imeParentKategorija.length()-1);
 							
-			System.out.println(imeParentKategorija);
-		
-			Kategorija parent = TrazenjeKategorijeVM.nadjiKategoriju(putanjaParentKategorija, imeParentKategorija, s);
+				System.out.println(imeParentKategorija);
+			
+				Kategorija parent = TrazenjeKategorijeVM.nadjiKategoriju(putanjaParentKategorija, imeParentKategorija, s);
 				DodavanjeKategorijeVM.dodajKategoriju(putanja, kategorija, parent, s);
 				
-				
+				MenadzerHome.osvjeziDrvo();
 			}
 		});
 		
