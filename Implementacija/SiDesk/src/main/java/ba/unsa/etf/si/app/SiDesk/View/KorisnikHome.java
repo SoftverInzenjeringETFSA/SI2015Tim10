@@ -790,24 +790,21 @@ public class KorisnikHome {
 			public void mouseClicked(MouseEvent arg0) {
 
 				if(rdbtnNoviKorisnik.isSelected()){
-				  String s2 = ((JTextField)
-				  dateChooser.getDateEditor().getUiComponent()).getText(); if
-				 (s2.equals("")) { JOptionPane.showMessageDialog(null,
-				  "Unesite ispravan datum!", "Info",
-				  JOptionPane.ERROR_MESSAGE);
+				  String s2 = ((JTextField)dateChooser.getDateEditor().getUiComponent()).getText(); 
+				  if(s2.equals("")) { 
+					  JOptionPane.showMessageDialog(null, "Unesite ispravan datum!", "Info", JOptionPane.ERROR_MESSAGE);
 				  
-				  } int year1 = Calendar.getInstance().get(Calendar.YEAR); int
-				  staro1 = dateChooser.getDate().getYear() + 1900; int starost1
-				  = year1 - staro1;
+				  } 
+				  int year1 = Calendar.getInstance().get(Calendar.YEAR); 
+				  int staro1 = dateChooser.getDate().getYear() + 1900; 
+				  int starost1 = year1 - staro1;
 				  
 				  if (!Validator.validirajIme(textField.getText()) ||
 				  !Validator.validirajPrezime(textField_1.getText()) ||
 				  !Validator.validirajStarost(starost1) ||
 				  !Validator.validirajBrojTelefona(textField_3.getText())) {
-				  JOptionPane.showMessageDialog(null,
-				  "Unijeli ste pogresne podatke!", "Info",
-				  JOptionPane.INFORMATION_MESSAGE);
-				  
+					  JOptionPane.showMessageDialog(null, "Unijeli ste pogresne podatke!", "Info", JOptionPane.INFORMATION_MESSAGE);
+					  return;
 				  } 
 				}
 
@@ -823,7 +820,7 @@ public class KorisnikHome {
 						int staro = dateChooser.getDate().getYear() + 1900;
 						int starost = year - staro;
 						klijent = DodavanjeKlijentaVM.dodajKlijenta(textField.getText(), textField_1.getText(),
-								textField_2.getText(), textField_3.getText(), starost, textField_4.getText());
+								textField_2.getText(), textField_3.getText(), starost, textField_4.getText(), s);
 						// PretragaPitanjaVM.nadjiPitanjaSaImenom(pitanje);
 						if (chckbxIzlazakIzScenarija.isSelected() == true) {
 							SpašavanjeTelefonskogPozivaVM.spasiPoziv(textField_5.getText(), klijent, operater, s);

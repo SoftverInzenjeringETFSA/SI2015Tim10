@@ -20,13 +20,13 @@ public class DodavanjeKlijentaVM {
 		this.s1 = s;
 	}
 	public static Klijent dodajKlijenta(String ime, String prezime, String Adresa, String brojTelefona, int starost,
-			String zaposlenje) {
+			String zaposlenje, Session s) {
 		Klijent k = null;
 		try {
 
-			Transaction tt = s1.beginTransaction();
+			Transaction tt = s.beginTransaction();
 			k = new Klijent(ime, prezime, Adresa, brojTelefona, starost, zaposlenje);
-			s1.save(k);
+			s.save(k);
 			tt.commit();
 		}
 
