@@ -24,7 +24,7 @@ public class Validator {
 		
 		if (jmbg.length() != brojZnakovaJmbg)
 		{
-			JOptionPane.showMessageDialog(null, "Ne ispravan jmbg!", "Info", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(null, "Ne ispravan jmbg, jmbg mora imati 13 brojeva!", "Info", JOptionPane.ERROR_MESSAGE);
 			
 			return false;
 		}
@@ -40,7 +40,7 @@ public class Validator {
 			return true;
 		else
 		{
-			JOptionPane.showMessageDialog(null, "Ne ispravan broj telefona!", "Info", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(null, "Ne ispravan broj telefona.Primjeri ispravnih brojeva telefona: 061-111-111 ili 062-222-2222!", "Info", JOptionPane.ERROR_MESSAGE);
 			
 			
 		return false;
@@ -57,7 +57,7 @@ public class Validator {
 	public static Boolean validirajBrojLicneKarte(String brojLicneKarte) {
 		if(brojLicneKarte.equals(""))
 		{
-			JOptionPane.showMessageDialog(null, "Unesite broj licne karte!", "Info", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(null, "Unesite broj licne karte. Broj mora imati bar 9 simbola!", "Info", JOptionPane.ERROR_MESSAGE);
 		return false;	
 			
 		}
@@ -65,7 +65,7 @@ public class Validator {
 			return true;
 		else
 		{
-			JOptionPane.showMessageDialog(null, "Ne ispravan broj licne karte!", "Info", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(null, "Ne ispravan broj licne karte. Broj mora imati bar 9 simbola!", "Info", JOptionPane.ERROR_MESSAGE);
 			
 		return false;
 		}
@@ -80,7 +80,7 @@ public class Validator {
 		
 		else 
 			{
-			JOptionPane.showMessageDialog(null, "Ne ispravan email!", "Info", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(null, "Ne ispravan email. Primjer ispravnog maila Korisnik@Koricnikovic.ba!", "Info", JOptionPane.ERROR_MESSAGE);
 			
 			return false;
 			
@@ -93,8 +93,11 @@ public class Validator {
 		
 
 		  if (danasnjiDatum.compareTo(datum)<0)
+		  {
+				JOptionPane.showMessageDialog(null, "Odabrani datum treba biti prije danasnjeg datuma!", "Info", JOptionPane.ERROR_MESSAGE);
+					  
 		 	return false;
-		
+		  }
 		return true;
 	}
 	
@@ -106,7 +109,7 @@ public class Validator {
 		
 		if(sifra.equals(""))
 		{
-			JOptionPane.showMessageDialog(null, "Unesite  lozinku!", "Info", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(null, "Unesite  lozinku, unosenjem alfanumericke simbole, ili klikom na button Generiši lozinku!", "Info", JOptionPane.ERROR_MESSAGE);
 			return false;
 		}
 		boolean ima = false;
@@ -127,7 +130,7 @@ public class Validator {
 	{
 		if(korisnicko.equals(""))
 		{
-			JOptionPane.showMessageDialog(null, "Unesite korisnicko ime!", "Info", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(null, "Unesite korisnicko ime. Korisnicko ime treba sadrzavati bar 1 alfanumericki simbol!", "Info", JOptionPane.ERROR_MESSAGE);
 		return false;	
 			
 		}
@@ -138,7 +141,7 @@ public class Validator {
 		Pattern patern = Pattern.compile(ALPHANUMERIC_PATTERN);
 		if(ime.equals(""))
 		{
-			JOptionPane.showMessageDialog(null, "Unesite ime!", "Info", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(null, "Unesite ime, ime treba sadrzavati bar 1 alfanumericki simbol!", "Info", JOptionPane.ERROR_MESSAGE);
 		return false;	
 			
 		}
@@ -149,7 +152,7 @@ public class Validator {
 	public static Boolean validirajPrezime(String prezime) {
 		if(prezime.equals(""))
 		{
-			JOptionPane.showMessageDialog(null, "Unesite prezime!", "Info", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(null, "Unesite prezime. Prezime treba sadrzavati bar 1 alfanumericki simbol!", "Info", JOptionPane.ERROR_MESSAGE);
 		return false;	
 			
 		}
