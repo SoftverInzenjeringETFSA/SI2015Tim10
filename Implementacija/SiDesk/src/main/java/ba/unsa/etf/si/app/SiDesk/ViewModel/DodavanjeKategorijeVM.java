@@ -13,6 +13,7 @@ import org.hibernate.criterion.Restrictions;
 import ba.unsa.etf.si.app.SiDesk.Model.Kategorija;
 import ba.unsa.etf.si.app.SiDesk.Util.HibernateUtil;
 import ba.unsa.etf.si.app.SiDesk.View.AdminDodavanjeKorisnika;
+import ba.unsa.etf.si.app.SiDesk.ViewModel.TrazenjeKategorijeVM;
 
 import org.apache.log4j.Logger;
 public class DodavanjeKategorijeVM {
@@ -24,8 +25,12 @@ public class DodavanjeKategorijeVM {
 		try {
 		
 	        Transaction tr = s.beginTransaction();
-			
-	        Kategorija k= new Kategorija();
+			Kategorija k1 = TrazenjeKategorijeVM.nadjiKategoriju(putanja, kategorija, s);
+			if(k1 != null) {
+				JOptionPane.showMessageDialog(null, "Postoji kategorija sa istim imenom.","Info", JOptionPane.INFORMATION_MESSAGE);	
+				return false;
+			}
+	        Kategorija k = new Kategorija();
 	        k.setIme(kategorija);
 	        k.setPutanja(putanja);
 	        k.setParentId(parent);

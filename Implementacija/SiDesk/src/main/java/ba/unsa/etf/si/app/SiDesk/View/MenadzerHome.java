@@ -45,21 +45,24 @@ import ba.unsa.etf.si.app.SiDesk.ViewModel.ModifikacijaKategorijeVM;
 import ba.unsa.etf.si.app.SiDesk.ViewModel.TrazenjeKategorijeVM;
 import org.apache.log4j.Logger;
 import org.hibernate.Session;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
+
 public class MenadzerHome {
 	final static Logger logger = Logger.getLogger(MenadzerHome.class);
 
-	protected JFrame frmMenadzerHome;
+	public JFrame frmMenadzerHome;
 	protected JMenuItem mntmDodajKategoriju;
 	protected JMenuItem mntmdodajPitanje;
 	protected JMenuItem mntmobrisiKategoriju;
-	private JTree tree;
+	public JTree tree;
 	protected String putanja;
 	protected String kliknutiCvorString;
 	private JTextField textField_pretragaPitanja;
 	private static Session s;
 	private MenadzerHome ref;
 	private static Login refLogin;
-
+	
 
 	/**
 	 * Launch the application.
@@ -98,6 +101,18 @@ public class MenadzerHome {
 	
 	private void initialize() {
 		frmMenadzerHome = new JFrame();
+		frmMenadzerHome.getContentPane().addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusGained(FocusEvent e) {
+				osvjeziDrvo();
+			}
+		});
+		frmMenadzerHome.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusGained(FocusEvent arg0) {
+				osvjeziDrvo();
+			}
+		});
 		
 		frmMenadzerHome.setTitle("Home");
 		
@@ -106,6 +121,12 @@ public class MenadzerHome {
 		frmMenadzerHome.getContentPane().setLayout(null);
 	
 		tree = new JTree();
+		tree.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusGained(FocusEvent e) {
+				osvjeziDrvo();
+			}
+		});
 		
 		tree.setBounds(10, 90, 198, 395);
 		tree.setModel(new DefaultTreeModel(
@@ -366,7 +387,7 @@ public class MenadzerHome {
 		JMenuItem mntmObriiKategoriju = new JMenuItem("Obri\u0161i kategoriju");
 		mntmObriiKategoriju.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				MenadzerBrisanjeKategorije window= new MenadzerBrisanjeKategorije(s, ref);
+				MenadzerBrisanjeKategorije window = new MenadzerBrisanjeKategorije(s, ref);
 				window.otvoriFormu();
 				//window.frmBrisanjeKategorije.setVisible(true);
 			}
@@ -460,6 +481,32 @@ public class MenadzerHome {
 		if(putanja == "") putanja = null;
 	    BrisanjeKategorijeVM.obrisiKategoriju(putanja, ime, s);
 	  }
+	
+	protected void osvjeziDrvo(){
+		tree.setModel(new DefaultTreeModel(
+				new DefaultMutableTreeNode("Kategorije") {
+					{
+						boolean flag = false;
+						
+						List<Kategorija> lista = TrazenjeKategorijeVM.nadjiKategorije(s);
+						//if(lista.size() == 0) 
+						DefaultMutableTreeNode[] drvo = new DefaultMutableTreeNode[lista.size()];
+						for(int i = 0; i < lista.size(); i++){
+							drvo[i] = new DefaultMutableTreeNode(lista.get(i).getIme());
+							flag = false;
+							for(int j = 0; j < lista.size(); j++){
+								if(lista.get(i).getParentId() == null) continue;
+								if(lista.get(i).getParentId()==lista.get(j)){
+									drvo[j].add(drvo[i]);
+									flag = true;
+								}
+							}
+							if(!flag) add(drvo[i]);
+						}
+					}
+				}
+			));
+	}
 	
 	private void addPopup(final JTree tree, final JPopupMenu popup) {		
 		tree.addMouseListener(new MouseAdapter() {

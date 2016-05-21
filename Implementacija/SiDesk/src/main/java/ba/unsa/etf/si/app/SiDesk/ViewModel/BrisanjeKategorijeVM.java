@@ -18,10 +18,12 @@ import ba.unsa.etf.si.app.SiDesk.View.AdminDodavanjeKorisnika;
 import org.apache.log4j.Logger;
 public class BrisanjeKategorijeVM {
 	final static Logger logger = Logger.getLogger(BrisanjeKategorijeVM.class);
-
-
 	
 	public static boolean obrisiKategoriju(String putanja, String ime, Session s) {
+		if(!s.isOpen()){
+			s = (Session) HibernateUtil.getSessionFactory().openSession();
+		}
+		
 		try {
 	        Transaction t = s.beginTransaction();
 			//brisanje pitanja povezanih sa kategorijom	        

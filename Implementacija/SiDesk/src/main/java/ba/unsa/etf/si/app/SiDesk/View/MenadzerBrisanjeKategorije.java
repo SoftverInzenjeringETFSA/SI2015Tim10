@@ -8,10 +8,13 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
+import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeModel;
 
 import ba.unsa.etf.si.app.SiDesk.Model.Kategorija;
 import ba.unsa.etf.si.app.SiDesk.ViewModel.BrisanjeKategorijeVM;
 import ba.unsa.etf.si.app.SiDesk.ViewModel.TrazenjeKategorijeVM;
+import ba.unsa.etf.si.app.SiDesk.View.MenadzerHome;
 
 import java.util.List;
 import java.awt.event.ActionListener;
@@ -19,9 +22,11 @@ import java.awt.event.ActionEvent;
 import java.awt.Color;
 import org.apache.log4j.Logger;
 import org.hibernate.Session;
+
 public class MenadzerBrisanjeKategorije {
 	final static Logger logger = Logger.getLogger(MenadzerBrisanjeKategorije.class);
 
+	//protected Jtree tree = MenadzerHome.tree;
 	protected JFrame frmBrisanjeKategorije;
 	private JTextField textField_imeKategorije;
 	private static Session s;
@@ -119,7 +124,6 @@ public class MenadzerBrisanjeKategorije {
 					}
 
 					lblPoruka.setVisible(false);
-
 				}
 
 				else {
