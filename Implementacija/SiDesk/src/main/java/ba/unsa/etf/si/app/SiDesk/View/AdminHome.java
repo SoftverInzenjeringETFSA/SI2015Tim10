@@ -80,6 +80,7 @@ public class AdminHome {
 		this.s=s;
 		this.ref=ref;
 		this.username=username;
+		
 
 		initialize();
 	}
@@ -106,6 +107,7 @@ public class AdminHome {
 		btnIzmjeni.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
+					
 					AdminUredjivanjeKorisnika window = new AdminUredjivanjeKorisnika(s, refAdmin);
 					
 
@@ -114,8 +116,9 @@ public class AdminHome {
 						
 						AdminUredjivanjeKorisnika.lista(list_korisnici);
 						
-						window.otvoriFormu();
-						//window.frmUredjivanjekorisnika.setVisible(true);
+						//window.otvoriFormu();
+
+							window.frmUredjivanjekorisnika.setVisible(true);
 					} else {
 						JOptionPane.showMessageDialog(null, "Greska, nije odabran nijedan korisnik!", "Info",
 								JOptionPane.INFORMATION_MESSAGE);

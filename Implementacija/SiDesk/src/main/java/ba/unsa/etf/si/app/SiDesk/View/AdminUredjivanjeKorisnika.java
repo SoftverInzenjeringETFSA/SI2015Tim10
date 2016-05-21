@@ -61,6 +61,7 @@ public class AdminUredjivanjeKorisnika {
 				
 		listaKorisnika = l;
 		Korisnik neko = new Korisnik();
+	
 		neko = (Korisnik) l.getSelectedValue();
 		textField_ime.setText(neko.getIme());
 		textField_prezime.setText(neko.getPrezime());
@@ -74,6 +75,7 @@ public class AdminUredjivanjeKorisnika {
 		textField_password.setText(neko.getSifra());
 		textField_brojTelefona.setText(neko.getBrojTelefona());
 		textField_brojLicne.setText(neko.getBrojLicneKarte());
+		
 
 	}
 
@@ -81,7 +83,9 @@ public class AdminUredjivanjeKorisnika {
 	 * Launch the application.
 	 */
 	public void otvoriFormu() {
+
 		EventQueue.invokeLater(new Runnable() {
+			
 			public void run() {
 				try {
 					AdminUredjivanjeKorisnika window = new AdminUredjivanjeKorisnika(s, ref);

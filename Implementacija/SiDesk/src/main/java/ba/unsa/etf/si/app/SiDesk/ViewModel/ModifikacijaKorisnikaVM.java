@@ -44,13 +44,14 @@ public class ModifikacijaKorisnikaVM {
 			Criteria criteria2 = s.createCriteria(Korisnik.class).add(Restrictions.like("ime", ime).ignoreCase());
 		
 			Criteria criteria3 = s.createCriteria(Korisnik.class).add(Restrictions.like("korisnickoIme", username).ignoreCase());
-			
+			Criteria criteria5 = s.createCriteria(Korisnik.class).add(Restrictions.eq("brojLicneKarte", brojLicne).ignoreCase());
 			List<Korisnik> lista1 = criteria1.list();
 			List<Korisnik> lista2 = criteria2.list();
 			List<Korisnik> lista3 = criteria3.list();
-	
+			List<Korisnik> lista5 = criteria5.list();
+			
 
-			if (lista1.isEmpty() && lista2.isEmpty() && lista3.isEmpty()) {
+			if (lista1.isEmpty() && lista2.isEmpty() && lista3.isEmpty() && lista5.isEmpty()) {
 
 				TipKorisnika tip = (TipKorisnika) s.createCriteria(TipKorisnika.class)
 						.add(Restrictions.eq("tipKorisnika", tipkorisnika)).uniqueResult();
