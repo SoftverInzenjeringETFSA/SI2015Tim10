@@ -15,10 +15,11 @@ import org.apache.log4j.Logger;
 public class PretragaPitanjaVM {
 	final static Logger logger = Logger.getLogger(PretragaPitanjaVM.class);
 
-	public static List<Pitanje> nadjiPitanjaSaPutanjom(String putanja){
+
+	
+	public static List<Pitanje> nadjiPitanjaSaPutanjom(String putanja, Session session){
 		List<Pitanje> listaPitanja = null;
 		try{
-			Session session = (Session) HibernateUtil.getSessionFactory().openSession();
 	        Transaction t = session.beginTransaction();
 			
 			Criteria criteria = session.createCriteria(Pitanje.class).add(Restrictions.like("putanja", putanja, MatchMode.ANYWHERE).ignoreCase());
@@ -32,10 +33,9 @@ public class PretragaPitanjaVM {
 		return listaPitanja;
 	}
 
-	public static Pitanje nadjiPitanje(String pitanje, String odgovor) {
+	public static Pitanje nadjiPitanje(String pitanje, String odgovor, Session session) {
 		Pitanje p = null;
 		try {
-			Session session = (Session) HibernateUtil.getSessionFactory().openSession();
 	        Transaction t = session.beginTransaction();
 			
 			Criteria criteria = session.createCriteria(Pitanje.class)

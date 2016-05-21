@@ -15,16 +15,17 @@ import org.apache.log4j.Logger;
 public class ModifikacijaKlijentaVM {
 	final static Logger logger = Logger.getLogger(ModifikacijaKlijentaVM.class);
 
-	public static List<Klijent> nadjiKlijenta(String ime){
+
+	public static List<Klijent> nadjiKlijenta(String ime, Session session){
 		List<Klijent> listaKlijenta = null;
 		try{
-			Session session = (Session) HibernateUtil.getSessionFactory().openSession();
+			
 	        Transaction t = session.beginTransaction();
 			
 			Criteria criteria = session.createCriteria(Klijent.class).add(Restrictions.like("ime", ime, MatchMode.ANYWHERE).ignoreCase());
 			listaKlijenta = criteria.list();		
 			
-			session.close();
+			
 		} catch(Exception e){
 			logger.error("Došlo je do greške:", e);
 			
@@ -32,16 +33,15 @@ public class ModifikacijaKlijentaVM {
 		return listaKlijenta;
 	}
 	
-	public static List<Klijent> nadjiKlijenta1(String prezime){
+	public static List<Klijent> nadjiKlijenta1(String prezime, Session session){
 		List<Klijent> listaKlijenta = null;
 		try{
-			Session session = (Session) HibernateUtil.getSessionFactory().openSession();
 	        Transaction t = session.beginTransaction();
 			
 			Criteria criteria = session.createCriteria(Klijent.class).add(Restrictions.like("prezime", prezime, MatchMode.ANYWHERE).ignoreCase());
 			listaKlijenta = criteria.list();		
 			
-			session.close();
+			
 		} catch(Exception e){
 			logger.error("Došlo je do greške:", e);
 		

@@ -34,7 +34,9 @@ import org.apache.log4j.Logger;
 public final class GenerisiIzvjestajStarosnaDob {
 	final static Logger logger = Logger.getLogger(GenerisiIzvjestajStarosnaDob.class);
 
-	public static Boolean generisi(String from, String to, String operater) throws MalformedURLException, IOException {
+	
+	
+	public static Boolean generisi(String from, String to, String operater, Session session) throws MalformedURLException, IOException {
 
 		JFileChooser chooser = new JFileChooser();
 		chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
@@ -50,7 +52,6 @@ public final class GenerisiIzvjestajStarosnaDob {
 
 			try {
 
-				Session session = (Session) HibernateUtil.getSessionFactory().openSession();
 				Transaction t = session.beginTransaction();
 
 				Integer moreThan = Integer.parseInt(from);

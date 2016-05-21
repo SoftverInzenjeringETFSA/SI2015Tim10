@@ -38,7 +38,8 @@ import org.apache.log4j.Logger;
 public final class GenerisiIzvjestajVremenskiPeriod {
 	final static Logger logger = Logger.getLogger(GenerisiIzvjestajVremenskiPeriod.class);
 
-	public static Boolean generisi(String operater, Date datum_od, Date datum_do) throws MalformedURLException, IOException, ParseException {
+
+	public static Boolean generisi(String operater, Date datum_od, Date datum_do, Session session) throws MalformedURLException, IOException, ParseException {
 
 		
 		JFileChooser chooser = new JFileChooser();
@@ -50,8 +51,6 @@ public final class GenerisiIzvjestajVremenskiPeriod {
 
 			try {
 				
-
-				Session session = (Session) HibernateUtil.getSessionFactory().openSession();
 				Transaction t = session.beginTransaction();
 
 				Criteria criteria_operater = session.createCriteria(Operater.class);

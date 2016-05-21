@@ -17,20 +17,23 @@ import java.util.List;
 import java.awt.event.ActionEvent;
 import java.awt.ComponentOrientation;
 import org.apache.log4j.Logger;
+import org.hibernate.Session;
 public class MenadzerDodavanjeKategorije {
 	final static Logger logger = Logger.getLogger(MenadzerDodavanjeKategorije.class);
 
 	protected JFrame frmDodavanjeKategorije;
 	private JTextField textField;
+	private static Session s;
+	private static MenadzerHome ref;
 
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
+	public void otvoriFormu() {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					MenadzerDodavanjeKategorije window = new MenadzerDodavanjeKategorije();
+					MenadzerDodavanjeKategorije window = new MenadzerDodavanjeKategorije(s, ref);
 					window.frmDodavanjeKategorije.setVisible(true);
 				} catch (Exception e) {
 					logger.error("Došlo je do greške:", e);
@@ -43,7 +46,9 @@ public class MenadzerDodavanjeKategorije {
 	/**
 	 * Create the application.
 	 */
-	public MenadzerDodavanjeKategorije() {
+	public MenadzerDodavanjeKategorije(Session s, MenadzerHome ref) {
+		this.ref=ref;
+		this.s=s;
 		initialize();
 	}
 
@@ -68,7 +73,7 @@ public class MenadzerDodavanjeKategorije {
 		final Choice choice = new Choice();
 		choice.setBounds(170, 32, 300, 22);
 		//choice.addItem("Software/MS office/Word/");
-		List<Kategorija> kategorije = TrazenjeKategorijeVM.nadjiKategorije();
+		List<Kategorija> kategorije = TrazenjeKategorijeVM.nadjiKategorije(s);
 		for(int i = 0; i < kategorije.size(); i++)
 		{
 			String putanjaChoice = new String();
@@ -98,8 +103,8 @@ public class MenadzerDodavanjeKategorije {
 							
 			System.out.println(imeParentKategorija);
 		
-			Kategorija parent = TrazenjeKategorijeVM.nadjiKategoriju(putanjaParentKategorija, imeParentKategorija);
-				DodavanjeKategorijeVM.dodajKategoriju(putanja, kategorija, parent);
+			Kategorija parent = TrazenjeKategorijeVM.nadjiKategoriju(putanjaParentKategorija, imeParentKategorija, s);
+				DodavanjeKategorijeVM.dodajKategoriju(putanja, kategorija, parent, s);
 				
 				
 			}

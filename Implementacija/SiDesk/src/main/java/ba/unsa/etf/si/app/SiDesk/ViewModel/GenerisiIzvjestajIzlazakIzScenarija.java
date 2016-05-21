@@ -34,7 +34,9 @@ import org.apache.log4j.Logger;
 public final class GenerisiIzvjestajIzlazakIzScenarija {
 	final static Logger logger = Logger.getLogger(GenerisiIzvjestajIzlazakIzScenarija.class);
 
-	public static Boolean generisi(String operater) throws MalformedURLException, IOException, ParseException {
+	  
+	
+	public static Boolean generisi(String operater, Session session) throws MalformedURLException, IOException, ParseException {
 
 		if(operater.equals("Foča")) operater="Foca";
 		JFileChooser chooser = new JFileChooser();
@@ -46,7 +48,6 @@ public final class GenerisiIzvjestajIzlazakIzScenarija {
 
 			try {
 
-				Session session = (Session) HibernateUtil.getSessionFactory().openSession();
 				Transaction t = session.beginTransaction();
 
 				Criteria criteria_operater = session.createCriteria(Operater.class);

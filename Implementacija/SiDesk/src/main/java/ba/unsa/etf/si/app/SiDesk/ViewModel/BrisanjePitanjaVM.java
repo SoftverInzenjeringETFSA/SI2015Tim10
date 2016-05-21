@@ -4,9 +4,15 @@ import ba.unsa.etf.si.app.SiDesk.Model.Pitanje;
 import ba.unsa.etf.si.app.SiDesk.View.AdminDodavanjeKorisnika;
 
 import org.apache.log4j.Logger;
+import org.hibernate.Session;
 public class BrisanjePitanjaVM {
 	final static Logger logger = Logger.getLogger(BrisanjePitanjaVM.class);
-
+    
+	private static Session s;
+    
+	public BrisanjePitanjaVM(Session s) {
+		this.s = s;
+	}
 	public static boolean obrisiPitanje(Pitanje pitanje) {
 		
 		try {

@@ -18,11 +18,13 @@ import org.hibernate.criterion.Restrictions;
 import org.apache.log4j.Logger;
 public class DodavanjePitanjaVM {
 	final static Logger logger = Logger.getLogger(DodavanjePitanjaVM.class);
+	
 
-	public static Boolean dodajPitanje(Pitanje pitanje) {
+	
+
+	public static Boolean dodajPitanje(Pitanje pitanje, Session sesija) {
 		
 		try {
-			Session sesija =  HibernateUtil.getSessionFactory().openSession();
 	        Transaction tr =  sesija.beginTransaction();
 
 	        Pitanje p= new Pitanje();
@@ -47,11 +49,10 @@ public class DodavanjePitanjaVM {
 	}
 	
 
-	public static List<Pitanje> pretraziPitanja(String kljucnaRijec, String putanja) {
+	public static List<Pitanje> pretraziPitanja(String kljucnaRijec, String putanja, Session session) {
 		
 		List<Pitanje> lista= null;
 		try {
-			Session session = (Session) HibernateUtil.getSessionFactory().openSession();
 	        Transaction tr =  session.beginTransaction();
 			
 	        Criteria criteria = session.createCriteria(Pitanje.class).add(Restrictions.like("pitanje", kljucnaRijec, MatchMode.ANYWHERE).ignoreCase()).add(Restrictions.like("putanja", putanja, MatchMode.ANYWHERE).ignoreCase());

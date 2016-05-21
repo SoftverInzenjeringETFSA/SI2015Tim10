@@ -32,8 +32,11 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.event.TreeModelEvent;
 import javax.swing.event.TreeModelListener;
+
+import ba.unsa.etf.si.app.SiDesk.App;
 import ba.unsa.etf.si.app.SiDesk.Model.Kategorija;
 import ba.unsa.etf.si.app.SiDesk.Model.Pitanje;
+import ba.unsa.etf.si.app.SiDesk.Util.HibernateUtil;
 import ba.unsa.etf.si.app.SiDesk.View.MenadzerDodavanjeKategorije;
 import ba.unsa.etf.si.app.SiDesk.ViewModel.BrisanjeKategorijeVM;
 import ba.unsa.etf.si.app.SiDesk.ViewModel.DodavanjeKategorijeVM;
@@ -41,6 +44,7 @@ import ba.unsa.etf.si.app.SiDesk.ViewModel.DodavanjePitanjaVM;
 import ba.unsa.etf.si.app.SiDesk.ViewModel.ModifikacijaKategorijeVM;
 import ba.unsa.etf.si.app.SiDesk.ViewModel.TrazenjeKategorijeVM;
 import org.apache.log4j.Logger;
+import org.hibernate.Session;
 public class MenadzerHome {
 	final static Logger logger = Logger.getLogger(MenadzerHome.class);
 
@@ -52,15 +56,19 @@ public class MenadzerHome {
 	protected String putanja;
 	protected String kliknutiCvorString;
 	private JTextField textField_pretragaPitanja;
+	private static Session s;
+	private MenadzerHome ref;
+	private static Login refLogin;
+
 
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
+	public void otvoriFormu() {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					MenadzerHome window = new MenadzerHome();
+					MenadzerHome window = new MenadzerHome(s, refLogin);
 					window.frmMenadzerHome.setVisible(true);
 				
 					
@@ -76,7 +84,10 @@ public class MenadzerHome {
 	/**
 	 * Create the application.
 	 */
-	public MenadzerHome() {
+	public MenadzerHome(Session s, Login refLogin) {
+		this.s=s;
+		this.ref=this;
+		this.refLogin=refLogin;
 		initialize();
 	}
 
@@ -102,7 +113,7 @@ public class MenadzerHome {
 				{
 					boolean flag = false;
 					
-					List<Kategorija> lista = TrazenjeKategorijeVM.nadjiKategorije();
+					List<Kategorija> lista = TrazenjeKategorijeVM.nadjiKategorije(s);
 					//if(lista.size() == 0) 
 					DefaultMutableTreeNode[] drvo = new DefaultMutableTreeNode[lista.size()];
 					for(int i = 0; i < lista.size(); i++){
@@ -135,18 +146,18 @@ public class MenadzerHome {
 	        	DefaultMutableTreeNode model = (DefaultMutableTreeNode)tree.getSelectionPath().getLastPathComponent();
 	        	putanja = new String();
 	        	//trazenje putanje
-	        	TreeNode[] s = model.getPath();
-	        	for(int i = 1; i < s.length-1; i++)//zanemari root
+	        	TreeNode[] ss = model.getPath();
+	        	for(int i = 1; i < ss.length-1; i++)//zanemari root
 	        	{
-	        			putanja += s[i].toString() + "/";
+	        			putanja += ss[i].toString() + "/";
 	        	}
 	        	//nalazenje imena starog cvora
 	        	String staroImeKategorije = kliknutiCvorString;
 	        	
 	        	if(putanja == "") putanja = null;
-	        	String novoImeKategorije = s[s.length-1].toString();
+	        	String novoImeKategorije = ss[ss.length-1].toString();
 	        	//System.out.println("Putanja" + putanja + " staro ime " + staroImeKategorije + " novo: " + novoImeKategorije);;
-	        	ModifikacijaKategorijeVM.modifikacijaKategorije(putanja, staroImeKategorije, novoImeKategorije);
+	        	ModifikacijaKategorijeVM.modifikacijaKategorije(putanja, staroImeKategorije, novoImeKategorije, s);
 			}
 		});
 		tree.setEditable(true);
@@ -167,10 +178,10 @@ public class MenadzerHome {
 		        	DefaultMutableTreeNode model = (DefaultMutableTreeNode)tree.getSelectionPath().getLastPathComponent();
 		        	putanja = new String();
 		        	//trazenje putanje
-		        	TreeNode[] s = model.getPath();
-		        	for(int i = 1; i < s.length; i++)//zanemari root
+		        	TreeNode[] ss = model.getPath();
+		        	for(int i = 1; i < ss.length; i++)//zanemari root
 		        	{
-		        			putanja += s[i].toString() + "/";
+		        			putanja += ss[i].toString() + "/";
 		        	}
 		        	//dodavanje na formu
 		        	DefaultTreeModel model1 = (DefaultTreeModel) tree.getModel();
@@ -190,10 +201,10 @@ public class MenadzerHome {
 		        	DefaultMutableTreeNode model = (DefaultMutableTreeNode)tree.getSelectionPath().getLastPathComponent();
 		        	putanja = new String();
 		        	//trazenje putanje
-		        	TreeNode[] s = model.getPath();
-		        	for(int i = 1; i < s.length-1; i++) //mora se oduzeti zadnji cvor tj ime cvora jer se on ne drzi u putanji
+		        	TreeNode[] ss = model.getPath();
+		        	for(int i = 1; i < ss.length-1; i++) //mora se oduzeti zadnji cvor tj ime cvora jer se on ne drzi u putanji
 		        	{//od 1 da zanemari root
-		        			putanja += s[i].toString() + "/";
+		        			putanja += ss[i].toString() + "/";
 		        		//System.out.println(s[i].toString());
 		        	}
 		        	//dodavanje na formu
@@ -267,11 +278,11 @@ public class MenadzerHome {
 		public void actionPerformed(ActionEvent e) {
 			String kljucnaRijec = textField_pretragaPitanja.getText();
 			//provjera je li oznacena kategorija
-			Kategorija oznacenaKategorija = TrazenjeKategorijeVM.nadjiKategoriju(putanja, kliknutiCvorString);
+			Kategorija oznacenaKategorija = TrazenjeKategorijeVM.nadjiKategoriju(putanja, kliknutiCvorString, s);
 			String putanjaZaKategorije = null;
 			if (oznacenaKategorija == null)  putanjaZaKategorije = "";
 			else if(kliknutiCvorString != null) putanjaZaKategorije = putanja + kliknutiCvorString;
-			List<Pitanje> listaPitanja = DodavanjePitanjaVM.pretraziPitanja(kljucnaRijec, putanjaZaKategorije);
+			List<Pitanje> listaPitanja = DodavanjePitanjaVM.pretraziPitanja(kljucnaRijec, putanjaZaKategorije, s);
 			
 			//dodavanje u tabelu
 			String[][] tabelaPitanja = new String[listaPitanja.size()][2];
@@ -304,10 +315,14 @@ public class MenadzerHome {
 			public void actionPerformed(ActionEvent e) {
 				try
 				{
+					s.close();
+			    	Session session = (Session) HibernateUtil.getSessionFactory().openSession();
+
 					frmMenadzerHome.dispose();
-					
-					Login window = new Login();
+					Login window = new Login(session);
 					window.frmSidesklogin.setVisible(true);
+				    
+					
 				}catch(Exception e1)
 				{
 					logger.error("Došlo je do greške:", e1);
@@ -329,8 +344,9 @@ public class MenadzerHome {
 		JMenuItem mntmDodajKategoriju_1 = new JMenuItem("Dodaj kategoriju");
 		mntmDodajKategoriju_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				MenadzerDodavanjeKategorije window= new MenadzerDodavanjeKategorije();
-				window.frmDodavanjeKategorije.setVisible(true);
+				MenadzerDodavanjeKategorije window= new MenadzerDodavanjeKategorije(s, ref);
+				window.otvoriFormu();
+			//	window.frmDodavanjeKategorije.setVisible(true);
 				
 			}
 		});
@@ -340,8 +356,9 @@ public class MenadzerHome {
 		JMenuItem mntmModifikujKategoriju = new JMenuItem("Modifikuj kategoriju");
 		mntmModifikujKategoriju.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				MenadzerModifikovanjeKategorije window= new MenadzerModifikovanjeKategorije();
-				window.frmModifikovanjeKategorije.setVisible(true);
+				MenadzerModifikovanjeKategorije window= new MenadzerModifikovanjeKategorije(s, ref);
+				window.otvoriFormu();
+				//window.frmModifikovanjeKategorije.setVisible(true);
 			}
 		});
 		mnAurirajKategorije.add(mntmModifikujKategoriju);
@@ -349,9 +366,9 @@ public class MenadzerHome {
 		JMenuItem mntmObriiKategoriju = new JMenuItem("Obri\u0161i kategoriju");
 		mntmObriiKategoriju.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				MenadzerBrisanjeKategorije window= new MenadzerBrisanjeKategorije();
-				
-				window.frmBrisanjeKategorije.setVisible(true);
+				MenadzerBrisanjeKategorije window= new MenadzerBrisanjeKategorije(s, ref);
+				window.otvoriFormu();
+				//window.frmBrisanjeKategorije.setVisible(true);
 			}
 		});
 		mnAurirajKategorije.add(mntmObriiKategoriju);
@@ -362,9 +379,9 @@ public class MenadzerHome {
 		JMenuItem mntmNewMenuItem = new JMenuItem("Izvje\u0161taj za pitanja iza\u0161la iz predefinisanog scenarija");
 		mntmNewMenuItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				MenadzerGenerisanjeIzaslaIzScen window= new MenadzerGenerisanjeIzaslaIzScen();
-				
-				window.frmGenerisanjeIzvjetaja.setVisible(true);
+				MenadzerGenerisanjeIzaslaIzScen window= new MenadzerGenerisanjeIzaslaIzScen(s, ref);
+				window.otvoriFormu();
+			//	window.frmGenerisanjeIzvjetaja.setVisible(true);
 			}
 		});
 		mnNewMenu.add(mntmNewMenuItem);
@@ -372,9 +389,10 @@ public class MenadzerHome {
 		JMenuItem mntmIzvjetajPoVremenskom = new JMenuItem("Izvje\u0161taj po vremenskom periodu");
 		mntmIzvjetajPoVremenskom.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				MenadzerGenerisanjeVremenski window= new MenadzerGenerisanjeVremenski();
+				MenadzerGenerisanjeVremenski window= new MenadzerGenerisanjeVremenski(s, ref);
+				window.otvoriFormu();
 				
-				window.frmKreiranjeIzvjetaja.setVisible(true);
+			//	window.frmKreiranjeIzvjetaja.setVisible(true);
 			}
 		});
 		mnNewMenu.add(mntmIzvjetajPoVremenskom);
@@ -382,9 +400,9 @@ public class MenadzerHome {
 		JMenuItem mntmNewMenuItem_2 = new JMenuItem("Izvje\u0161taj po starosnoj dobi klijenata");
 		mntmNewMenuItem_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				MenadzerGenerisanjeStarosnaDob window= new MenadzerGenerisanjeStarosnaDob();
-				
-				window.frmGenerisanjeIzvjetaja.setVisible(true);
+				MenadzerGenerisanjeStarosnaDob window= new MenadzerGenerisanjeStarosnaDob(s, ref);
+				window.otvoriFormu();
+				//window.frmGenerisanjeIzvjetaja.setVisible(true);
 			}
 		});
 		mnNewMenu.add(mntmNewMenuItem_2);
@@ -392,8 +410,9 @@ public class MenadzerHome {
 		JMenuItem mntmIzvjetajPoKategoriji = new JMenuItem("Izvje\u0161taj po kategoriji problema");
 		mntmIzvjetajPoKategoriji.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				MenadzerGenerisanjeKategorija window = new MenadzerGenerisanjeKategorija();		
-				window.frmGenerisanjeIzvjetaja.setVisible(true);
+				MenadzerGenerisanjeKategorija window = new MenadzerGenerisanjeKategorija(s, ref);		
+				window.otvoriFormu();
+			//	window.frmGenerisanjeIzvjetaja.setVisible(true);
 			}
 		});
 		mnNewMenu.add(mntmIzvjetajPoKategoriji);
@@ -405,8 +424,9 @@ public class MenadzerHome {
 		JMenuItem mntmDodajPitanje = new JMenuItem("Dodaj pitanje");
 		mntmDodajPitanje.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				MenadzerDodajPitanje window= new MenadzerDodajPitanje();
-				window.frmDodajPitanje.setVisible(true);
+				MenadzerDodajPitanje window= new MenadzerDodajPitanje(s, ref);
+				window.otvoriFormu();
+			//	window.frmDodajPitanje.setVisible(true);
 				
 			}
 		});
@@ -431,14 +451,14 @@ public class MenadzerHome {
 		
 		if(putanja == "") putanja = null;
 
-		Kategorija parent = TrazenjeKategorijeVM.nadjiKategoriju(putanjaParentKategorija, imeParentKategorija);
-		DodavanjeKategorijeVM.dodajKategoriju(putanja, imeKategorije, parent);
+		Kategorija parent = TrazenjeKategorijeVM.nadjiKategoriju(putanjaParentKategorija, imeParentKategorija, s);
+		DodavanjeKategorijeVM.dodajKategoriju(putanja, imeKategorije, parent, s);
 		
 	}
 	
 	protected void deleteCategory(String putanja, String ime) {
 		if(putanja == "") putanja = null;
-	    BrisanjeKategorijeVM.obrisiKategoriju(putanja, ime);
+	    BrisanjeKategorijeVM.obrisiKategoriju(putanja, ime, s);
 	  }
 	
 	private void addPopup(final JTree tree, final JPopupMenu popup) {		
@@ -464,10 +484,10 @@ public class MenadzerHome {
 						DefaultMutableTreeNode model = (DefaultMutableTreeNode)tree.getSelectionPath().getLastPathComponent();
 			        	putanja = new String();
 			        	//trazenje putanje
-			        	TreeNode[] s = model.getPath();
-			        	for(int i = 1; i < s.length-1; i++)//zanemari root
+			        	TreeNode[] ss = model.getPath();
+			        	for(int i = 1; i < ss.length-1; i++)//zanemari root
 			        	{
-			        			putanja += s[i].toString() + "/";
+			        			putanja += ss[i].toString() + "/";
 			        	}
 			        	
 						kliknutiCvorString = selPath.getLastPathComponent().toString();

@@ -20,6 +20,7 @@ import com.toedter.calendar.JDateChooser;
 import ba.unsa.etf.si.app.SiDesk.ViewModel.GenerisiIzvjestajStarosnaDob;
 import ba.unsa.etf.si.app.SiDesk.ViewModel.GenerisiIzvjestajVremenskiPeriod;
 import org.apache.log4j.Logger;
+import org.hibernate.Session;
 public class MenadzerGenerisanjeVremenski {
 	final static Logger logger = Logger.getLogger(MenadzerGenerisanjeVremenski.class);
 
@@ -27,15 +28,17 @@ public class MenadzerGenerisanjeVremenski {
 	private Choice choice;
 	private JDateChooser dateChooser;
 	private JDateChooser dateChooser_1;
+	private static Session s;
+	private static MenadzerHome ref;
 
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
+	public void otvoriFormu() {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					MenadzerGenerisanjeVremenski window = new MenadzerGenerisanjeVremenski();
+					MenadzerGenerisanjeVremenski window = new MenadzerGenerisanjeVremenski(s, ref);
 					window.frmKreiranjeIzvjetaja.setVisible(true);
 				} catch (Exception e) {
 					logger.error("Došlo je do greške:", e);
@@ -48,7 +51,9 @@ public class MenadzerGenerisanjeVremenski {
 	/**
 	 * Create the application.
 	 */
-	public MenadzerGenerisanjeVremenski() {
+	public MenadzerGenerisanjeVremenski(Session s, MenadzerHome ref) {
+		this.ref=ref;
+		this.s=s;
 		initialize();
 		frmKreiranjeIzvjetaja.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 	}
@@ -104,7 +109,7 @@ public class MenadzerGenerisanjeVremenski {
 				if (command.equals("Kreiraj izvje\u0161taj")) {
 					try {
 						
-						GenerisiIzvjestajVremenskiPeriod.generisi(choice.getSelectedItem(),dateChooser.getDate(), dateChooser_1.getDate());
+						GenerisiIzvjestajVremenskiPeriod.generisi(choice.getSelectedItem(),dateChooser.getDate(), dateChooser_1.getDate(), s);
 					} catch (MalformedURLException e1) {
 						logger.error("Došlo je do greške:", e1);
 						JOptionPane.showMessageDialog(null, "Izvještaj nije generisan");

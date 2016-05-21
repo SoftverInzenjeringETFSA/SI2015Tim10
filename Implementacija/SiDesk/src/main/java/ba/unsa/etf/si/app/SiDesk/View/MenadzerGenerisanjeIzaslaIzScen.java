@@ -17,20 +17,22 @@ import javax.swing.JTextField;
 import ba.unsa.etf.si.app.SiDesk.ViewModel.GenerisiIzvjestajIzlazakIzScenarija;
 import ba.unsa.etf.si.app.SiDesk.ViewModel.GenerisiIzvjestajVremenskiPeriod;
 import org.apache.log4j.Logger;
+import org.hibernate.Session;
 public class MenadzerGenerisanjeIzaslaIzScen {
 	final static Logger logger = Logger.getLogger(MenadzerGenerisanjeIzaslaIzScen.class);
 
 	protected JFrame frmGenerisanjeIzvjetaja;
 	private Choice choice;
-
+	private static Session s;
+	private static MenadzerHome ref;
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
+	public void otvoriFormu() {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					MenadzerGenerisanjeIzaslaIzScen window = new MenadzerGenerisanjeIzaslaIzScen();
+					MenadzerGenerisanjeIzaslaIzScen window = new MenadzerGenerisanjeIzaslaIzScen(s, ref);
 					window.frmGenerisanjeIzvjetaja.setVisible(true);
 				} catch (Exception e) {
 					logger.error("Došlo je do greške:", e);
@@ -43,7 +45,9 @@ public class MenadzerGenerisanjeIzaslaIzScen {
 	/**
 	 * Create the application.
 	 */
-	public MenadzerGenerisanjeIzaslaIzScen() {
+	public MenadzerGenerisanjeIzaslaIzScen(Session s, MenadzerHome ref) {
+		this.s=s;
+		this.ref=ref;
 		initialize();
 		frmGenerisanjeIzvjetaja.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 	}
@@ -81,7 +85,7 @@ public class MenadzerGenerisanjeIzaslaIzScen {
 				
 				if (command.equals("Kreiraj izvje\u0161taj")) {
 					try {
-						GenerisiIzvjestajIzlazakIzScenarija.generisi(choice.getSelectedItem());
+						GenerisiIzvjestajIzlazakIzScenarija.generisi(choice.getSelectedItem(), s);
 					} catch (MalformedURLException e1) {
 						logger.error("Došlo je do greške:", e1);
 						JOptionPane.showMessageDialog(null, "Izvještaj nije generisan");

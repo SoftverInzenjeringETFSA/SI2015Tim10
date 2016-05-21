@@ -51,16 +51,18 @@ public class AdminDodavanjeKorisnika {
 	private JDateChooser dateChooser_datumZaposlenja;
 	private JComboBox comboBox_tipOperatera;
 	private JComboBox comboBox_tipKorisnika;
+	private static Session s;
+	private static AdminHome ref;
 	final static Logger logger = Logger.getLogger(AdminDodavanjeKorisnika.class);
 
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
+	public void otvoriFormu() {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					AdminDodavanjeKorisnika window = new AdminDodavanjeKorisnika();
+					AdminDodavanjeKorisnika window = new AdminDodavanjeKorisnika(s, ref);
 					window.frmDodavanjeNovogKorisnika.setVisible(true);
 				} catch (Exception e) {
 					logger.error("Došlo je do greške:", e);
@@ -73,7 +75,9 @@ public class AdminDodavanjeKorisnika {
 	/**
 	 * Create the application.
 	 */
-	public AdminDodavanjeKorisnika() {
+	public AdminDodavanjeKorisnika(Session s, AdminHome ref) {
+		this.ref=ref;
+		this.s=s;
 		initialize();
 	}
 
@@ -251,7 +255,6 @@ public class AdminDodavanjeKorisnika {
 						&& Validator.validirajDatumZaposlenja(d) && !textField_password.getText().isEmpty()) {
 					try {
 
-						Session s = HibernateUtil.getSessionFactory().openSession();
 						String tipKorisnika = comboBox_tipKorisnika.getSelectedItem().toString();
 						String imeOperatera = comboBox_tipOperatera.getSelectedItem().toString();
 

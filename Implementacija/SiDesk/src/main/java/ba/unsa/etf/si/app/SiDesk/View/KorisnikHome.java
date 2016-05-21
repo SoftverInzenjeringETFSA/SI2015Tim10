@@ -33,6 +33,7 @@ import com.toedter.calendar.JDateChooser;
 import com.toedter.calendar.JTextFieldDateEditor;
 
 import ba.unsa.etf.si.app.SiDesk.Validation.Validator;
+import ba.unsa.etf.si.app.SiDesk.App;
 import ba.unsa.etf.si.app.SiDesk.Model.Kategorija;
 import ba.unsa.etf.si.app.SiDesk.Model.Klijent;
 import ba.unsa.etf.si.app.SiDesk.Model.Operater;
@@ -89,6 +90,8 @@ public class KorisnikHome {
 	protected String putanja;
 	protected String kliknutiCvorString;
 	protected String username = new String();
+	private static Session s;
+	private static Login ref;
 
 	private JDateChooser dateChooser;
 
@@ -97,12 +100,12 @@ public class KorisnikHome {
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
+	public void otvoriFormu() {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
 					String username1 = "aaaa";
-					KorisnikHome window = new KorisnikHome(username1);
+					KorisnikHome window = new KorisnikHome(username1,s, ref);
 					window.frameKorisnik.setVisible(true);
 				} catch (Exception e) {
 					logger.error("Došlo je do greške:", e);
@@ -115,9 +118,11 @@ public class KorisnikHome {
 	/**
 	 * Create the application.
 	 */
-	public KorisnikHome(String username) {
-		initialize();
+	public KorisnikHome(String username, Session s, Login ref) {
+		this.s=s;
 		this.username = username;
+		this.ref=ref;
+		initialize();
 	}
 
 	/**
@@ -386,13 +391,13 @@ public class KorisnikHome {
 				String kljucnaRijec = textField.getText();
 				// provjera je li oznacena kategorija
 
-				Kategorija oznacenaKategorija = TrazenjeKategorijeVM.nadjiKategoriju(putanja, kliknutiCvorString);
+				Kategorija oznacenaKategorija = TrazenjeKategorijeVM.nadjiKategoriju(putanja, kliknutiCvorString, s);
 				String putanjaZaKategorije = null;
 				if (oznacenaKategorija == null)
 					putanjaZaKategorije = "";
 				else if (kliknutiCvorString != null)
 					putanjaZaKategorije = putanja + kliknutiCvorString;
-				List<Klijent> listaKlijenta = ModifikacijaKlijentaVM.nadjiKlijenta(kljucnaRijec);
+				List<Klijent> listaKlijenta = ModifikacijaKlijentaVM.nadjiKlijenta(kljucnaRijec, s);
 
 				// dodavanje u tabelu
 				String[][] tabelaPitanja = new String[listaKlijenta.size()][6];
@@ -425,7 +430,7 @@ public class KorisnikHome {
 				String kljucnaRijec = textField_1.getText();
 				// provjera je li oznacena kategorija
 
-				List<Klijent> listaKlijenta = ModifikacijaKlijentaVM.nadjiKlijenta1(kljucnaRijec);
+				List<Klijent> listaKlijenta = ModifikacijaKlijentaVM.nadjiKlijenta1(kljucnaRijec, s);
 
 				// dodavanje u tabelu
 				String[][] tabelaPitanja = new String[listaKlijenta.size()][6];
@@ -563,9 +568,11 @@ public class KorisnikHome {
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
-					frameKorisnik.dispose();
+					s.close();
+			    	Session session = (Session) HibernateUtil.getSessionFactory().openSession();
 
-					Login window = new Login();
+					frameKorisnik.dispose();
+					Login window = new Login(session);
 					window.frmSidesklogin.setVisible(true);
 				} catch (Exception e) {
 					logger.error("Došlo je do greške:", e);
@@ -595,23 +602,23 @@ public class KorisnikHome {
 							.getLastPathComponent();
 					putanja = new String();
 					// trazenje putanje
-					TreeNode[] s = model.getPath();
-					for (int i = 1; i < s.length - 1; i++)// zanemari root
+					TreeNode[] ss = model.getPath();
+					for (int i = 1; i < ss.length - 1; i++)// zanemari root
 					{
-						putanja += s[i].toString() + "/";
+						putanja += ss[i].toString() + "/";
 					}
 
 					kliknutiCvorString = selPath.getLastPathComponent().toString();
 					System.out.println("Putanja " + putanja + "cvor " + kliknutiCvorString);
 					String kljucnaRijec = textField_7.getText();
-					Kategorija oznacenaKategorija = TrazenjeKategorijeVM.nadjiKategoriju(putanja, kliknutiCvorString);
+					Kategorija oznacenaKategorija = TrazenjeKategorijeVM.nadjiKategoriju(putanja, kliknutiCvorString, s);
 					String putanjaZaKategorije = null;
 					if (oznacenaKategorija == null)
 						putanjaZaKategorije = "";
 					else if (kliknutiCvorString != null)
 						putanjaZaKategorije = putanja + kliknutiCvorString;
 
-					List<Pitanje> listaPitanja = DodavanjePitanjaVM.pretraziPitanja(kljucnaRijec, putanjaZaKategorije);
+					List<Pitanje> listaPitanja = DodavanjePitanjaVM.pretraziPitanja(kljucnaRijec, putanjaZaKategorije, s);
 
 					// dodavanje u tabelu
 					String[][] tabelaPitanja = new String[listaPitanja.size()][2];
@@ -630,7 +637,7 @@ public class KorisnikHome {
 			{
 				boolean flag = false;
 
-				List<Kategorija> lista = TrazenjeKategorijeVM.nadjiKategorije();
+				List<Kategorija> lista = TrazenjeKategorijeVM.nadjiKategorije(s);
 
 				DefaultMutableTreeNode[] drvo = new DefaultMutableTreeNode[lista.size()];
 				for (int i = 0; i < lista.size(); i++) {
@@ -692,13 +699,13 @@ public class KorisnikHome {
 				String kljucnaRijec = textField_7.getText();
 				// provjera je li oznacena kategorija
 
-				Kategorija oznacenaKategorija = TrazenjeKategorijeVM.nadjiKategoriju(putanja, kliknutiCvorString);
+				Kategorija oznacenaKategorija = TrazenjeKategorijeVM.nadjiKategoriju(putanja, kliknutiCvorString, s);
 				String putanjaZaKategorije = null;
 				if (oznacenaKategorija == null)
 					putanjaZaKategorije = "";
 				else if (kliknutiCvorString != null)
 					putanjaZaKategorije = putanja + kliknutiCvorString;
-				List<Pitanje> listaPitanja = DodavanjePitanjaVM.pretraziPitanja(kljucnaRijec, putanjaZaKategorije);
+				List<Pitanje> listaPitanja = DodavanjePitanjaVM.pretraziPitanja(kljucnaRijec, putanjaZaKategorije, s);
 
 				// dodavanje u tabelu
 				String[][] tabelaPitanja = new String[listaPitanja.size()][2];
@@ -808,7 +815,7 @@ public class KorisnikHome {
 					Klijent klijent = null;
 					// trazenje pitanja na osnovu teksta
 	
-					Operater operater = PretragaOperateraVM.nadjiOperatera(username);
+					Operater operater = PretragaOperateraVM.nadjiOperatera(username,s);
 					DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 					Date date = new Date();
 					if (rdbtnNoviKorisnik.isSelected() == true) {
@@ -819,13 +826,13 @@ public class KorisnikHome {
 								textField_2.getText(), textField_3.getText(), starost, textField_4.getText());
 						// PretragaPitanjaVM.nadjiPitanjaSaImenom(pitanje);
 						if (chckbxIzlazakIzScenarija.isSelected() == true) {
-							SpašavanjeTelefonskogPozivaVM.spasiPoziv(textField_5.getText(), klijent, operater);
+							SpašavanjeTelefonskogPozivaVM.spasiPoziv(textField_5.getText(), klijent, operater, s);
 						} else {
 							String pitanjeTabela = (String) table_2.getModel().getValueAt(table_2.getSelectedRow(), 0);
 							String odgovorTabela = (String) table_2.getModel().getValueAt(table_2.getSelectedRow(), 1);
-							Pitanje pitanje = PretragaPitanjaVM.nadjiPitanje(pitanjeTabela, odgovorTabela);
+							Pitanje pitanje = PretragaPitanjaVM.nadjiPitanje(pitanjeTabela, odgovorTabela, s);
 
-							SpašavanjeTelefonskogPozivaVM.spasiPoziv(klijent, pitanje, operater, date);
+							SpašavanjeTelefonskogPozivaVM.spasiPoziv(klijent, pitanje, operater, date, s);
 						}
 					}
 					// ovdje ces naci starog
@@ -841,15 +848,15 @@ public class KorisnikHome {
 						int xd = Integer.parseInt(starostIzTabele);
 
 						klijent = PretragaKlijenataVM.nadjiKlijenta(imeIzTabele, prezimeIzTabele, adresaIzTabele,
-								brojTelefonaIzTabele, xd, zaposlenjeIzTabele);
+								brojTelefonaIzTabele, xd, zaposlenjeIzTabele, s);
 						if (chckbxIzlazakIzScenarija.isSelected() == true) {
-							SpašavanjeTelefonskogPozivaVM.spasiPoziv(textField_5.getText(), klijent, operater);
+							SpašavanjeTelefonskogPozivaVM.spasiPoziv(textField_5.getText(), klijent, operater, s);
 						} else {
 							String pitanjeTabela = (String) table_2.getModel().getValueAt(table_2.getSelectedRow(), 0);
 							String odgovorTabela = (String) table_2.getModel().getValueAt(table_2.getSelectedRow(), 1);
-							Pitanje pitanje = PretragaPitanjaVM.nadjiPitanje(pitanjeTabela, odgovorTabela);
+							Pitanje pitanje = PretragaPitanjaVM.nadjiPitanje(pitanjeTabela, odgovorTabela, s);
 
-							SpašavanjeTelefonskogPozivaVM.spasiPoziv(klijent, pitanje, operater, date);
+							SpašavanjeTelefonskogPozivaVM.spasiPoziv(klijent, pitanje, operater, date, s);
 						}
 					}
 

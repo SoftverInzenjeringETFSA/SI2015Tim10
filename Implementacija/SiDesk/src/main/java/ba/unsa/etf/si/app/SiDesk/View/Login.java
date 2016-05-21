@@ -2,6 +2,8 @@ package ba.unsa.etf.si.app.SiDesk.View;
 
 import java.awt.EventQueue;
 import org.apache.log4j.Logger;
+import org.hibernate.Session;
+
 import java.awt.Font;
 
 import javax.swing.GroupLayout;
@@ -28,16 +30,18 @@ public class Login {
 	private JTextField textField_Username;
 	private JPasswordField  textField_Password;
 	final static Logger logger = Logger.getLogger(Login.class);
+	private static Session s;
+	private Login ref;
 
 
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
+	public void OtvoriFormu() {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Login window = new Login();
+					Login window = new Login(s);
 					window.frmSidesklogin.setVisible(true);
 				} catch (Exception e) {
 					logger.error("Došlo je do greške:", e);
@@ -50,7 +54,9 @@ public class Login {
 	/**
 	 * Create the application.
 	 */
-	public Login() {
+	public Login(Session s) {
+		this.ref=this;
+		this.s=s;
 		initialize();
 	}
 
@@ -87,20 +93,26 @@ public class Login {
 			public void actionPerformed(ActionEvent arg0) {
 				String username = textField_Username.getText();
 				String password = textField_Password.getText();
-				Korisnik k = PretragaKorisnikaNejedinstvenaVM.nadjiKorisnikaUsername(username, password);
+				System.out.println(password);
+				Korisnik k = PretragaKorisnikaNejedinstvenaVM.nadjiKorisnikaUsername(s, username, password);
 				if(k == null) JOptionPane.showMessageDialog(null, "Pogrešan username ili password", "Info",
 						JOptionPane.INFORMATION_MESSAGE);
 				else if(k.getTipkorisnika().getId() == 2){
-					MenadzerHome window = new MenadzerHome();
-					window.frmMenadzerHome.setVisible(true);
+					MenadzerHome window = new MenadzerHome(s, ref);
+					window.otvoriFormu();
+					//window.frmMenadzerHome.setVisible(true);
 					frmSidesklogin.setVisible(false);
 				} else if (k.getTipkorisnika().getId() == 3){
-					KorisnikHome window = new KorisnikHome(k.getKorisnickoIme());
-					window.frameKorisnik.setVisible(true);
+					KorisnikHome window = new KorisnikHome(k.getKorisnickoIme(), s, ref);
+				//	window.frameKorisnik.setVisible(true);
+					window.otvoriFormu();
 					frmSidesklogin.setVisible(false);
 				} else if(k.getTipkorisnika().getId() == 1){
-					AdminHome window = new AdminHome(username);
-					window.frmManager.setVisible(true);
+
+					AdminHome window = new AdminHome(s, ref, username);
+					window.otvoriFormu();
+					//window.frmManager.setVisible(true);
+
 					frmSidesklogin.setVisible(false);
 				}
 			}

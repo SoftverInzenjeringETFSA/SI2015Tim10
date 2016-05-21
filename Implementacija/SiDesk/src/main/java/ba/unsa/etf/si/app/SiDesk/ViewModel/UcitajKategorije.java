@@ -12,9 +12,9 @@ import org.apache.log4j.Logger;
 public class UcitajKategorije {
 	final static Logger logger = Logger.getLogger(UcitajKategorije.class);
 	
-	public static List<Kategorija> ucitajKategorije() {
+
+	public static List<Kategorija> ucitajKategorije(Session session) {
 		
-		Session session = (Session) HibernateUtil.getSessionFactory().openSession();
 		Transaction t = session.beginTransaction();
 		
 		Criteria criteria_kategorija = session.createCriteria(Kategorija.class);

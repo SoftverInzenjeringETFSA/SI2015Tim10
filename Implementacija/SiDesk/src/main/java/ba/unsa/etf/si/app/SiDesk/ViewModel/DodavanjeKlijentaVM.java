@@ -13,13 +13,17 @@ import ba.unsa.etf.si.app.SiDesk.View.AdminDodavanjeKorisnika;
 import org.apache.log4j.Logger;
 public class DodavanjeKlijentaVM {
 	final static Logger logger = Logger.getLogger(DodavanjeKlijentaVM.class);
-
+    
+	private static Session s1;
+    
+	public DodavanjeKlijentaVM(Session s) {
+		this.s1 = s;
+	}
 	public static Klijent dodajKlijenta(String ime, String prezime, String Adresa, String brojTelefona, int starost,
 			String zaposlenje) {
 		Klijent k = null;
 		try {
 
-			Session s1 = (Session) HibernateUtil.getSessionFactory().openSession();
 			Transaction tt = s1.beginTransaction();
 			k = new Klijent(ime, prezime, Adresa, brojTelefona, starost, zaposlenje);
 			s1.save(k);

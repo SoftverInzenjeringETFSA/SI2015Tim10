@@ -17,11 +17,12 @@ import org.apache.log4j.Logger;
 public class ModifikacijaKategorijeVM {
 	final static Logger logger = Logger.getLogger(ModifikacijaKategorijeVM.class);
 
-	public static boolean modifikacijaKategorije(String putanja, String staroIme, String novoIme) {
+
+	
+	public static boolean modifikacijaKategorije(String putanja, String staroIme, String novoIme, Session session) {
 		try {
 			if(putanja == "") putanja = null;
-			Kategorija k = TrazenjeKategorijeVM.nadjiKategoriju(putanja, staroIme);
-			Session session = (Session) HibernateUtil.getSessionFactory().openSession();
+			Kategorija k = TrazenjeKategorijeVM.nadjiKategoriju(putanja, staroIme, session);
 	        Transaction t = session.beginTransaction();
 	        k.setIme(novoIme);
 	        session.update(k);

@@ -14,10 +14,10 @@ import org.apache.log4j.Logger;
 public class PretragaOperateraVM {
 	final static Logger logger = Logger.getLogger(PretragaOperateraVM.class);
 
-	public static Operater nadjiOperatera(String username) {
+
+	public static Operater nadjiOperatera(String username, Session s) {
 		Operater o = null;
 		try{
-			Session s = (Session) HibernateUtil.getSessionFactory().openSession();
 			Transaction t = s.beginTransaction();
 			Criteria criteria = s.createCriteria(Korisnik.class).add(Restrictions.like("korisnickoIme", username).ignoreCase());
 			List<Korisnik> lista = criteria.list();

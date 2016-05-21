@@ -64,10 +64,9 @@ public class PretragaKorisnikaNejedinstvenaVM {
 
 	}
 	
-	public static Korisnik nadjiKorisnikaUsername(String username, String password){
+	public static Korisnik nadjiKorisnikaUsername(Session s, String username, String password){
 		Korisnik k = null;
 		try{
-			Session s = (Session) HibernateUtil.getSessionFactory().openSession();
 			Transaction t = s.beginTransaction();
 			Criteria criteria = s.createCriteria(Korisnik.class)
 					.add(Restrictions.like("korisnickoIme", username).ignoreCase())
@@ -75,7 +74,7 @@ public class PretragaKorisnikaNejedinstvenaVM {
 			List<Korisnik> lista = criteria.list();
 			if(lista.size() == 0) return null;
 			k = lista.get(0);
-			s.close();
+		
 			
 		} catch (Exception e){
 			logger.error("Došlo je do greške:", e);

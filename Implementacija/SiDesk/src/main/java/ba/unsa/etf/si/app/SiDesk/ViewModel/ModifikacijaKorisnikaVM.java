@@ -22,6 +22,8 @@ import org.apache.log4j.Logger;
 public class ModifikacijaKorisnikaVM {
 	final static Logger logger = Logger.getLogger(ModifikacijaKorisnikaVM.class);
 
+	
+	
 	public static boolean modifikacijaKorisnika(Session s, Korisnik k, JList lista, String ime, String prezime,
 			String jmbg, String brojTelefona, String email, String username, String password, String adresa,
 			String brojLicne, Date datumZaposljenja, String tipkorisnika, String imeOperatera) {
@@ -71,7 +73,7 @@ public class ModifikacijaKorisnikaVM {
 
 				s.save(novi);
 				t.commit();
-				s.close();
+			
 				JOptionPane.showMessageDialog(null, "Uspjesno modifikovan korisnik", "Info ",
 						JOptionPane.INFORMATION_MESSAGE);
 				return true;

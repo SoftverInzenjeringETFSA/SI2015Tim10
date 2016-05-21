@@ -15,6 +15,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 import org.apache.log4j.Logger;
+import org.hibernate.Session;
 
 import ba.unsa.etf.si.app.SiDesk.Model.Kategorija;
 import ba.unsa.etf.si.app.SiDesk.ViewModel.GenerisiIzvjestajIzlazakIzScenarija;
@@ -26,15 +27,18 @@ public class MenadzerGenerisanjeKategorija {
 	protected JFrame frmGenerisanjeIzvjetaja;
 	private Choice choice_1;
 	private Choice choice_2;
+	private static Session s;
+	private static MenadzerHome ref;
 
+	
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
+	public void otvoriFormu() {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					MenadzerGenerisanjeKategorija window = new MenadzerGenerisanjeKategorija();
+					MenadzerGenerisanjeKategorija window = new MenadzerGenerisanjeKategorija(s, ref);
 					window.frmGenerisanjeIzvjetaja.setVisible(true);
 				} catch (Exception e) {
 					logger.error("Došlo je do greške:", e);
@@ -47,7 +51,9 @@ public class MenadzerGenerisanjeKategorija {
 	/**
 	 * Create the application.
 	 */
-	public MenadzerGenerisanjeKategorija() {
+	public MenadzerGenerisanjeKategorija(Session s, MenadzerHome ref) {
+		this.ref=ref;
+		this.s = s;
 		initialize();
 		frmGenerisanjeIzvjetaja.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 	}
@@ -74,7 +80,7 @@ public class MenadzerGenerisanjeKategorija {
 		
 		choice_1 = new Choice();
 		choice_1.setBounds(165, 103, 230, 20);
-		List<Kategorija> kategorije = UcitajKategorije.ucitajKategorije();
+		List<Kategorija> kategorije = UcitajKategorije.ucitajKategorije(s);
 		for (Kategorija kategorija : kategorije) {
 			
 			choice_1.add(kategorija.getIme());
@@ -103,7 +109,7 @@ public class MenadzerGenerisanjeKategorija {
 				
 				if (command.equals("Kreiraj izvje\u0161taj")) {
 					try {
-						GenerisiIzvjestajKategorija.generisi(choice_1.getSelectedItem(), choice_2.getSelectedItem());
+						GenerisiIzvjestajKategorija.generisi(choice_1.getSelectedItem(), choice_2.getSelectedItem(), s);
 					} catch (MalformedURLException e1) {
 						logger.error("Došlo je do greške:", e1);
 						JOptionPane.showMessageDialog(null, "Izvještaj nije generisan");

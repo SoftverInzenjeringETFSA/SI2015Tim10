@@ -20,10 +20,11 @@ import org.apache.log4j.Logger;
 public class SpašavanjeTelefonskogPozivaVM {
 	final static Logger logger = Logger.getLogger(SpašavanjeTelefonskogPozivaVM.class);
 
-	public static boolean spasiPoziv(String opisniTekst, Klijent klijent_id, Operater operater ) {
+	
+	
+	public static boolean spasiPoziv(String opisniTekst, Klijent klijent_id, Operater operater, Session s2 ) {
 		
 		try {
-			Session s2 = (Session) HibernateUtil.getSessionFactory().openSession();
 	        Transaction tr = s2.beginTransaction();
 	        
 			
@@ -44,7 +45,7 @@ public class SpašavanjeTelefonskogPozivaVM {
 		return true;
 	}
 
-	public static void spasiPoziv(Klijent klijent, Pitanje pitanje, Operater operater, Date kal) {
+	public static void spasiPoziv(Klijent klijent, Pitanje pitanje, Operater operater, Date kal, Session s) {
 		try {
 			Session s2 = (Session) HibernateUtil.getSessionFactory().openSession();
 	        Transaction tr = s2.beginTransaction();

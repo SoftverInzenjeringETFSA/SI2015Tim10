@@ -55,7 +55,8 @@ public class AdminUredjivanjeKorisnika {
 	static JList listaKorisnika;
 	private static JDateChooser dateChooser;
 	final static Logger logger = Logger.getLogger(AdminUredjivanjeKorisnika.class);
-
+    private static Session s;
+    private static AdminHome ref;
 	public static void lista(JList l) {
 				
 		listaKorisnika = l;
@@ -79,11 +80,11 @@ public class AdminUredjivanjeKorisnika {
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
+	public void otvoriFormu() {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					AdminUredjivanjeKorisnika window = new AdminUredjivanjeKorisnika();
+					AdminUredjivanjeKorisnika window = new AdminUredjivanjeKorisnika(s, ref);
 					window.frmUredjivanjekorisnika.setVisible(true);
 				} catch (Exception e) {
 					logger.error("Došlo je do greške:", e);
@@ -96,8 +97,9 @@ public class AdminUredjivanjeKorisnika {
 	/**
 	 * Create the application.
 	 */
-	public AdminUredjivanjeKorisnika() {
-
+	public AdminUredjivanjeKorisnika(Session s, AdminHome ref) {
+		this.ref=ref;
+		this.s=s;
 		initialize();
 
 	}
@@ -180,7 +182,6 @@ public class AdminUredjivanjeKorisnika {
 				cal.set(Calendar.MONTH, m);
 				cal.set(Calendar.DAY_OF_MONTH, day);
 				Date dat = cal.getTime();
-				Session s = HibernateUtil.getSessionFactory().openSession();
 				Korisnik k=(Korisnik)listaKorisnika.getSelectedValue();
 
 				Korisnik k2=new Korisnik(k.getIme(),k.getPrezime(),k.getBrojTelefona(),k.getJmbg(),k.getBrojLicneKarte(),

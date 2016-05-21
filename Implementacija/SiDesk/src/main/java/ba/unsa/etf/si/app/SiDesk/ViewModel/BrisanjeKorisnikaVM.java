@@ -16,7 +16,8 @@ import ba.unsa.etf.si.app.SiDesk.View.AdminDodavanjeKorisnika;
 import org.apache.log4j.Logger;
 public class BrisanjeKorisnikaVM {
 	final static Logger logger = Logger.getLogger(BrisanjeKorisnikaVM.class);
-
+	
+	
 	public static void BrisiKorisnika(Session sesija, JList lista) {
 		try {
 			int selectedIndex = lista.getSelectedIndex();

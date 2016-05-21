@@ -14,10 +14,10 @@ public class Validator {
 	private static final String Telefon_PATTERN1 = "([06]{2}[0-6]{1}[-]{1}[0-9]{3}[-]{1}[0-9]{3,})";
 	private static final String Telefon_PATTERN2 = "([06]{2}[0-6]{1}[/]{1}[0-9]{3}[-]{1}[0-9]{3,})";
 	private static final String ALPHANUMERIC_PATTERN = "^[a-zA-Z0-9 ]*$";
-	private static final String EMAIL_PATTERN = 
-			"^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
-			+ "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
+	
 //	private static final String NUMERIC_PATTERN = "^[0-9]*$";
+	
+	private static final String EMAIL_PATTERN = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@" + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
 	
 	public static Boolean validairajJMBG(String jmbg) {
 		
@@ -52,9 +52,10 @@ public class Validator {
 	}
 	
 	public static Boolean validirajEmail(String email) {
-Pattern pattern = Pattern.compile(EMAIL_PATTERN);
+
+		Pattern pattern = Pattern.compile(EMAIL_PATTERN);
 		
-		if(pattern.matcher(email).matches() )
+			if(pattern.matcher(email).matches() )
 			return true;
 		
 		else return false;

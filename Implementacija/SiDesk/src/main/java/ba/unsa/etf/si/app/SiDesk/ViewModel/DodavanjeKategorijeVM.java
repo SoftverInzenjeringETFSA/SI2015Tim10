@@ -17,19 +17,20 @@ import ba.unsa.etf.si.app.SiDesk.View.AdminDodavanjeKorisnika;
 import org.apache.log4j.Logger;
 public class DodavanjeKategorijeVM {
 	final static Logger logger = Logger.getLogger(BrisanjeKategorijeVM.class);
+    
 
-	public static boolean dodajKategoriju(String putanja, String kategorija, Kategorija parent) {
+	
+	public static boolean dodajKategoriju(String putanja, String kategorija, Kategorija parent, Session s) {
 		try {
 		
-			Session sesija = (Session) HibernateUtil.getSessionFactory().openSession();
-	        Transaction tr = sesija.beginTransaction();
+	        Transaction tr = s.beginTransaction();
 			
 	        Kategorija k= new Kategorija();
 	        k.setIme(kategorija);
 	        k.setPutanja(putanja);
 	        k.setParentId(parent);
 	        	        
-	        sesija.save(k);
+	        s.save(k);
 			tr.commit();		
 			
 			JOptionPane.showMessageDialog(null, "Kategorija je uspješno dodana.","Info", JOptionPane.INFORMATION_MESSAGE);	

@@ -16,20 +16,23 @@ import java.util.List;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import org.apache.log4j.Logger;
+import org.hibernate.Session;
 public class MenadzerModifikovanjeKategorije {
 	final static Logger logger = Logger.getLogger(MenadzerModifikovanjeKategorije.class);
 
 	protected JFrame frmModifikovanjeKategorije;
 	private JTextField textField_novoIme;
+	private static Session s;
+	private static MenadzerHome ref;
 
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
+	public void otvoriFormu() {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					MenadzerModifikovanjeKategorije window = new MenadzerModifikovanjeKategorije();
+					MenadzerModifikovanjeKategorije window = new MenadzerModifikovanjeKategorije(s,ref);
 					window.frmModifikovanjeKategorije.setVisible(true);
 				} catch (Exception e) {
 					logger.error("Došlo je do greške:", e);
@@ -42,7 +45,9 @@ public class MenadzerModifikovanjeKategorije {
 	/**
 	 * Create the application.
 	 */
-	public MenadzerModifikovanjeKategorije() {
+	public MenadzerModifikovanjeKategorije(Session s, MenadzerHome ref) {
+		this.ref=ref;
+		this.s=s;
 		initialize();
 	}
 
@@ -66,7 +71,7 @@ public class MenadzerModifikovanjeKategorije {
 		
 		final Choice choice_modifikovanjeKategorije = new Choice();
 		choice_modifikovanjeKategorije.setBounds(170, 32, 300, 22);
-		List<Kategorija> kategorije = TrazenjeKategorijeVM.nadjiKategorije();
+		List<Kategorija> kategorije = TrazenjeKategorijeVM.nadjiKategorije(s);
 		for(int i = 0; i < kategorije.size(); i++)
 		{
 			String putanjaChoice = new String();
@@ -102,7 +107,7 @@ public class MenadzerModifikovanjeKategorije {
 					putanja +="/";
 				}	
 							
-				ModifikacijaKategorijeVM.modifikacijaKategorije(putanja, staroIme, novoImeKategorije);
+				ModifikacijaKategorijeVM.modifikacijaKategorije(putanja, staroIme, novoImeKategorije, s);
 				
 			}
 

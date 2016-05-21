@@ -35,8 +35,9 @@ import ba.unsa.etf.si.app.SiDesk.Util.HibernateUtil;
 import org.apache.log4j.Logger;
 public final class GenerisiIzvjestajKategorija {
 	final static Logger logger = Logger.getLogger(GenerisiIzvjestajKategorija.class);
-
-	public static Boolean generisi(String kategorija, String operater) throws MalformedURLException, IOException {
+ 
+	
+	public static Boolean generisi(String kategorija, String operater, Session session) throws MalformedURLException, IOException {
 
 		if(operater.equals("Foča")) operater="Foca";
 		
@@ -49,7 +50,6 @@ public final class GenerisiIzvjestajKategorija {
 
 			try {
 
-				Session session = (Session) HibernateUtil.getSessionFactory().openSession();
 				Transaction t = session.beginTransaction();
 			
 				

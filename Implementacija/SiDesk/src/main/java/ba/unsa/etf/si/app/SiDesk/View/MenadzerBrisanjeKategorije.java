@@ -18,20 +18,23 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.Color;
 import org.apache.log4j.Logger;
+import org.hibernate.Session;
 public class MenadzerBrisanjeKategorije {
 	final static Logger logger = Logger.getLogger(MenadzerBrisanjeKategorije.class);
 
 	protected JFrame frmBrisanjeKategorije;
 	private JTextField textField_imeKategorije;
+	private static Session s;
+	private static MenadzerHome ref;
 
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
+	public void otvoriFormu() {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					MenadzerBrisanjeKategorije window = new MenadzerBrisanjeKategorije();
+					MenadzerBrisanjeKategorije window = new MenadzerBrisanjeKategorije(s, ref);
 					window.frmBrisanjeKategorije.setVisible(true);
 				} catch (Exception e) {
 					logger.error("Došlo je do greške:", e);
@@ -44,7 +47,9 @@ public class MenadzerBrisanjeKategorije {
 	/**
 	 * Create the application.
 	 */
-	public MenadzerBrisanjeKategorije() {
+	public MenadzerBrisanjeKategorije(Session s, MenadzerHome ref) {
+		this.ref=ref;
+		this.s=s;
 		initialize();
 	}
 
@@ -55,6 +60,7 @@ public class MenadzerBrisanjeKategorije {
 		frmBrisanjeKategorije = new JFrame();
 		frmBrisanjeKategorije.setTitle("Brisanje kategorije");
 		frmBrisanjeKategorije.setBounds(100, 100, 517, 216);
+
 		frmBrisanjeKategorije.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frmBrisanjeKategorije.getContentPane().setLayout(null);
 
@@ -75,7 +81,7 @@ public class MenadzerBrisanjeKategorije {
 		final Choice choice_brisanjeKategorije = new Choice();
 		choice_brisanjeKategorije.setBounds(170, 32, 300, 22);
 
-		List<Kategorija> kategorije = TrazenjeKategorijeVM.nadjiKategorije();
+		List<Kategorija> kategorije = TrazenjeKategorijeVM.nadjiKategorije(s);
 		for (int i = 0; i < kategorije.size(); i++) {
 			String putanjaChoice = new String();
 			if (kategorije.get(i).getPutanja() != null)
@@ -96,13 +102,13 @@ public class MenadzerBrisanjeKategorije {
 
 				String kategZaBrisanje = textField_imeKategorije.getText();
 				String putanja = choice_brisanjeKategorije.getSelectedItem();
-				Kategorija k = TrazenjeKategorijeVM.nadjiKategoriju(putanja, kategZaBrisanje);
+				Kategorija k = TrazenjeKategorijeVM.nadjiKategoriju(putanja, kategZaBrisanje, s);
 
 				if (k != null) {
 
-					BrisanjeKategorijeVM.obrisiKategoriju(putanja, kategZaBrisanje);
+					BrisanjeKategorijeVM.obrisiKategoriju(putanja, kategZaBrisanje, s);
 
-					List<Kategorija> kategorije = TrazenjeKategorijeVM.nadjiKategorije();
+					List<Kategorija> kategorije = TrazenjeKategorijeVM.nadjiKategorije(s);
 					for (int i = 0; i < kategorije.size(); i++) {
 						String putanjaChoice = new String();
 						if (kategorije.get(i).getPutanja() != null)

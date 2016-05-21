@@ -14,12 +14,13 @@ import org.apache.log4j.Logger;
 public class TrazenjeKategorijeVM {
 	final static Logger logger = Logger.getLogger(TrazenjeKategorijeVM.class);
 
-	public static Kategorija  nadjiKategoriju(String putanja, String ime) {
+
+	
+	public static Kategorija  nadjiKategoriju(String putanja, String ime, Session session) {
 		Criteria criteria = null;
 		List<Kategorija> lista=null;
 	
 		try {
-			Session session = (Session) HibernateUtil.getSessionFactory().openSession();
 	        Transaction t = session.beginTransaction();
 	        if(putanja != null)
 		    criteria = session.createCriteria(Kategorija.class).add(Restrictions.like("ime", ime).ignoreCase()).add(Restrictions.like("putanja", putanja).ignoreCase());
@@ -28,7 +29,6 @@ public class TrazenjeKategorijeVM {
 	        lista = criteria.list();
 	        if(lista.size() == 0) return null;
 			t.commit();	
-			session.close();
 		} catch (Exception e) {
 			logger.error("Došlo je do greške:", e);
 	
@@ -37,10 +37,9 @@ public class TrazenjeKategorijeVM {
 		return lista.get(0);
 	}
 	
-	public static List<Kategorija> nadjiKategorije() {
+	public static List<Kategorija> nadjiKategorije(Session session) {
 		Criteria criteria = null;
 		try {
-			Session session = (Session) HibernateUtil.getSessionFactory().openSession();
 	        Transaction t = session.beginTransaction();
 			criteria = session.createCriteria(Kategorija.class);
 			
@@ -52,16 +51,14 @@ public class TrazenjeKategorijeVM {
 	}
 	
 	//putanja = putanja + ime kategorije
-	public static List<Kategorija> nadjiKategorijeSaPutanjom(String putanja){
+	public static List<Kategorija> nadjiKategorijeSaPutanjom(String putanja, Session session){
 		List<Kategorija> listaKategorija = null;
 		try{
-			Session session = (Session) HibernateUtil.getSessionFactory().openSession();
 	        Transaction t = session.beginTransaction();
 			
 			Criteria criteria = session.createCriteria(Kategorija.class).add(Restrictions.like("putanja", putanja, MatchMode.ANYWHERE).ignoreCase());
 			listaKategorija = criteria.list();		
 			
-			session.close();
 		} catch(Exception e){
 			logger.error("Došlo je do greške:", e);
 		

@@ -15,6 +15,7 @@ import javax.swing.JTextField;
 
 import ba.unsa.etf.si.app.SiDesk.ViewModel.GenerisiIzvjestajStarosnaDob;
 import org.apache.log4j.Logger;
+import org.hibernate.Session;
 public class MenadzerGenerisanjeStarosnaDob {
 	final static Logger logger = Logger.getLogger(MenadzerGenerisanjeStarosnaDob.class);
 
@@ -22,15 +23,16 @@ public class MenadzerGenerisanjeStarosnaDob {
 	private JTextField textField;
 	private JTextField textField_1;
 	private Choice choice;
-
+	private static Session s;
+    private static MenadzerHome ref;
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
+	public void otvoriFormu() {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					MenadzerGenerisanjeStarosnaDob window = new MenadzerGenerisanjeStarosnaDob();
+					MenadzerGenerisanjeStarosnaDob window = new MenadzerGenerisanjeStarosnaDob(s, ref);
 					window.frmGenerisanjeIzvjetaja.setVisible(true);
 				} catch (Exception e) {
 					logger.error("Došlo je do greške:", e);
@@ -43,7 +45,9 @@ public class MenadzerGenerisanjeStarosnaDob {
 	/**
 	 * Create the application.
 	 */
-	public MenadzerGenerisanjeStarosnaDob() {
+	public MenadzerGenerisanjeStarosnaDob(Session s, MenadzerHome ref) {
+		this.ref=ref;
+		this.s=s;
 		initialize();
 		frmGenerisanjeIzvjetaja.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 	}
@@ -95,11 +99,10 @@ public class MenadzerGenerisanjeStarosnaDob {
 		btnKreirajIzvjetaj.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String command = e.getActionCommand();
-				GenerisiIzvjestajStarosnaDob i = new GenerisiIzvjestajStarosnaDob();
 				if (command.equals("Kreiraj izvje\u0161taj")) {
 					try {
 						GenerisiIzvjestajStarosnaDob.generisi(textField.getText(), textField_1.getText(),
-								choice.getSelectedItem());
+								choice.getSelectedItem(), s);
 					} catch (MalformedURLException e1) {
 						logger.error("Došlo je do greške:", e1);
 						JOptionPane.showMessageDialog(null, "Izvještaj nije generisan");

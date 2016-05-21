@@ -23,19 +23,22 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.ActionEvent;
 import org.apache.log4j.Logger;
+import org.hibernate.Session;
 public class MenadzerDodajPitanje {
 	final static Logger logger = Logger.getLogger(MenadzerDodajPitanje.class);
 
 	protected JFrame frmDodajPitanje;
+	private static Session s;
+	private static MenadzerHome ref;
 
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
+	public void otvoriFormu() {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					MenadzerDodajPitanje window = new MenadzerDodajPitanje();
+					MenadzerDodajPitanje window = new MenadzerDodajPitanje(s, ref);
 					
 					window.frmDodajPitanje.setVisible(true);
 					
@@ -50,7 +53,9 @@ public class MenadzerDodajPitanje {
 	/**
 	 * Create the application.
 	 */
-	public MenadzerDodajPitanje() {
+	public MenadzerDodajPitanje(Session s, MenadzerHome ref) {
+		this.ref=ref;
+		this.s=s;
 		initialize();
 		frmDodajPitanje.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 	}
@@ -94,7 +99,7 @@ public class MenadzerDodajPitanje {
 				{
 					boolean flag = false;
 					
-					List<Kategorija> lista = TrazenjeKategorijeVM.nadjiKategorije();
+					List<Kategorija> lista = TrazenjeKategorijeVM.nadjiKategorije(s);
 					DefaultMutableTreeNode[] drvo = new DefaultMutableTreeNode[lista.size()];
 					for(int i = 0; i < lista.size(); i++){
 						drvo[i] = new DefaultMutableTreeNode(lista.get(i).getIme());
@@ -141,10 +146,10 @@ public class MenadzerDodajPitanje {
 				DefaultMutableTreeNode model = (DefaultMutableTreeNode)tree.getSelectionPath().getLastPathComponent();
 	        	String putanja = new String();
 	        	//trazenje putanje
-	        	TreeNode[] s = model.getPath();
-	        	for(int i = 1; i < s.length; i++)//zanemari root
+	        	TreeNode[] ss = model.getPath();
+	        	for(int i = 1; i < ss.length; i++)//zanemari root
 	        	{
-        			putanja += s[i].toString() + "/";
+        			putanja += ss[i].toString() + "/";
 	        	}
 				
 				Pitanje p = new Pitanje();
@@ -168,10 +173,10 @@ public class MenadzerDodajPitanje {
 				System.out.println(imeParentKategorija);
 				
 				if(putanja == "") putanja = null;
-				Kategorija parent = TrazenjeKategorijeVM.nadjiKategoriju(putanjaParentKategorija, imeParentKategorija);
+				Kategorija parent = TrazenjeKategorijeVM.nadjiKategoriju(putanjaParentKategorija, imeParentKategorija, s);
 				p.setKategorija_pitanja(parent);
 
-				DodavanjePitanjaVM.dodajPitanje(p);
+				DodavanjePitanjaVM.dodajPitanje(p, s);
 				
 				editorPane.setText(null);
 				editorPane_1.setText(null);

@@ -29,6 +29,7 @@ import javax.swing.border.LineBorder;
 
 import org.hibernate.Session;
 
+import ba.unsa.etf.si.app.SiDesk.App;
 import ba.unsa.etf.si.app.SiDesk.Model.Korisnik;
 import ba.unsa.etf.si.app.SiDesk.Model.TipKorisnika;
 import ba.unsa.etf.si.app.SiDesk.Util.HibernateUtil;
@@ -48,15 +49,20 @@ public class AdminHome {
 	private JTextField textField_1;
 	private static String username_prijavljenog;
 	final static Logger logger = Logger.getLogger(AdminHome.class);
-
+	private static Session s;
+	private static Login ref;
+	private static AdminHome refAdmin;
+    private String username;
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
+	public void otvoriFormu() {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					AdminHome window = new AdminHome(username_prijavljenog);
+
+					AdminHome window = new AdminHome(s, ref, username);
+
 					window.frmManager.setVisible(true);
 				} catch (Exception e) {
 					logger.error("Došlo je do greške:", e);
@@ -69,9 +75,12 @@ public class AdminHome {
 	/**
 	 * Create the application.
 	 */
-	
-	public AdminHome(String un) {
-		setUsername_prijavljenog(un);
+
+	public AdminHome(Session s, Login ref, String username) {
+		this.s=s;
+		this.ref=ref;
+		this.username=username;
+
 		initialize();
 	}
 
@@ -97,14 +106,16 @@ public class AdminHome {
 		btnIzmjeni.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-					AdminUredjivanjeKorisnika window = new AdminUredjivanjeKorisnika();
+					AdminUredjivanjeKorisnika window = new AdminUredjivanjeKorisnika(s, refAdmin);
 					
 
 					if (list_korisnici.getSelectedIndex() != -1) {
 						
 						
 						AdminUredjivanjeKorisnika.lista(list_korisnici);
-						window.frmUredjivanjekorisnika.setVisible(true);
+						
+						window.otvoriFormu();
+						//window.frmUredjivanjekorisnika.setVisible(true);
 					} else {
 						JOptionPane.showMessageDialog(null, "Greska, nije odabran nijedan korisnik!", "Info",
 								JOptionPane.INFORMATION_MESSAGE);
@@ -125,13 +136,12 @@ public class AdminHome {
 				try {
 					if (list_korisnici.getSelectedIndex() != -1) {
 						Korisnik k = new Korisnik();
-						k = (Korisnik) list_korisnici.getSelectedValue();
 
-						if(!k.getKorisnickoIme().matches(username_prijavljenog))
-						{
+						k=(Korisnik)list_korisnici.getSelectedValue();
+						if (!k.getKorisnickoIme().matches(username)) {
 
-						Session sesija = HibernateUtil.getSessionFactory().openSession();
-						BrisanjeKorisnikaVM.BrisiKorisnika(sesija, list_korisnici);
+							BrisanjeKorisnikaVM.BrisiKorisnika(s, list_korisnici);
+
 
 						JOptionPane.showMessageDialog(null, "Korisnik je uspješno obrisan", "Info",
 								JOptionPane.INFORMATION_MESSAGE);
@@ -141,14 +151,15 @@ public class AdminHome {
 							JOptionPane.showMessageDialog(null, "Greska pri brisanju, brisanje samog sebe nije dozvoljeno!",
 									"Info", JOptionPane.INFORMATION_MESSAGE);
 							
-						
 						}
-					} else {
+					} 
+					
+						else {
 						JOptionPane.showMessageDialog(null, "Greska pri brisanju, nije odabran nijedan korisnik!",
 								"Info", JOptionPane.INFORMATION_MESSAGE);
 
-					}
-				} catch (Exception ex) {
+						}}
+				 catch (Exception ex) {
 					logger.error("Došlo je do greške:", ex);
 					JOptionPane.showMessageDialog(null, "Greska pri brisanju korisnika", "Info ",
 							JOptionPane.INFORMATION_MESSAGE);
@@ -160,8 +171,9 @@ public class AdminHome {
 		btnDodajNovog.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
-					AdminDodavanjeKorisnika window = new AdminDodavanjeKorisnika();
-					window.frmDodavanjeNovogKorisnika.setVisible(true);
+					AdminDodavanjeKorisnika window = new AdminDodavanjeKorisnika(s, refAdmin);
+					window.otvoriFormu();
+					//window.frmDodavanjeNovogKorisnika.setVisible(true);
 				} catch (Exception e) {
 					logger.error("Došlo je do greške:", e);
 					
@@ -173,9 +185,11 @@ public class AdminHome {
 		btnOdjava.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
-					frmManager.dispose();
+					s.close();
+			    	Session session = (Session) HibernateUtil.getSessionFactory().openSession();
 
-					Login window = new Login();
+					frmManager.dispose();
+					Login window = new Login(session);
 					window.frmSidesklogin.setVisible(true);
 				} catch (Exception e) {
 					logger.error("Došlo je do greške:", e);
@@ -207,11 +221,10 @@ public class AdminHome {
 							model.clear();
 						}
 
-						Session sesija = HibernateUtil.getSessionFactory().openSession();
 
 						Korisnik k = new Korisnik();
 
-						k = PretragaKorisnikaJedinstvenaVM.pretraziKorisnikaJMBG(sesija, textField_1.getText());
+						k = PretragaKorisnikaJedinstvenaVM.pretraziKorisnikaJMBG(s, textField_1.getText());
 				
 
 						model.addElement(k);
@@ -330,15 +343,14 @@ public class AdminHome {
 						if (list_korisnici.getModel().getSize() != 0) {
 							model.clear();
 						}
-						Session sesija = HibernateUtil.getSessionFactory().openSession();
-						List<Korisnik> k = PretragaKorisnikaNejedinstvenaVM.pretraziKorisnikaPoImenu(sesija,
+						List<Korisnik> k = PretragaKorisnikaNejedinstvenaVM.pretraziKorisnikaPoImenu(s,
 								textField_ime.getText());
 						if(k.isEmpty())
 						{
 
 							JOptionPane.showMessageDialog(null, "Ne postoji korisnik sa takvim imenom", "Info ",
 									JOptionPane.INFORMATION_MESSAGE);
-							sesija.close();
+							
 						}
 						else
 						{
@@ -347,7 +359,6 @@ public class AdminHome {
 
 						}
 
-						sesija.close();
 						}
 						} catch (Exception ex) {
 							logger.error("Došlo je do greške:", ex);
@@ -394,16 +405,14 @@ public class AdminHome {
 
 					try {
 
-						Session sesija = HibernateUtil.getSessionFactory().openSession();
 
-						List<Korisnik> k = PretragaKorisnikaNejedinstvenaVM.pretraziKorisnikaPoPrezimenu(sesija,
+						List<Korisnik> k = PretragaKorisnikaNejedinstvenaVM.pretraziKorisnikaPoPrezimenu(s,
 								textField_prezime.getText());
 						if(k.isEmpty())
 						{
 
 							JOptionPane.showMessageDialog(null, "Ne postoji korisnik sa takvim prezimenom", "Info ",
 									JOptionPane.INFORMATION_MESSAGE);
-							sesija.close();
 						}
 						else
 						{
@@ -411,7 +420,6 @@ public class AdminHome {
 							model.addElement(p);
 
 						}
-						sesija.close();
 						}
 						
 					}
@@ -439,16 +447,15 @@ public class AdminHome {
 					model.clear();
 				}
 				try {
-					Session sesija = HibernateUtil.getSessionFactory().openSession();
 
-					List<Korisnik> k = PretragaKorisnikaNejedinstvenaVM.pretraziKorisnikaPoTipu(sesija,
+					List<Korisnik> k = PretragaKorisnikaNejedinstvenaVM.pretraziKorisnikaPoTipu(s,
 							comboBox_tipKorisnika.getSelectedItem().toString());
 					if(k.isEmpty())
 					{
 
 						JOptionPane.showMessageDialog(null, "Ne postoji korisnik sa takvim tipom", "Info ",
 								JOptionPane.INFORMATION_MESSAGE);
-						sesija.close();
+						
 					}
 					else
 					{
@@ -456,7 +463,7 @@ public class AdminHome {
 						model.addElement(p);
 
 					}
-					sesija.close();
+					
 					}
 
 				}
