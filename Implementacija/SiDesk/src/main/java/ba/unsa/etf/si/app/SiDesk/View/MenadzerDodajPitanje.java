@@ -24,6 +24,8 @@ import java.awt.event.MouseEvent;
 import java.awt.event.ActionEvent;
 import org.apache.log4j.Logger;
 import org.hibernate.Session;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 public class MenadzerDodajPitanje {
 	final static Logger logger = Logger.getLogger(MenadzerDodajPitanje.class);
 
@@ -65,6 +67,13 @@ public class MenadzerDodajPitanje {
 	 */
 	private void initialize() {
 		frmDodajPitanje = new JFrame();
+		frmDodajPitanje.addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosed(WindowEvent e) {
+				ref.frmMenadzerHome.setEnabled(true);
+				ref.frmMenadzerHome.setVisible(true);
+			}
+		});
 		frmDodajPitanje.setTitle("Dodaj pitanje");
 		frmDodajPitanje.setBounds(100, 100, 675, 455);
 		//frmDodajPitanje.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -218,6 +227,9 @@ public class MenadzerDodajPitanje {
 		    btnIzadji.addActionListener(new ActionListener() {
 		        public void actionPerformed(ActionEvent e) {
 		        	frmDodajPitanje.setVisible(false);
+		        	ref.frmMenadzerHome.setEnabled(true);
+					ref.frmMenadzerHome.setVisible(true);
+		        	
 		        }
 
 		});

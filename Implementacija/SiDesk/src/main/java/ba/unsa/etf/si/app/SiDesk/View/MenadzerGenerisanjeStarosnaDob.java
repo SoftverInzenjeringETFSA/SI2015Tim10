@@ -16,6 +16,8 @@ import javax.swing.JTextField;
 import ba.unsa.etf.si.app.SiDesk.ViewModel.GenerisiIzvjestajStarosnaDob;
 import org.apache.log4j.Logger;
 import org.hibernate.Session;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 public class MenadzerGenerisanjeStarosnaDob {
 	final static Logger logger = Logger.getLogger(MenadzerGenerisanjeStarosnaDob.class);
 
@@ -57,6 +59,14 @@ public class MenadzerGenerisanjeStarosnaDob {
 	 */
 	private void initialize() {
 		frmGenerisanjeIzvjetaja = new JFrame();
+		frmGenerisanjeIzvjetaja.addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosed(WindowEvent e) {
+				ref.frmMenadzerHome.setEnabled(true);
+				ref.frmMenadzerHome.setVisible(true);
+			}
+			
+		});
 		frmGenerisanjeIzvjetaja.setTitle("Generisanje izvje\u0161taja");
 		frmGenerisanjeIzvjetaja.setBounds(100, 100, 405, 239);
 		frmGenerisanjeIzvjetaja.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

@@ -362,6 +362,7 @@ public class MenadzerHome {
 			public void actionPerformed(ActionEvent e) {
 				MenadzerDodavanjeKategorije window= new MenadzerDodavanjeKategorije(s, ref);
 				window.otvoriFormu();
+				frmMenadzerHome.setEnabled(false);
 			//	window.frmDodavanjeKategorije.setVisible(true);
 				
 			}
@@ -374,6 +375,7 @@ public class MenadzerHome {
 			public void actionPerformed(ActionEvent e) {
 				MenadzerModifikovanjeKategorije window= new MenadzerModifikovanjeKategorije(s, ref);
 				window.otvoriFormu();
+				frmMenadzerHome.setEnabled(false);
 				//window.frmModifikovanjeKategorije.setVisible(true);
 			}
 		});
@@ -384,6 +386,7 @@ public class MenadzerHome {
 			public void actionPerformed(ActionEvent e) {
 				MenadzerBrisanjeKategorije window = new MenadzerBrisanjeKategorije(s, ref);
 				window.otvoriFormu();
+				frmMenadzerHome.setEnabled(false);
 				//window.frmBrisanjeKategorije.setVisible(true);
 			}
 		});
@@ -397,6 +400,7 @@ public class MenadzerHome {
 			public void actionPerformed(ActionEvent e) {
 				MenadzerGenerisanjeIzaslaIzScen window= new MenadzerGenerisanjeIzaslaIzScen(s, ref);
 				window.otvoriFormu();
+				frmMenadzerHome.setEnabled(false);
 			//	window.frmGenerisanjeIzvjetaja.setVisible(true);
 			}
 		});
@@ -407,7 +411,7 @@ public class MenadzerHome {
 			public void actionPerformed(ActionEvent e) {
 				MenadzerGenerisanjeVremenski window= new MenadzerGenerisanjeVremenski(s, ref);
 				window.otvoriFormu();
-				
+				frmMenadzerHome.setEnabled(false);
 			//	window.frmKreiranjeIzvjetaja.setVisible(true);
 			}
 		});
@@ -418,6 +422,7 @@ public class MenadzerHome {
 			public void actionPerformed(ActionEvent e) {
 				MenadzerGenerisanjeStarosnaDob window= new MenadzerGenerisanjeStarosnaDob(s, ref);
 				window.otvoriFormu();
+				frmMenadzerHome.setEnabled(false);
 				//window.frmGenerisanjeIzvjetaja.setVisible(true);
 			}
 		});
@@ -428,6 +433,7 @@ public class MenadzerHome {
 			public void actionPerformed(ActionEvent e) {
 				MenadzerGenerisanjeKategorija window = new MenadzerGenerisanjeKategorija(s, ref);		
 				window.otvoriFormu();
+				frmMenadzerHome.setEnabled(false);
 			//	window.frmGenerisanjeIzvjetaja.setVisible(true);
 			}
 		});
@@ -442,6 +448,7 @@ public class MenadzerHome {
 			public void actionPerformed(ActionEvent e) {
 				MenadzerDodajPitanje window= new MenadzerDodajPitanje(s, ref);
 				window.otvoriFormu();
+				frmMenadzerHome.setEnabled(false);
 			//	window.frmDodajPitanje.setVisible(true);
 				
 			}

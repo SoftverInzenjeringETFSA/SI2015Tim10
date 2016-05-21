@@ -17,6 +17,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import org.apache.log4j.Logger;
 import org.hibernate.Session;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 public class MenadzerModifikovanjeKategorije {
 	final static Logger logger = Logger.getLogger(MenadzerModifikovanjeKategorije.class);
 
@@ -56,6 +58,13 @@ public class MenadzerModifikovanjeKategorije {
 	 */
 	private void initialize() {
 		frmModifikovanjeKategorije = new JFrame();
+		frmModifikovanjeKategorije.addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosed(WindowEvent e) {
+				ref.frmMenadzerHome.setEnabled(true);
+				ref.frmMenadzerHome.setVisible(true);
+			}
+		});
 		frmModifikovanjeKategorije.setTitle("Modifikovanje kategorije");
 		frmModifikovanjeKategorije.setBounds(100, 100, 517, 216);
 		frmModifikovanjeKategorije.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);

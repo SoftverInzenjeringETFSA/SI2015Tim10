@@ -22,6 +22,8 @@ import java.awt.event.ActionEvent;
 import java.awt.Color;
 import org.apache.log4j.Logger;
 import org.hibernate.Session;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 public class MenadzerBrisanjeKategorije {
 	final static Logger logger = Logger.getLogger(MenadzerBrisanjeKategorije.class);
@@ -63,6 +65,13 @@ public class MenadzerBrisanjeKategorije {
 	 */
 	private void initialize() {
 		frmBrisanjeKategorije = new JFrame();
+		frmBrisanjeKategorije.addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosed(WindowEvent e) {
+				ref.frmMenadzerHome.setEnabled(true);
+				ref.frmMenadzerHome.setVisible(true);
+			}
+		});
 		frmBrisanjeKategorije.setTitle("Brisanje kategorije");
 		frmBrisanjeKategorije.setBounds(100, 100, 517, 216);
 

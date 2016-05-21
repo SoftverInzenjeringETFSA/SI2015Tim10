@@ -21,6 +21,8 @@ import ba.unsa.etf.si.app.SiDesk.Model.Kategorija;
 import ba.unsa.etf.si.app.SiDesk.ViewModel.GenerisiIzvjestajIzlazakIzScenarija;
 import ba.unsa.etf.si.app.SiDesk.ViewModel.GenerisiIzvjestajKategorija;
 import ba.unsa.etf.si.app.SiDesk.ViewModel.UcitajKategorije;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 public class MenadzerGenerisanjeKategorija {
 	final static Logger logger = Logger.getLogger(MenadzerGenerisanjeKategorija.class);
 
@@ -63,6 +65,13 @@ public class MenadzerGenerisanjeKategorija {
 	 */
 	private void initialize() {
 		frmGenerisanjeIzvjetaja = new JFrame();
+		frmGenerisanjeIzvjetaja.addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosed(WindowEvent e) {
+				ref.frmMenadzerHome.setEnabled(true);
+				ref.frmMenadzerHome.setVisible(true);
+			}
+		});
 		frmGenerisanjeIzvjetaja.setTitle("Generisanje izvje\u0161taja");
 		frmGenerisanjeIzvjetaja.setBounds(100, 100, 433, 267);
 		frmGenerisanjeIzvjetaja.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

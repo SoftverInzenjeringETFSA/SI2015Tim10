@@ -18,6 +18,8 @@ import ba.unsa.etf.si.app.SiDesk.ViewModel.GenerisiIzvjestajIzlazakIzScenarija;
 import ba.unsa.etf.si.app.SiDesk.ViewModel.GenerisiIzvjestajVremenskiPeriod;
 import org.apache.log4j.Logger;
 import org.hibernate.Session;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 public class MenadzerGenerisanjeIzaslaIzScen {
 	final static Logger logger = Logger.getLogger(MenadzerGenerisanjeIzaslaIzScen.class);
 
@@ -57,6 +59,13 @@ public class MenadzerGenerisanjeIzaslaIzScen {
 	 */
 	private void initialize() {
 		frmGenerisanjeIzvjetaja = new JFrame();
+		frmGenerisanjeIzvjetaja.addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosed(WindowEvent e) {
+				ref.frmMenadzerHome.setEnabled(true);
+				ref.frmMenadzerHome.setVisible(true);
+			}
+		});
 		frmGenerisanjeIzvjetaja.setTitle("Generisanje izvje\u0161taja");
 		frmGenerisanjeIzvjetaja.setBounds(100, 100, 412, 203);
 		frmGenerisanjeIzvjetaja.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

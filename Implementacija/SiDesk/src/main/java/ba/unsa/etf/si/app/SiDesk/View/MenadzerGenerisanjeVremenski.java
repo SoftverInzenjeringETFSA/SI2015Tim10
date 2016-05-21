@@ -21,6 +21,8 @@ import ba.unsa.etf.si.app.SiDesk.ViewModel.GenerisiIzvjestajStarosnaDob;
 import ba.unsa.etf.si.app.SiDesk.ViewModel.GenerisiIzvjestajVremenskiPeriod;
 import org.apache.log4j.Logger;
 import org.hibernate.Session;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 public class MenadzerGenerisanjeVremenski {
 	final static Logger logger = Logger.getLogger(MenadzerGenerisanjeVremenski.class);
 
@@ -63,6 +65,13 @@ public class MenadzerGenerisanjeVremenski {
 	 */
 	private void initialize() {
 		frmKreiranjeIzvjetaja = new JFrame();
+		frmKreiranjeIzvjetaja.addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosed(WindowEvent e) {
+				ref.frmMenadzerHome.setEnabled(true);
+				ref.frmMenadzerHome.setVisible(true);
+			}
+		});
 		frmKreiranjeIzvjetaja.setTitle("Generisanje izvje\u0161taja");
 		frmKreiranjeIzvjetaja.setBounds(100, 100, 464, 315);
 		frmKreiranjeIzvjetaja.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
