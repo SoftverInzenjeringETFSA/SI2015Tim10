@@ -13,14 +13,12 @@ import ba.unsa.etf.si.app.SiDesk.View.AdminDodavanjeKorisnika;
 
 import org.hibernate.Criteria;
 import org.hibernate.Transaction;
+import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Restrictions;
 import org.apache.log4j.Logger;
 public class DodavanjePitanjaVM {
 	final static Logger logger = Logger.getLogger(DodavanjePitanjaVM.class);
-	
-
-	
 
 	public static Boolean dodajPitanje(Pitanje pitanje, Session sesija) {
 		
@@ -49,24 +47,18 @@ public class DodavanjePitanjaVM {
 	}
 	
 
-	public static List<Pitanje> pretraziPitanja(String kljucnaRijec, String putanja, Session session) {
-		
+	public static List<Pitanje> pretraziPitanja(String kljucnaRijec, String putanja, Session sesija) {
 		List<Pitanje> lista= null;
 		try {
-	        Transaction tr =  session.beginTransaction();
+	        Transaction tr =  sesija.beginTransaction();
 			
-	        Criteria criteria = session.createCriteria(Pitanje.class).add(Restrictions.like("pitanje", kljucnaRijec, MatchMode.ANYWHERE).ignoreCase()).add(Restrictions.like("putanja", putanja, MatchMode.ANYWHERE).ignoreCase());
-		    lista = criteria.list();
-			
+	        Criteria criteria = sesija.createCriteria(Pitanje.class).add(Restrictions.and(Restrictions.like("pitanje", kljucnaRijec, MatchMode.ANYWHERE).ignoreCase()).add(Restrictions.like("putanja", putanja, MatchMode.ANYWHERE).ignoreCase()));
+	        lista = (List<Pitanje>)criteria.list();
 			}
-		
-		
 		catch (Exception e) {
 			logger.error("Došlo je do greške:", e);
-			
-		
 		}
-		return (List<Pitanje>)lista;
+		return lista;
 		
 	}
 	

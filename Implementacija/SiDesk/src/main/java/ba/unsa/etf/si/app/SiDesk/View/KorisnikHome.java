@@ -65,6 +65,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.beans.PropertyChangeEvent;
@@ -91,7 +92,7 @@ public class KorisnikHome {
 	protected String kliknutiCvorString;
 	protected String username;
 	private static Session s;
-	private static Login ref;
+	private Login ref;
 
 	private JDateChooser dateChooser;
 
@@ -618,7 +619,7 @@ public class KorisnikHome {
 						putanjaZaKategorije = putanja + kliknutiCvorString;
 
 					List<Pitanje> listaPitanja = DodavanjePitanjaVM.pretraziPitanja(kljucnaRijec, putanjaZaKategorije, s);
-
+					
 					// dodavanje u tabelu
 					String[][] tabelaPitanja = new String[listaPitanja.size()][2];
 					for (int i = 0; i < listaPitanja.size(); i++) {

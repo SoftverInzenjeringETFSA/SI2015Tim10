@@ -21,7 +21,6 @@ public class TrazenjeKategorijeVM {
 	public static Kategorija  nadjiKategoriju(String putanja, String ime, Session session) {
 		Criteria criteria = null;
 		List<Kategorija> lista = null;
-	
 		try {
 	        Transaction t = session.beginTransaction();
 	        if(putanja != null)
