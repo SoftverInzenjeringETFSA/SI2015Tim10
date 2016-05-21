@@ -57,7 +57,7 @@ public class MenadzerHome {
 	protected JMenuItem mntmDodajKategoriju;
 	protected JMenuItem mntmdodajPitanje;
 	protected JMenuItem mntmobrisiKategoriju;
-	public static JTree tree;
+	protected static JTree tree;
 	protected String putanja;
 	protected String kliknutiCvorString;
 	private JTextField textField_pretragaPitanja;
@@ -339,17 +339,6 @@ public class MenadzerHome {
 		});
 		btnOdjava.setBounds(558, 30, 85, 23);
 		frmMenadzerHome.getContentPane().add(btnOdjava);
-		
-		JButton btnOsvjeziKategorije = new JButton("Osvjezi kategorije");
-		btnOsvjeziKategorije.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				osvjeziDrvo();
-			}
-		});
-		btnOsvjeziKategorije.setBounds(89, 65, 119, 23);
-		frmMenadzerHome.getContentPane().add(btnOsvjeziKategorije);
-	
-		
 		
 		JMenuBar menuBar = new JMenuBar();
 		frmMenadzerHome.setJMenuBar(menuBar);

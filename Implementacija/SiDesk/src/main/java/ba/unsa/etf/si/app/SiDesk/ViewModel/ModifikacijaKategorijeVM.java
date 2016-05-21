@@ -16,9 +16,6 @@ import ba.unsa.etf.si.app.SiDesk.Util.HibernateUtil;
 import org.apache.log4j.Logger;
 public class ModifikacijaKategorijeVM {
 	final static Logger logger = Logger.getLogger(ModifikacijaKategorijeVM.class);
-
-
-	
 	public static boolean modifikacijaKategorije(String putanja, String staroIme, String novoIme, Session session) {
 		try {
 			if(putanja == "") putanja = null;
@@ -26,7 +23,7 @@ public class ModifikacijaKategorijeVM {
 	        Transaction t = session.beginTransaction();
 	        k.setIme(novoIme);
 	        session.update(k);
-	        
+	        if(putanja == null) putanja="";
 	        //treba promijeniti i putanje svih koji imaju excel (pitanja i kategorije)
 	        Criteria criteria = session.createCriteria(Kategorija.class).add(Restrictions.like("putanja", putanja + staroIme, MatchMode.ANYWHERE).ignoreCase());
 			List<Kategorija> listaKategorija = criteria.list();		
