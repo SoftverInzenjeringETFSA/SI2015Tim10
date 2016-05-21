@@ -776,6 +776,7 @@ public class KorisnikHome {
 				textField_4.setText("");
 				dateChooser.setDate(null);
 				tabbedPane.setSelectedIndex(0);
+				table_2.clearSelection();
 				JOptionPane.showMessageDialog(null, "Ponisteno", "Info", JOptionPane.INFORMATION_MESSAGE);
 			}
 		});
