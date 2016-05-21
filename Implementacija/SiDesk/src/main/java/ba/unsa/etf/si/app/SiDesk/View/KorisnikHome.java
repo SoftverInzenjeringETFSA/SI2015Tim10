@@ -92,7 +92,7 @@ public class KorisnikHome {
 	protected String kliknutiCvorString;
 	protected String username;
 	private static Session s;
-	private Login ref;
+	private static Login ref;
 
 	private JDateChooser dateChooser;
 
