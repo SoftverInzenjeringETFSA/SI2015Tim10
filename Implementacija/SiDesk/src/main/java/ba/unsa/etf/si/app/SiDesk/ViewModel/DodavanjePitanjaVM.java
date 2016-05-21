@@ -13,6 +13,7 @@ import ba.unsa.etf.si.app.SiDesk.View.AdminDodavanjeKorisnika;
 
 import org.hibernate.Criteria;
 import org.hibernate.Transaction;
+import org.hibernate.criterion.CriteriaSpecification;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Restrictions;
@@ -53,6 +54,7 @@ public class DodavanjePitanjaVM {
 	        Transaction tr =  sesija.beginTransaction();
 			
 	        Criteria criteria = sesija.createCriteria(Pitanje.class).add(Restrictions.and(Restrictions.like("pitanje", kljucnaRijec, MatchMode.ANYWHERE).ignoreCase()).add(Restrictions.like("putanja", putanja, MatchMode.ANYWHERE).ignoreCase()));
+	        criteria.setResultTransformer(CriteriaSpecification.DISTINCT_ROOT_ENTITY);
 	        lista = (List<Pitanje>)criteria.list();
 			}
 		catch (Exception e) {
