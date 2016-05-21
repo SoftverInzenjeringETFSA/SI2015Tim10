@@ -14,7 +14,7 @@ public class DodavanjeKlijentaVMTest extends TestCase
 		// testiranje uspješnog dodavanja klijenta
     	Session session = (Session) HibernateUtil.getSessionFactory().openSession();
 
-		DodavanjeKlijentaVM.dodajKlijenta("Mujo", "Alić", "Ferhadija bb", "032-556-632", 25, "pekar");
+		DodavanjeKlijentaVM.dodajKlijenta("Mujo", "Alić", "Ferhadija bb", "032-556-632", 25, "pekar", session);
 		Klijent k = PretragaKlijenataVM.nadjiKlijenta("Mujo", "Alić", "Ferhadija bb", "032-556-632", 25, "pekar", session);
 		assertEquals("Mujo", k.getIme());
 		assertEquals("Alić", k.getPrezime());

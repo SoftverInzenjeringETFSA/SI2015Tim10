@@ -16,7 +16,7 @@ public class ModifikacijaKlijentaVMTest extends TestCase
 		
 		Session session = (Session) HibernateUtil.getSessionFactory().openSession();
 
-		DodavanjeKlijentaVM.dodajKlijenta("Mujo", "Alić", "Ferhadija bb", "032-556-632", 25, "pekar");
+		DodavanjeKlijentaVM.dodajKlijenta("Mujo", "Alić", "Ferhadija bb", "032-556-632", 25, "pekar", session);
 		List<Klijent> nadjeni = ModifikacijaKlijentaVM.nadjiKlijenta("Mujo", session);
 		
 		assertEquals(nadjeni.get(0).getIme(), "Mujo");
